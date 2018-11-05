@@ -1,0 +1,18 @@
+Options -Indexes
+
+RewriteEngine on
+RewriteRule ^(gii.*)$ web/index.php/$1 [L]
+RewriteRule ^(.*)$ web/$1 [L]
+
+<Files ~ "(^\.|\/\.)">
+Order allow,deny
+Deny from all
+</Files>
+
+# Variables de php a modificar
+# php_value upload_max_filesize 10M
+# php_value post_max_size 10M
+# -- reportes error_reporting = E_ALL & ~E_NOTICE & ~E_STRICT
+php_value error_reporting 30711
+php_value memory_limit 256M
+php_value max_execution_time 300

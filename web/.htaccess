@@ -1,0 +1,19 @@
+#Options +FollowSymLinks
+#IndexIgnore */*
+RewriteEngine on
+
+#RewriteBase /
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+# otherwise forward it to index.php
+RewriteRule . index.php
+
+# Variables de php a modificar
+# php_value upload_max_filesize 10M
+# php_value post_max_size 10M
+# -- reportes error_reporting = E_ALL & ~E_NOTICE & ~E_STRICT
+# php_value error_reporting 30711
+php_value memory_limit 256M
+php_value max_execution_time 300
