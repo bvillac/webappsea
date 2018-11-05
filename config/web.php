@@ -4,7 +4,8 @@ $params = require __DIR__ . '/params.php';
 //$db = require __DIR__ . '/db.php';
 
 $config = [
-    'id' => 'Utimpor S.A.',
+    'id' => 'websea',
+    'name' => 'UTIMPOR S.A.',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'language' => 'es',
@@ -16,8 +17,12 @@ $config = [
     ],
     'components' => [
         'request' => [
+            'baseUrl' => '/webappsea',
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'gHrCkD6izohFYH1FnCk-V7TsOLqfhEht',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -45,7 +50,7 @@ $config = [
                 ],
             ],
         ],
-        'db' => $db,
+        //'db' => $db,
         
         'urlManager' => [
             'enablePrettyUrl' => true,
