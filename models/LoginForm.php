@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use app\models\Usuario;
 
 /**
  * LoginForm is the model behind the login form.
@@ -16,8 +17,8 @@ class LoginForm extends Model
     public $username;
     public $password;
     public $rememberMe = true;
-
     private $_user = false;
+    private $_errorSession = false;
 
 
     /**
@@ -57,12 +58,59 @@ class LoginForm extends Model
      * Logs in a user using the provided username and password.
      * @return bool whether the user is logged in successfully
      */
+    //*****************INICIO TODO ************/
     public function login()
     {
-        if ($this->validate()) {
+        /*if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
         }
-        return false;
+        return false;*/
+        if ($this->validate()) {
+            $usuario = Usuario::findByUsername($this->username);
+            if (isset($usuario)) {
+                $status = $usuario->validatePassword($this->password);
+                $status_activo = $usuario->usu_estado_activo;
+                if ($status_activo == 1) { // si es usuario activo
+                    if ($status && isset($status)) {
+                        
+                        $usuario->createSession($emp_id);
+                        // agregar link dash session
+
+                        Yii::$app->user->login($usuario, 0);
+                        Yii::$app->user->setIdentity($usuario);
+                    } else { // error password
+                        $this->setErrorSession(true);
+                        Yii::$app->session->setFlash('error', Yii::t("login", "<h4>Error</h4>Incorrect username or password."));
+                        $usuario->destroySession();
+                        return false;
+                    }
+                } else { // account disabled
+                    $this->setErrorSession(true);
+                    Yii::$app->session->setFlash('error', Yii::t("login", "<h4>Error</h4>Incorrect username or password."));
+                    $usuario->destroySession();
+                    return false;
+                }
+                return $status;
+            } else {
+                $this->setErrorSession(true);
+                Yii::$app->session->setFlash('error', Yii::t("login", "<h4>Error</h4>Incorrect username or password."));
+                return false;
+            }
+        } else {
+            $this->setErrorSession(true);
+            Yii::$app->session->setFlash('error', Yii::t("login", "<h4>Error</h4>Incorrect username or password."));
+            return false;
+        }
+
+        
+    }
+    
+    public function setErrorSession($error) {
+        $this->_errorSession = $error;
+    }
+    
+    public function getErrorSession() {
+        return $this->_errorSession;
     }
 
     /**
@@ -73,7 +121,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = Usuario::findByUsername($this->username);
         }
 
         return $this->_user;

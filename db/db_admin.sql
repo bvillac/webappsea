@@ -300,3 +300,50 @@ CREATE TABLE IF NOT EXISTS `omodulo_rol` (
   FOREIGN KEY (`rol_id`) REFERENCES `rol` (`rol_id`) 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+
+CREATE TABLE IF NOT EXISTS `cliente` (
+  `cli_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `cod_cli` VARCHAR(10) NULL,
+  `cli_nombre` VARCHAR(50) NULL DEFAULT NULL,
+  `cli_ruc` VARCHAR(15) NULL DEFAULT NULL,
+  `cli_descripcion` VARCHAR(100) NULL DEFAULT NULL,
+  `cli_direccion` VARCHAR(100) NULL DEFAULT NULL,
+  `cli_telefono` VARCHAR(20) NULL DEFAULT NULL,
+  `cli_est_log` VARCHAR(1) NULL DEFAULT NULL,
+  `cli_fec_cre` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `cli_fec_mod` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`cli_id`))
+ENGINE = InnoDB AUTO_INCREMENT=1
+DEFAULT CHARACTER SET = utf8;
+
+
+CREATE TABLE IF NOT EXISTS `usuario_cliente` (
+  `ucli_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `usu_id` BIGINT(20) NOT NULL,
+  `cli_id` BIGINT(20) NOT NULL,
+  `rol_id` BIGINT(20) NOT NULL,
+  `ucli_est_log` VARCHAR(1) NULL DEFAULT NULL,
+  `ucli_fec_cre` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `ucli_fec_mod` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`ucli_id`),
+  INDEX `fk_usuario_cliente_usuario1_idx` (`usu_id` ASC),
+  INDEX `fk_usuario_cliente_cliente1_idx` (`cli_id` ASC),
+  INDEX `fk_usuario_cliente_rol1_idx` (`rol_id` ASC),
+  CONSTRAINT `fk_usuario_cliente_usuario1`
+    FOREIGN KEY (`usu_id`)
+    REFERENCES `db_admin`.`usuario` (`usu_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuario_cliente_cliente1`
+    FOREIGN KEY (`cli_id`)
+    REFERENCES `db_admin`.`cliente` (`cli_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuario_cliente_rol1`
+    FOREIGN KEY (`rol_id`)
+    REFERENCES `db_admin`.`rol` (`rol_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB AUTO_INCREMENT=1
+DEFAULT CHARACTER SET = utf8;
+

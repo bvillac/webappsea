@@ -3,6 +3,12 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Security;
+use yii\web\IdentityInterface;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
+use yii\helpers\Url;
+use yii\data\ArrayDataProvider;
 
 /**
  * This is the model class for table "usuario".
@@ -25,8 +31,7 @@ use Yii;
  * @property Persona $per
  * @property UsuarioEmpresa[] $usuarioEmpresas
  */
-class Usuario extends \yii\db\ActiveRecord
-{
+class Usuario extends ActiveRecord implements IdentityInterface  {
     /**
      * {@inheritdoc}
      */
@@ -98,4 +103,136 @@ class Usuario extends \yii\db\ActiveRecord
     {
         return $this->hasMany(UsuarioEmpresa::className(), ['usu_id' => 'usu_id']);
     }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getId() {
+        return $this->getPrimaryKey();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAuthKey() {
+        return $this->usu_sha;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentity($id) {
+        return static::findOne($id);
+    }
+    
+    public static function findByCondition($condition) {
+        return parent::findByCondition($condition);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentityByAccessToken($token, $type = null) {
+        return static::findOne(['usu_sha' => $token]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validateAuthKey($authKey) {
+        return $this->getAuthKey() === $authKey;
+    }
+    
+    /*
+        Login de Usuario  valida User
+     *      */
+    public static function findByUsername($username) {
+        $user = static::findOne(['usu_username' => $username, 'usu_estado_activo' => 1]);
+        if (isset($user->usu_id))
+            return $user;
+        else
+            return NULL;
+    }
+    
+    /*
+     * Validates password
+     */
+    public function validatePassword($password) {
+        $security = new Security();
+        return ($this->usu_sha === $security->decryptByPassword(base64_decode($this->usu_password), $password));
+    }
+    
+    public function setPassword($password) {
+        $security = new Security();
+        $hash = (isset($this->usu_sha) ? $this->usu_sha : ($this->generateAuthKey()));
+        $this->usu_password = base64_encode($security->encryptByPassword($hash, $password));
+    }
+    
+    public function generateAuthKey() {
+        $security = new Security();
+        $this->usu_sha = $security->generateRandomString();
+        return $this->usu_sha;
+    }
+    
+    //CREAR TODAS LAS SESCI9ONES DE LA APLICACION
+    public function createSession($id_empresa = NULL) {
+        $session = Yii::$app->session;
+        if ($session->isActive) {
+            $session->open();
+            //$session->close();
+            $model_persona = Persona::findIdentity($this->per_id);
+
+            $nombre_persona = $model_persona->per_nombre;
+            $apellido_persona = $model_persona->per_apellido;
+            $session->set('PB_isuser', true);
+            $session->set('PB_username', $this->usu_user);
+            $session->set('PB_nombres', $nombre_persona . " " . $apellido_persona);
+            //$session->set('PB_idempresa', $id_empresa);
+            $session->set('PB_empresa', $nombre_empresa);
+            $session->set('PB_perid', $this->per_id);
+            $session->set('PB_iduser', $this->usu_id);
+            $session->set('PB_yii_lang', Yii::$app->language);
+            //$session->set('PB_yii_theme', Yii::$app->view->theme->themeName);
+        } else {
+            $session->destroy();
+        }
+    }
+    
+    public static function addVarSession($alias, $value){
+        $session = Yii::$app->session;
+        if ($session->isActive) {
+            $session->set($alias, $value);
+        }
+    }
+    
+    public function regenerateSession() {
+        $session = Yii::$app->session;
+        if ($session->isActive) {
+            $id = Yii::$app->session->getId();
+            Yii::$app->session->regenerateID($id);
+        }
+    }
+    
+    public function destroySession() {
+        $usuario = $this->findIdentity(Yii::$app->session->get("PB_iduser"));
+        $session = Yii::$app->session;
+        $session->close();
+        $session->destroy();
+    }
+    
+    public function crearUsuario($username, $password, $id_persona) {
+        // se debe verificar de que el usuario no exista
+        $this->usu_user = $username;
+        $this->generateAuthKey(); // generacion de hash
+        $this->setPassword($password);
+        $this->per_id = $id_persona;
+        if ($this->save())
+            return true;
+        return false;
+    }
+    
+    
+    
+    
+    
 }
