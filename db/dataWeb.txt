@@ -1,1 +1,8 @@
 mysql -u root -p  < db_admin.sql 
+
+
+    Model Class: app\models\Country
+    Search Model Class: app\models\CountrySearch
+    Controller Class: app\controllers\CountryController
+    @app/views/empresa
+

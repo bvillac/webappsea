@@ -16,8 +16,18 @@
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-jui": "*",
         "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0"
+        "yiisoft/yii2-swiftmailer": "~2.0.0",
+        "fxp/composer-asset-plugin": "~1.4.4",
+        "mpdf/mpdf": "*",
+        "phpoffice/phpspreadsheet": "*",
+        "bower-asset/font-awesome": "*",
+        "branchonline/yii2-lightbox": "*",
+        "cebe/yii2-gravatar": "1.*",
+        "bower-asset/toastr": "*",
+        "kartik-v/yii2-widget-fileinput": "*",
+        "kartik-v/yii2-widget-datepicker": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
