@@ -4,11 +4,16 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use app\components\CController;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Usuario;
+use app\models\Utilities;
+use \yii\helpers\Url;
+
 
 class SiteController extends Controller
 {
@@ -77,6 +82,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        //if ($model->login()) {
             return $this->goBack();
         }
 

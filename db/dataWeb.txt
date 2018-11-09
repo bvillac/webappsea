@@ -6,3 +6,4 @@ mysql -u root -p  < db_admin.sql
     Controller Class: app\controllers\CountryController
     @app/views/empresa
 
+https://www.yiiframework.com/doc/guide/2.0/es/security-authentication

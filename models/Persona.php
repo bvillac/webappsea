@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Usuario;
 
 /**
  * This is the model class for table "persona".
@@ -87,5 +88,9 @@ class Persona extends \yii\db\ActiveRecord
     public function getUsuarios()
     {
         return $this->hasMany(Usuario::className(), ['per_id' => 'per_id']);
+    }
+    
+    public static function findIdentity($id) {
+        return static::findOne($id);
     }
 }

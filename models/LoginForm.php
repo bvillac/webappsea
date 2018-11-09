@@ -61,6 +61,7 @@ class LoginForm extends Model
     //*****************INICIO TODO ************/
     public function login()
     {
+        //$usuario=new Usuario();
         /*if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
         }
@@ -71,8 +72,7 @@ class LoginForm extends Model
                 $status = $usuario->validatePassword($this->password);
                 $status_activo = $usuario->usu_estado_activo;
                 if ($status_activo == 1) { // si es usuario activo
-                    if ($status && isset($status)) {
-                        
+                    if ($status && isset($status)) {                        
                         $usuario->createSession($emp_id);
                         // agregar link dash session
 
