@@ -14,3 +14,7 @@ https://www.youtube.com/watch?v=11Chbt_kxNk
 
 https://usebootstrap.com/tag/ecommerce?s=popular
 
+AIzaSyBKq8Ruomuy6eniHPeTyDHxlZs54LGipDk
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKq8Ruomuy6eniHPeTyDHxlZs54LGipDk&callback=initMap">
+  </script>

@@ -15,7 +15,7 @@ use yii\helpers\Html;
                 <div class="logo pull-left">
                     <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
                 </div>
-                <div class="btn-group pull-right">
+<!--                <div class="btn-group pull-right">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
                             USA
@@ -37,16 +37,16 @@ use yii\helpers\Html;
                             <li><a href="#">Pound</a></li>
                         </ul>
                     </div>
-                </div>
+                </div>-->
             </div>
             <div class="col-sm-8">
                 <div class="shop-menu pull-right">
                     <ul class="nav navbar-nav">
-                        <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-                        <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-                        <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                        <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                        <li><?= Html::a('<i class="fa fa-lock"></i> Login', ['site/login']); ?></li>
+                        <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("store", "Account"), ['site/index']); ?></li>
+                        <li><?= Html::a('<i class="fa fa-star"></i> '.Yii::t("store", "Wishlist"), ['site/index']); ?></li>
+                        <li><?= Html::a('<i class="fa fa-crosshairs"></i> '.Yii::t("store", "Checkout"), ['site/checkout']); ?></li>
+                        <li><?= Html::a('<i class="fa fa-shopping-cart"></i> '.Yii::t("store", "Cart"), ['site/cart']); ?></li>
+                        <li><?= Html::a('<i class="fa fa-lock"></i> '.Yii::t("store", "Login"), ['site/login']); ?></li>
                    
                     </ul>
                 </div>

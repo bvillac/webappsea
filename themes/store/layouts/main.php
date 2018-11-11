@@ -54,12 +54,14 @@ $directoryAsset = $assetsStore->baseUrl;
 	
 	 <!-- Main Footer -->
         <footer id="footer"><!--Footer-->
-            <?= $this->render('footer-top.php',['directoryAsset' => $directoryAsset]) ?> 
+            <?php //$this->render('footer-top.php',['directoryAsset' => $directoryAsset]) ?> 
             <?= $this->render('footer-widget.php',['directoryAsset' => $directoryAsset]) ?> 
             <?= $this->render('footer.php') ?> 
         </footer><!--/Footer-->
 </div> 
-    
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKq8Ruomuy6eniHPeTyDHxlZs54LGipDk&callback=initMap">
+    </script>
 <?php $this->endBody() ?>
 </body>
 </html>

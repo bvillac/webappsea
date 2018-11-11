@@ -10,4 +10,12 @@ return [
     'All rights reserved.' => 'Todos los derechos reservados.',
     'Search' => 'Buscar',
     'Version' => 'Versión',
+    'Address' => 'Dirección',
+    'Email' => 'Correo',
+    'Name' => 'Nombre',
+    'Phone' => 'Teléfono',
+    'Subject' => 'Tema',
+    'Body' => 'Mensaje',
+    'required' => 'Requerido',
+    'Verification Code' => 'Código de verificación',
 ];

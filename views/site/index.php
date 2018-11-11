@@ -4,7 +4,7 @@
 $this->title = Yii::$app->params['alias']; //'My Yii Application';
 ?>
 <!--slider-->
-    <?= $this->render('slider.php', ['directoryAsset' => $directoryAsset]) ?> 
+    <?= $this->render('_slider.php', ['directoryAsset' => $directoryAsset]) ?> 
 <!--/slider-->
 <div class="col-sm-3">
     <div class="left-sidebar">
