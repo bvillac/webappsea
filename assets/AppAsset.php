@@ -26,6 +26,11 @@ class AppAsset extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
+        'yii\web\JqueryAsset',
+        'yii\jui\JuiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
+        //'\app\assets\Portadab4Asset',
+        //'\app\assets\StoreAsset',
     ];
 }

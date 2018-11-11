@@ -1,5 +1,10 @@
 <?php
-
+Yii::setAlias('@modules', dirname(__DIR__) . '/modules');
+Yii::setAlias('@themes', dirname(__DIR__) . '/themes');
+Yii::setAlias('@widgets', dirname(__DIR__) . '/widgets');
+Yii::setAlias('@views', dirname(__DIR__) . '/views');
+Yii::setAlias('@assets', dirname(__DIR__) . '/assets');
+Yii::setAlias('@web', dirname(__DIR__) . '/web');
 $params = require __DIR__ . '/params.php';
 //$db = require __DIR__ . '/db.php';
 
@@ -60,11 +65,22 @@ $config = [
             ],
         ],
         //'db' => $db,
+        'view' => [
+            'theme' => [
+                 'class' => '\app\components\CThemeTienda',
+                 'pathMap' => [
+                    '@app/views' => '@app/themes/store',
+                 ],
+                 'baseUrl' => '@web/themes/store',
+                 'themeName' => 'store',
+            ],
+        ],
         
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
+            'baseUrl' => '/webappsea',
             'rules' => [
             ],
         ],
@@ -75,7 +91,7 @@ $config = [
 
 /******************************************************************************/
 // se agregan multiples base de datos
-/******************************************************************************/
+/*******************************************************\***********************/
 $dir_data = __DIR__ . '/../datadb/';
 $listFiles = scandir($dir_data);
 $urlDir = "";

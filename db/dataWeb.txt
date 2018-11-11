@@ -7,3 +7,10 @@ mysql -u root -p  < db_admin.sql
     @app/views/empresa
 
 https://www.yiiframework.com/doc/guide/2.0/es/security-authentication
+
+https://www.youtube.com/watch?v=6QHx9uT53So
+
+https://www.youtube.com/watch?v=11Chbt_kxNk
+
+https://usebootstrap.com/tag/ecommerce?s=popular
+

@@ -1,0 +1,158 @@
+/*
+The PenBlu framework is free software. It is released under the terms of
+the following BSD License.
+
+Copyright (C) 2015 by PenBlu Software (http://www.penblu.com)
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+ - Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+ - Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in
+   the documentation and/or other materials provided with the
+   distribution.
+ - Neither the name of PenBlu Software nor the names of its
+   contributors may be used to endorse or promote products derived
+   from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+PenBlu is based on code by
+Yii Software LLC (http://www.yiisoft.com) Copyright Â© 2008
+
+Authors:
+
+Eduardo Cueva <edu19432@gmail.com>
+Byron Villacreses <byronvillacreses@gmail.com>
+*/
+
+
+/* 
+    Created on : 29/11/2015, 12:44:16 AM
+    Author     : eduardocueva
+*/
+@media (max-width: 767px) {
+  .skin-black-light .main-header > .logo {
+    background-color: #FFFFFF !important;
+    color: #ffffff;
+    border-bottom: 1px solid #eee !important;
+    border-right: none;
+  }
+  .skin-black-light .main-header > .logo:hover {
+    background-color: #FFFFFF !important;
+  }
+}
+
+.skin-black-light .main-header li.user-header {
+    background-color: #d2d6de;
+}
+
+@media (max-width: 767px) {
+  .skin-black .main-header > .logo {
+    background-color: #FFFFFF !important;
+    color: #ffffff;
+    border-bottom: 1px solid #eee !important;
+    border-right: none;
+  }
+  .skin-black .main-header > .logo:hover {
+    background-color: #FFFFFF !important;
+  }
+}
+
+.skin-black .main-header li.user-header {
+    background-color: #d2d6de;
+}
+/* new from ecuadoramalavida */
+.skin-black .main-header > .logo, .skin-black .main-header > .navbar {
+    background: rgba(255, 255, 255, 0.8) !important;
+}
+.content-wrapper{
+    background: rgba(236, 240, 245, 0.5) !important;
+}
+    
+.box{
+    background: rgba(255, 255, 255, 0.8) none repeat scroll 0 0 !important;
+}
+
+//Fondo Transparente
+.skin-black .wrapper, .skin-black .main-sidebar, .skin-black .left-side{
+    //background: rgba(34, 45, 50, 0) !important;
+}
+
+.skin-black .sidebar-menu > li > .treeview-menu{
+    background: rgba(44, 59, 65, 0.5) none repeat scroll 0 0 !important;
+}
+
+.skin-black .sidebar-menu > li:hover > a, .skin-black .sidebar-menu > li.active > a {
+    background: rgba(30, 40, 44, 0.5) none repeat scroll 0% 0%;
+}
+
+.main-footer{
+    background: rgba(255, 255, 255, 0.8) none repeat scroll 0 0;
+}
+
+.skin-black .sidebar-menu > li:hover > a, .skin-black .sidebar-menu > li.active > a {
+    color: #FFF;
+    font-weight: bold;
+}
+
+.skin-black .sidebar a {
+    color: #B8C7CE;
+    font-weight: bold;
+}
+
+.skin-black .treeview-menu > li > a {
+    color: #f2f2f2;
+    font-weight: bold;
+}
+
+.nav-tabs-custom{
+    background: none !important;
+}
+
+.info-alertpb{
+    background-color: #7BA9D1;
+    color: #FFF;
+    border: 1px solid #D2D6DE;
+    padding: 10px;
+    font-weight: bold;
+    margin: 15px 0px;
+}
+.info-alertpb>a>span {
+    color: #FFF;
+}
+
+table.dataTable{
+    background-color: #f9f9f9;
+}
+
+kbd{
+    background-color: #7BA9D1 !important;
+}
+
+#TbG_Productos.table {
+    border: 2px solid #f4f4f4;
+}
+
+.body-system{
+    background: rgba(0, 0, 0, 0) url("../../../img/bg/bgMarca.jpg") repeat fixed center center / cover;
+}
+
+.body-loginr{
+    background: rgba(0, 0, 0, 0) url("../../../img/bg/bgFormulario.jpg") repeat fixed center center / cover;
+}

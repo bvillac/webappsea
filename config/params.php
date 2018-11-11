@@ -6,6 +6,7 @@ return [
     'web' => 'https://www.utimpor.com/',
     'version' => '1.0',
     'adminEmail' => 'admin@utimpor.com',
+    'ventasEmail' => 'ventas@utimpor.com',
     'contactoEmail' => 'contacto@utimpor.com',
     'no-responder' => 'no-responder@innovaticsa.com',
     'culture' => 'es-ES',
@@ -34,6 +35,6 @@ return [
         'youtube'  => 'https://www.youtube.com/user/utimpor',
     ],
     'soporte' => 'bvillacreses@utimpor.com',
-    'telefonos' => '(593) 3-810300',
+    'telefonos' => 'PBX:(593) 3-810300',
     'direccion' => 'Cdla. La Garzota Av. Hermano Miguel Solar 3 y Av. Agustin Freire',
 ];

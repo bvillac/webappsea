@@ -6,6 +6,7 @@ use Yii;
 use yii\base\InlineAction;
 use yii\helpers\Url;
 use app\models\Error;
+use app\models\Utilities;
 
 class CController extends \yii\web\Controller
 {
@@ -17,9 +18,16 @@ class CController extends \yii\web\Controller
     public $id_objeto_modulo = 0;
     public $id_moduloPadre = 0;
     
+    /*public function init() {
+        return parent::init();
+    }*/
+    
     public function init() {
+		if(!is_dir(Yii::getAlias('@bower')))
+			Yii::setAlias('@bower', '@vendor/bower-asset');
         return parent::init();
     }
+    
     
 //    public function behaviors()
 //    {
