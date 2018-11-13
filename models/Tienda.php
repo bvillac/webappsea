@@ -33,10 +33,13 @@ class Tienda {
     public static function getProductoTienda($data){
         //$page = $_GET['page'];
         $arroout = array();
+        $tCount=Tienda::getCountProductoTienda();
         Utilities::putMessageLogFile($data);
-        $page=(isset($data["page"]))?$data["page"]:2;
+        $page=(isset($data["page"]))?$data["page"]:1;
         $rowsPerPage = \Yii::$app->params['pagePro'];
         $offset = ($page - 1) * $rowsPerPage;
+        Utilities::putMessageLogFile($page);
+        Utilities::putMessageLogFile($offset);
         $con = \Yii::$app->db_tienda;
         $sql="SELECT A.ids_pro,A.cod_art,A.des_com,B.p_venta,A.ruta_img
                 FROM " . $con->dbname . ".productos A
@@ -50,12 +53,24 @@ class Tienda {
         $arroout["status"] = TRUE;
         //$arroout["error"] = null;
         //$arroout["message"] = null;
-        $arroout["trows"] = count($rawData);
+        $arroout["trows"] = $tCount;//count($rawData);
         $arroout["data"] = $rawData;
         return $arroout;
         
         //return $comando->queryAll();
         
+    }
+    public static function getCountProductoTienda(){
+        $con = \Yii::$app->db_tienda;
+        $sql="SELECT COUNT(*) tpro FROM " . $con->dbname . ".productos "
+                . "WHERE est_log=1 AND est_web=0 ";
+        $comando = $con->createCommand($sql);
+        //$comando->bindParam(":med_id", $ids, \PDO::PARAM_INT);
+        //$rawData=$comando->queryAll();
+        $rawData=$comando->queryScalar();
+        if ($rawData === false)
+            return 0; //en caso de que existe problema o no retorne nada tiene 1 por defecto 
+        return $rawData;
     }
     
 }

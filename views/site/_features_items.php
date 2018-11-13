@@ -6,8 +6,10 @@
  */
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
+use app\models\Tienda;
 
 //$CastPro=app\models\Tienda::getMarcaTienda();
+$num_total_rows= Tienda::getCountProductoTienda();
 ?>
 
 <div class="features_items"><!--features_items-->
@@ -170,13 +172,15 @@ use yii\widgets\LinkPager;
 
 
 <?php
-$num_pages = 10;
-if ($num_pages > 1) {
+//$num_pages = 10;
+if ($num_total_rows > 0) {
+    $num_pages = ceil($num_total_rows / (\Yii::$app->params['pagePro']));
     echo '<div class="row">';
     echo '<div class="col-lg-12">';
     echo '<nav aria-label="Page navigation example">';
     echo '<ul class="pagination justify-content-end">';
-    for ($i = 1; $i <= $num_pages; $i++) {
+    //for ($i = 1; $i <= $num_pages; $i++) {
+    for ($i = 1; $i <= 10; $i++) {
         $class_active = '';
         if ($i == 1) {
             $class_active = 'active';

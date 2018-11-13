@@ -23,7 +23,8 @@ return [
     'themesLogosFolder' => '/assets/img/logos/',
     'themesModulesFolder' => '/assets/img/modules/',
     'documentFolder' => '/uploads/',
-    'imgFolder' => '/site/getimage/?route=/uploads/',
+    //'imgFolder' => '/site/getimage/?route=/uploads/',
+    'imgFolder' => '/web/img/productos/',
     'FileExtensions' => ['jpg','png','pdf'],
     'MaxFileSize' => 1024,//Tamaño 1 MB
     'timeRecursive' => '2',// segundos

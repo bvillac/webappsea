@@ -55,5 +55,8 @@ CREATE TABLE IF NOT EXISTS `db_tienda`.`producto_dato_adicional` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+GRANT ALL PRIVILEGES ON `db_tienda`.* TO 'adminuser' IDENTIFIED BY 'Us3r@W3b2oo19';
+GRANT ALL PRIVILEGES ON `db_tienda`.* TO 'adminuser'@'localhost' IDENTIFIED BY 'Us3r@W3b2oo19';
+
 
 

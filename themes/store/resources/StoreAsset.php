@@ -31,7 +31,7 @@ class StoreAsset extends AssetBundle
         'css/responsive.css', 
         'css/ionicons.min.css', 
         'css/skins/_all-skins.min.css',
-        'css/styleLTE.css',
+        //'css/styleLTE.css',
         'plugins/iCheck/square/blue.css',
         'plugins/colorpicker/bootstrap-colorpicker.min.css',
         'plugins/datepicker/datepicker3.css',

@@ -69,29 +69,11 @@ class SiteController extends Controller
      */
     public function actionIndex() {
         $resul=array();
-
-        /*$query = Tienda::getProductoTienda();
-        $countQuery = $query;//clone $query;
-        Utilities::putMessageLogFile($query);
-        $pages = new Pagination(['totalCount' => count($countQuery)]);
-        $models = $query->offset($pages->offset)
-                ->limit(\Yii::$app->params['pagePro'])
-                ->all();
-        //return $this->render('index');
-        return $this->render('index', [
-                    'models' => $models,
-                    'pages' => $pages,
-        ]);*/
-        //$data = Yii::$app->request->get();
-        //if (\Yii::$app->user->isGuest) {
-            
-        //}
-        
-        //Utilities::putMessageLogFile("llego 1");
         if (Yii::$app->request->isAjax) {
+            Utilities::putMessageLogFile("llego post");
             $data = Yii::$app->request->post();
-            $resul = Tienda::getProductoTienda($page);
-
+            Utilities::putMessageLogFile($data["page"]);
+            $resul = Tienda::getProductoTienda($data);
             if ($resul['status']) {
                 $message = array(
                     "wtmessage" => Yii::t("notificaciones", "Archivo procesado correctamente."),
@@ -102,9 +84,6 @@ class SiteController extends Controller
         }
         //$pages=1;
         $resul = Tienda::getProductoTienda(null);
-        //$countQuery = $query;
-        //$pages = new Pagination(['totalCount' => count($countQuery)]);
-        //Utilities::putMessageLogFile($pages->offset);
         return $this->render('index', [
                     'models' => $resul['data'],
                     'pages' => $resul['trows'],

@@ -10,4 +10,5 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
 <?= Html::hiddenInput('txth_base', Url::base(), ["id" => "txth_base"]) ?>
+<?= Html::hiddenInput('txth_imgfolder', Url::base().Yii::$app->params["imgFolder"], ["id"=>"txth_imgfolder"]) ?>
 
