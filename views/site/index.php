@@ -27,7 +27,7 @@ $this->title = Yii::$app->params['alias']; //'My Yii Application';
 
 
 <div class="col-sm-9 padding-right">
-    <?= $this->render('_features_items.php', ['directoryAsset' => $directoryAsset]) ?> 
+    <?= $this->render('_features_items.php', ['directoryAsset' => $directoryAsset,'pages' => $pages]) ?> 
     <?= $this->render('_category-tab.php', ['directoryAsset' => $directoryAsset]) ?> 
     <?= $this->render('_recommended_items.php', ['directoryAsset' => $directoryAsset]) ?> 			
 </div>

@@ -13,6 +13,8 @@ use app\models\ContactForm;
 use app\models\Usuario;
 use app\models\Utilities;
 use \yii\helpers\Url;
+use app\models\Tienda;
+use yii\data\Pagination;
 
 
 class SiteController extends Controller
@@ -32,6 +34,7 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    
                 ],
             ],
             'verbs' => [
@@ -64,9 +67,48 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
-        return $this->render('index');
+    public function actionIndex() {
+        $resul=array();
+
+        /*$query = Tienda::getProductoTienda();
+        $countQuery = $query;//clone $query;
+        Utilities::putMessageLogFile($query);
+        $pages = new Pagination(['totalCount' => count($countQuery)]);
+        $models = $query->offset($pages->offset)
+                ->limit(\Yii::$app->params['pagePro'])
+                ->all();
+        //return $this->render('index');
+        return $this->render('index', [
+                    'models' => $models,
+                    'pages' => $pages,
+        ]);*/
+        //$data = Yii::$app->request->get();
+        //if (\Yii::$app->user->isGuest) {
+            
+        //}
+        
+        //Utilities::putMessageLogFile("llego 1");
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $resul = Tienda::getProductoTienda($page);
+
+            if ($resul['status']) {
+                $message = array(
+                    "wtmessage" => Yii::t("notificaciones", "Archivo procesado correctamente."),
+                    "title" => Yii::t('jslang', 'Success'),
+                );
+                return Utilities::ajaxResponse('OK', 'alert', Yii::t("jslang", "Success"), false, $resul['data']);
+            }
+        }
+        //$pages=1;
+        $resul = Tienda::getProductoTienda(null);
+        //$countQuery = $query;
+        //$pages = new Pagination(['totalCount' => count($countQuery)]);
+        //Utilities::putMessageLogFile($pages->offset);
+        return $this->render('index', [
+                    'models' => $resul['data'],
+                    'pages' => $resul['trows'],
+        ]);
     }
 
     /**
@@ -130,5 +172,12 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+    
+    public function actionData(){
+        Utilities::putMessageLogFile("llego ajax");
+//        if (Yii::$app->request->isAjax) {
+//            Utilities::putMessageLogFile("llego ajax");
+//        }
     }
 }

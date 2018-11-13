@@ -1,4 +1,5 @@
 <?php
+//\Yii::$app->params['copyright']
 return [
     'copyright' => 'WebSea',
     'alias' => 'UTIMPOR S.A.',
@@ -14,6 +15,7 @@ return [
     'logfile' => __DIR__ . '/../runtime/logs/webapp.log',
     'limitRow' => 10,
     'pageSize' => 20,
+    'pagePro' => 9,
     'dateTimeByDefault' => 'Y-m-d H:i:s',
     'dateByDefault' => 'Y-m-d',
     'datePickerDefault' => 'yyyy-mm-dd',

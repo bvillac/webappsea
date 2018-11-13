@@ -4,7 +4,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 ?>
+
 <h2><?=Yii::t("store", "Category")?></h2>
 <div class="panel-group category-products" id="accordian"><!--category-productsr-->
     <div class="panel panel-default">

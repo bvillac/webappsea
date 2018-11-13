@@ -82,6 +82,24 @@ $config = [
             'enableStrictParsing' => false,
             'baseUrl' => '/webappsea',
             'rules' => [
+                // REST patterns
+                'GET api/list/<modelo:\w+>/format' => 'api/list',
+                'GET api/view/<modelo:\w+>/<id:\d+>/format' => 'api/view',
+                'PUT api/update/<modelo:\w+>/<id:\d+>/format' => 'api/update',
+                'DELETE api/delete/<modelo:\w+>/<id:\d+>/format' => 'api/delete',
+                'POST api/create/<modelo:\w+>/format' => 'api/create',
+                'POST api/request/<modelo:\w+>/<metodo:\w+>/<format:\w+>' => 'api/request',
+//                
+                'GET api/list/<module:\w+>/<modelo:\w+>/format' => 'api/list',
+                'GET api/view/<module:\w+>/<modelo:\w+>/<id:\d+>/format' => 'api/view',
+                'PUT api/update/<module:\w+>/<modelo:\w+>/<id:\d+>/format' => 'api/update',
+                'DELETE api/delete/<module:\w+>/<modelo:\w+>/<id:\d+>/format' => 'api/delete',
+                'POST api/create/<module:\w+>/<modelo:\w+>/format' => 'api/create',
+                'POST api/request/<module:\w+>/<modelo:\w+>/<metodo:\w+>/<format:\w+>' => 'api/request',
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api'
+                ],
             ],
         ],
         

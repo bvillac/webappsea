@@ -14,7 +14,46 @@ https://www.youtube.com/watch?v=11Chbt_kxNk
 
 https://usebootstrap.com/tag/ecommerce?s=popular
 
+https://www.jose-aguilar.com/scripts/jquery/pagination-me/
+
 AIzaSyBKq8Ruomuy6eniHPeTyDHxlZs54LGipDk
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKq8Ruomuy6eniHPeTyDHxlZs54LGipDk&callback=initMap">
   </script>
+
+############
+ALTER TABLE `db_tienda`.`marca` 
+ADD COLUMN `est_web` VARCHAR(1) NULL DEFAULT '0' AFTER `nom_mar`;
+
+ALTER TABLE `db_tienda`.`categorias` 
+ADD COLUMN `est_web` VARCHAR(1) NULL DEFAULT '0' AFTER `observacion`;
+
+ALTER TABLE `db_tienda`.`productos` 
+ADD COLUMN `est_web` VARCHAR(1) NULL DEFAULT '0' AFTER `ruta_img`;
+
+ALTER TABLE `db_tienda`.`productos` 
+ADD COLUMN `est_rec` VARCHAR(1) NULL DEFAULT '0' AFTER `ruta_img`;
+
+CREATE TABLE IF NOT EXISTS `db_tienda`.`producto_dato_adicional` (
+  `ids_pda` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `ids_pro` BIGINT(20) NOT NULL,
+  `titulo` VARCHAR(10) NULL,
+  `tip_campo` VARCHAR(1) NULL,
+  `text_corto` VARCHAR(100) NULL,
+  `text_largo` TEXT NULL,
+  `text_numero` INT(10) NULL,
+  `est_log` VARCHAR(1) NULL,
+  `fec_cre` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `fec_mod` TIMESTAMP NULL,
+  `usuario` BIGINT(20) NULL,
+  PRIMARY KEY (`ids_pda`),
+  INDEX `fk_producto_dato_adicional_productos1_idx` (`ids_pro` ASC),
+  CONSTRAINT `fk_producto_dato_adicional_productos1`
+    FOREIGN KEY (`ids_pro`)
+    REFERENCES `db_tienda`.`productos` (`ids_pro`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+

@@ -17,13 +17,18 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
+    public $sourcePath = '@assets/assets';
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
     ];
     public $js = [
+        'js/PBscripts.js',
+        'js/PBvalidation.js',
+        'js/cedulaRucPass.js',
+        'js/base64.js',
     ];
+    public $jsOptions = ['position' => \yii\web\View::POS_END];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\web\JqueryAsset',

@@ -4,11 +4,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+use yii\helpers\Html;
+use yii\widgets\LinkPager;
+
+//$CastPro=app\models\Tienda::getMarcaTienda();
 ?>
 
 <div class="features_items"><!--features_items-->
     <h2 class="title text-center"><?=Yii::t("store", "Features Items")?></h2>
-    <div class="col-sm-4">
+    <div id="listaPedidos"></div>
+    <!--<div class="col-sm-4">
         <div class="product-image-wrapper">
             <div class="single-products">
                 <div class="productinfo text-center">
@@ -159,6 +164,34 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div>-->
 
 </div><!--features_items-->
+
+
+<?php
+$num_pages = 10;
+if ($num_pages > 1) {
+    echo '<div class="row">';
+    echo '<div class="col-lg-12">';
+    echo '<nav aria-label="Page navigation example">';
+    echo '<ul class="pagination justify-content-end">';
+    for ($i = 1; $i <= $num_pages; $i++) {
+        $class_active = '';
+        if ($i == 1) {
+            $class_active = 'active';
+        }
+        //echo '<li class="page-item '.$class_active.'"><a class="page-link" href="#" data="'.$i.'">'.$i.'</a></li>';
+        echo '<li class="page-item ' . $class_active . '"><a class="page-link" data="' . $i . '">' . $i . '</a></li>';
+    }
+
+    echo '</ul>';
+    echo '</nav>';
+    echo '</div>';
+    echo '</div>';
+}
+?>
+
+<?php //LinkPager::widget([
+    //'pagination' => $pages,
+//])?>
