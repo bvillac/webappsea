@@ -35,8 +35,8 @@ $(document).ready(function(){
         var strData = "";
         var page = $(this).attr('data');
         alert(page);
-        var link = $('#txth_base').val();// + "/site/index";
-        //var link = $('#txth_base').val() + "/site/index";
+        //var link = $('#txth_base').val(); //+ "/site/index";
+        var link = $('#txth_base').val() + "/site/opcion";
         var arrParams = new Object();
         arrParams.page = page;
         alert(arrParams);

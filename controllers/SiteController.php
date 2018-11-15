@@ -34,6 +34,11 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['index','opcion'],
+                        'allow' => true,
+                        //'roles' => ['@','?'],
+                    ],
                     
                 ],
             ],
@@ -43,6 +48,7 @@ class SiteController extends Controller
                     'logout' => ['post'],
                 ],
             ],
+            
         ];
     }
 
@@ -68,12 +74,25 @@ class SiteController extends Controller
      * @return string
      */
     public function actionIndex() {
+        //exit('llego');
+        
         $resul=array();
+        
+        //$pages=1;
+        $resul = Tienda::getProductoTienda(null);
+        return $this->render('index', [
+                    'models' => $resul['data'],
+                    'pages' => $resul['trows'],
+        ]);
+    }
+    
+    public function actionOpcion() {
         if (Yii::$app->request->isAjax) {
-            Utilities::putMessageLogFile("llego post");
+            Utilities::putMessageLogFile("llego post OTR");
             $data = Yii::$app->request->post();
+            Utilities::putMessageLogFile($data);
             Utilities::putMessageLogFile($data["page"]);
-            $resul = Tienda::getProductoTienda($data);
+            //$resul = Tienda::getProductoTienda($data);
             if ($resul['status']) {
                 $message = array(
                     "wtmessage" => Yii::t("notificaciones", "Archivo procesado correctamente."),
@@ -81,13 +100,10 @@ class SiteController extends Controller
                 );
                 return Utilities::ajaxResponse('OK', 'alert', Yii::t("jslang", "Success"), false, $resul['data']);
             }
+            //echo "terminado";
+            echo Utilities::ajaxResponse('NO_OK', 'alert', Yii::t("jslang", "Success"), false, NULL);
         }
-        //$pages=1;
-        $resul = Tienda::getProductoTienda(null);
-        return $this->render('index', [
-                    'models' => $resul['data'],
-                    'pages' => $resul['trows'],
-        ]);
+        
     }
 
     /**
