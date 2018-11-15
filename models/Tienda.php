@@ -31,7 +31,6 @@ class Tienda {
     }
     
     public static function getProductoTienda($data){
-        //$page = $_GET['page'];
         $arroout = array();
         $tCount=Tienda::getCountProductoTienda();
         Utilities::putMessageLogFile($data);

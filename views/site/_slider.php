@@ -4,6 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+use yii\helpers\Url;
 ?>
 
 
@@ -20,37 +21,51 @@
                     <div class="carousel-inner">
                         <div class="item active">
                             <div class="col-sm-6">
-                                <h1><span>E</span>-Tienda-1</h1>
-                                <h2>Titulo tienda-1</h2>
-                                <p>Presentacion producto 1. </p>
+                                <h1><span>Brio</span></h1>
+                                <h2>Resmas de Papel</h2>
+                                <p> 
+                                    <ul>
+                                        <li>Papel y empaque 100% biodegradables.</li>
+                                        <li>Alta blancura.</li>
+                                        <li>Uso en offset, fotocopias, impresiones láser, fax.</li>
+                                        <li>Certificado ISO 9001/14001, ECF Libre de Cloro Elemental, PEFC PEFC/2831-01 Programa Certificación Bosques Renovables.</li>
+                                        <li>Máximo desempeño para su impresión!!.</li>
+                                    </ul>
+                                </p>
                                 <button type="button" class="btn btn-default get"><?=Yii::t("store", "Get it now")?></button>
                             </div>
                             <div class="col-sm-6">
-                                <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
+                                <img src="<?=Url::base()?>/web/img/portada/slider-1.jpg" class="girl img-responsive" alt="" />
                                 <img src="images/home/pricing.png"  class="pricing" alt="" />
                             </div>
                         </div>
                         <div class="item">
                             <div class="col-sm-6">
-                                <h1><span>E</span>-Tienda-2</h1>
-                                <h2>Titulo tienda-2</h2>
-                                <p>Presentacion producto 2. </p>
+                                <h1><span>E</span>-paper</h1>
+                                <h2>Resmas de Papel</h2>
+                                <p>
+                                <ul>
+                                    <li>TECNOLOGÍA TRUTONE: Ahorro en Consumo de Tintas y Toner</li>
+                                    <li>CALIDAD ISO 9001</li>
+                                </ul>
+                                
+                                </p>
                                 <button type="button" class="btn btn-default get"><?=Yii::t("store", "Get it now")?></button>
                             </div>
                             <div class="col-sm-6">
-                                <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
+                                <img src="<?=Url::base()?>/web/img/portada/slider-2.jpg" class="girl img-responsive" alt="" />
                                 <img src="images/home/pricing.png"  class="pricing" alt="" />
                             </div>
                         </div>
                         <div class="item">
                             <div class="col-sm-6">
-                                <h1><span>E</span>-Tienda-3</h1>
-                                <h2>Titulo tienda-3</h2>
-                                <p>Presentacion producto 3. </p>
+                                <h1><span>C</span>artuchos de inyección </h1>
+                                <h2> Para impresora HP y consumibles tinta. </h2>
+                                <p>Disfrute las ventajas de la calidad superior de HP a bajo costo. Produzca documentos, informes y fotos en colores intensos, mientras mantiene bajos los costos de impresión, utilizando cartuchos de tinta HP originales.</p>
                                 <button type="button" class="btn btn-default get"><?=Yii::t("store", "Get it now")?></button>
                             </div>
                             <div class="col-sm-6">
-                                <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
+                                <img src="<?=Url::base()?>/web/img/portada/slider-3.jpg" class="girl img-responsive" alt="" />
                                 <img src="images/home/pricing.png"  class="pricing" alt="" />
                             </div>
                         </div>

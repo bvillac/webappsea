@@ -34,17 +34,14 @@ $(document).ready(function(){
         //$('.items').html('<div class="loading"><img src="images/loading.gif" width="70px" height="70px"/><br/>Un momento por favor...</div>');
         var strData = "";
         var page = $(this).attr('data');
-        alert(page);
-        //var link = $('#txth_base').val(); //+ "/site/index";
-        var link = $('#txth_base').val() + "/site/opcion";
+        var link = $('#txth_base').val() + "/site/index";
         var arrParams = new Object();
         arrParams.page = page;
-        alert(arrParams);
         requestHttpAjax(link, arrParams, function (response) {
             if (response.status == "OK") {
                 var data = response.message;
                 for (var i = 0; i < data.length; i++) {
-                    // //option_arr += '<a onclick="deleteComentario(\'' + data[i]['Ids'] + '\')" class="pull-right btn-box-tool" href="#"><i class="fa fa-times"></i></a>';
+                    //option_arr += '<a onclick="deleteComentario(\'' + data[i]['Ids'] + '\')" class="pull-right btn-box-tool" href="#"><i class="fa fa-times"></i></a>';
                     strData+=llenarItems(data[i]);
                 }
                 $("#listaPedidos").empty();
@@ -57,8 +54,6 @@ $(document).ready(function(){
                 $('.pagination li a[data="'+page+'"]').parent().addClass('active');
             }
         }, true);
-        
-
         return false;
     });              
     

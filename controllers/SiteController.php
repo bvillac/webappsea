@@ -33,12 +33,7 @@ class SiteController extends Controller
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['index','opcion'],
-                        'allow' => true,
-                        //'roles' => ['@','?'],
-                    ],
+                    ],                    
                     
                 ],
             ],
@@ -75,9 +70,19 @@ class SiteController extends Controller
      */
     public function actionIndex() {
         //exit('llego');
-        
         $resul=array();
-        
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $resul = Tienda::getProductoTienda($data);
+            if ($resul['status']) {
+                $message = ["info" => Yii::t('exception', '<strong>Well done!</strong> your information was successfully saved.')];
+                return Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', $resul['data']);
+            }else{
+                $message = ["info" => Yii::t('exception', 'The above error occurred while the Web server was processing your request.')];
+                return Utilities::ajaxResponse('NO_OK', 'alert', Yii::t('jslang', 'Error'), 'false', $message);
+            }
+            return;
+        }
         //$pages=1;
         $resul = Tienda::getProductoTienda(null);
         return $this->render('index', [
@@ -86,26 +91,6 @@ class SiteController extends Controller
         ]);
     }
     
-    public function actionOpcion() {
-        if (Yii::$app->request->isAjax) {
-            Utilities::putMessageLogFile("llego post OTR");
-            $data = Yii::$app->request->post();
-            Utilities::putMessageLogFile($data);
-            Utilities::putMessageLogFile($data["page"]);
-            //$resul = Tienda::getProductoTienda($data);
-            if ($resul['status']) {
-                $message = array(
-                    "wtmessage" => Yii::t("notificaciones", "Archivo procesado correctamente."),
-                    "title" => Yii::t('jslang', 'Success'),
-                );
-                return Utilities::ajaxResponse('OK', 'alert', Yii::t("jslang", "Success"), false, $resul['data']);
-            }
-            //echo "terminado";
-            echo Utilities::ajaxResponse('NO_OK', 'alert', Yii::t("jslang", "Success"), false, NULL);
-        }
-        
-    }
-
     /**
      * Login action.
      *
