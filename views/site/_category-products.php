@@ -4,12 +4,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+//$CatePro=app\models\Tienda::getSubNivelTienda();
 ?>
 
 <h2><?=Yii::t("store", "Category")?></h2>
 <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-    <div class="panel panel-default">
+    <div id="listaCategorias"></div>
+    <!--<div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
@@ -112,6 +113,6 @@
         <div class="panel-heading">
             <h4 class="panel-title"><a href="#">Shoes</a></h4>
         </div>
-    </div>
+    </div>-->
 </div><!--/category-products-->
 

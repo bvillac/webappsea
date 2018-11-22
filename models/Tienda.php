@@ -30,15 +30,48 @@ class Tienda {
         return $comando->queryAll();
     }
     
+    public static function getSeccionTienda(){
+        $con = \Yii::$app->db_tienda;
+        $sql="SELECT ids_cat,nom_cat FROM " . $con->dbname . ".categorias WHERE ids_cat=ids_scat AND est_log=1 ORDER BY orden;";
+        $comando = $con->createCommand($sql);
+        //$comando->bindParam(":med_id", $ids, \PDO::PARAM_INT);
+        return $comando->queryAll();
+    }
+    
+    public static function getSubNivelTienda($ids){
+        $con = \Yii::$app->db_tienda;
+        $sql="SELECT ids_cat,nom_cat  FROM " . $con->dbname . ".categorias "
+                . " WHERE ids_scat=:ids AND ids_cat<>ids_scat AND est_log=1 ORDER BY ids_cat;";
+        $comando = $con->createCommand($sql);
+        $comando->bindParam(":ids", $ids, \PDO::PARAM_INT);
+        $result=$comando->queryAll();
+        if ($result === false)
+            return 0; //en caso de que existe problema o no retorne nada tiene 1 por defecto 
+        return $result;
+    }
+    
+    public static function getNivelTienda($ids){
+        $rawData = array();
+        $rawData=Tienda::getSubNivelTienda($ids);
+        if($rawData!=0){
+            for ($i = 0; $i < sizeof($rawData); $i++) {
+                $rawData[$i]['subnivel']=Tienda::getSubNivelTienda($rawData[$i]['ids_cat']);
+            }
+        }
+        return $rawData;
+    }
+    
+    
+
     public static function getProductoTienda($data){
         $arroout = array();
         $tCount=Tienda::getCountProductoTienda();
-        Utilities::putMessageLogFile($data);
+        //Utilities::putMessageLogFile($data);
         $page=(isset($data["page"]))?$data["page"]:1;
         $rowsPerPage = \Yii::$app->params['pagePro'];
         $offset = ($page - 1) * $rowsPerPage;
-        Utilities::putMessageLogFile($page);
-        Utilities::putMessageLogFile($offset);
+        //Utilities::putMessageLogFile($page);
+        //Utilities::putMessageLogFile($offset);
         $con = \Yii::$app->db_tienda;
         $sql="SELECT A.ids_pro,A.cod_art,A.des_com,B.p_venta,A.ruta_img
                 FROM " . $con->dbname . ".productos A

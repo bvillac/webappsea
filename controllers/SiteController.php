@@ -73,7 +73,23 @@ class SiteController extends Controller
         $resul=array();
         if (Yii::$app->request->isAjax) {
             $data = Yii::$app->request->post();
-            $resul = Tienda::getProductoTienda($data);
+            $op=(isset($data["op"]))?$data["op"]:'';
+            switch ($op) {
+                case 'categoria':
+                    $ids=(isset($data["ids"]))?$data["ids"]:'0';
+                    //Utilities::putMessageLogFile(Tienda::getNivelTienda($ids));
+                    $dts = Tienda::getNivelTienda($ids);//Tienda::getSubNivelTienda($ids);
+                    $resul["status"] = TRUE;
+                    $resul["data"] = $dts;
+                    break;
+                case 'productos':
+                    $resul = Tienda::getProductoTienda($data);
+                    break;
+                default:
+                   //echo "i no es igual a 0, 1 ni 2";
+                    $resul['status']=FALSE;
+            }
+            
             if ($resul['status']) {
                 $message = ["info" => Yii::t('exception', '<strong>Well done!</strong> your information was successfully saved.')];
                 return Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', $resul['data']);

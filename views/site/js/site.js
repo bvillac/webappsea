@@ -3,7 +3,5 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function verproducto(ids){
-    alert('Mostrar producto '+ ids);
-}
+//alert('hola');
 

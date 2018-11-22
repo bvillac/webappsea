@@ -6,6 +6,7 @@
  */
 use yii\helpers\Url;
 use yii\helpers\Html;
+$SeccPro=app\models\Tienda::getSeccionTienda();
 ?>
 <div class="header-bottom"><!--header-bottom-->
     <div class="container">
@@ -24,11 +25,14 @@ use yii\helpers\Html;
                         <li><?= Html::a(Yii::t("store", "Home"), ['site/index'],['class' => 'active']); ?></li>                       
                         <li class="dropdown"><?= Html::a(Yii::t("store", "Shop").'<i class="fa fa-angle-down"></i> ', ['site/index']); ?></a>
                             <ul role="menu" class="sub-menu">
-                                <li><?= Html::a(Yii::t("store", "Products"), ['site/shop']); ?></li>
+                                <?php for ($i = 0; $i < sizeof($SeccPro); $i++) {  ?>
+                                <li><?= Html::a($SeccPro[$i]['nom_cat'], Url::to('#'),['onclick' => 'javascript:mostrarCategoria(\'' . base64_encode($SeccPro[$i]['ids_cat']) . '\');']); ?></li>
+                                <?php }  ?>
+<!--                            <li><?= Html::a(Yii::t("store", "Products"), ['site/shop']); ?></li>
                                 <li><?= Html::a(Yii::t("store", "Product Details"), ['site/product-details']); ?></li> 
                                 <li><?= Html::a(Yii::t("store", "Checkout"), ['site/checkout']); ?></li> 
                                 <li><?= Html::a(Yii::t("store", "Cart"), ['site/cart']); ?></li> 
-                                <li><?= Html::a(Yii::t("store", "Login"), ['site/login']); ?></li> 
+                                <li><?= Html::a(Yii::t("store", "Login"), ['site/login']); ?></li> -->
                             </ul>
                         </li> 
 <!--                        <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>

@@ -18,4 +18,5 @@ return [
     'Body' => 'Mensaje',
     'required' => 'Requerido',
     'Verification Code' => 'Código de verificación',
+    
 ];
