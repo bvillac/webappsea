@@ -861,6 +861,7 @@ h2.title {
   right: 0;
 }
 
+/*TAMAÑO DE PRECIOS*/
 .productinfo h2{
 	color: #FE980F;
 	font-family: 'Roboto', sans-serif;
@@ -874,7 +875,7 @@ h2.title {
 	font-weight: 700;
 }
 
-
+/*TAAMAÑO DE LETRAS*/
 .productinfo p{
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
@@ -2520,4 +2521,15 @@ h2.title {
   color: #FE980F;
 }
 
+/*IMAGEN PRESENSTA*/
 
+.imgProducto {
+  /*height:160px;
+  width: 100%;
+  resize:none;
+  */
+  height:auto;
+  width: 250px;
+  
+  
+}

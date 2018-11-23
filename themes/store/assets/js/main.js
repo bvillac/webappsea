@@ -9,7 +9,7 @@ var RGBChange = function () {
 /*scroll to top*/
 
 $(document).ready(function () {
-    buscarProductos(1);
+    buscarProductos(1,0);
     mostrarCategoria(base64_encode('1'));
     
     $(function () {
@@ -35,31 +35,34 @@ $(document).ready(function () {
 
     $('.pagination li a').on('click', function () {
         var page = $(this).attr('data');
-        buscarProductos(page);
+        buscarProductos(page,0);
     });
-
-    //function loadDataIndex() {
-        //alert("iniico");
-        //Valores por defecto
-         
-    //}
 
 });
 
 
-function buscarProductos(page) {
+function buscarProductos(page,idsCat) {
     //$('.items').html('<div class="loading"><img src="images/loading.gif" width="70px" height="70px"/><br/>Un momento por favor...</div>');
     var strData = "";
     var link = $('#txth_base').val() + "/site/index";
     var arrParams = new Object();
-    arrParams.page = page;
+    arrParams.page = (page!=0)?page:1;
+    arrParams.idsCat = (idsCat!=0)?idsCat:0;
     arrParams.op = 'productos';
     requestHttpAjax(link, arrParams, function (response) {
         if (response.status == "OK") {
             var data = response.message;
+            var n=0;
             for (var i = 0; i < data.length; i++) {
                 //option_arr += '<a onclick="deleteComentario(\'' + data[i]['Ids'] + '\')" class="pull-right btn-box-tool" href="#"><i class="fa fa-times"></i></a>';
-                strData += llenarItems(data[i]);
+                n=0;
+                strData+='<div class="row">';
+                while (n < 3) {
+                    strData += llenarItems(data[i]);
+                    n ++;                    
+                }
+                strData+='</div>';
+                i=i+n;
             }
             $("#listaPedidos").empty();
             // $("#listaPedidos").append(strData);
@@ -141,13 +144,17 @@ function llenarCategorias(data){
                         strData += '</a>';
                     strData += '</h4>';
                 strData += '</div>';
-
+                //option_arr += '<a onclick="deleteComentario(\'' + data[i]['Ids'] + '\')" class="pull-right btn-box-tool" href="#"><i class="fa fa-times"></i></a>';
+               
                 strData += '<div id="' + data['nom_cat'] + '" class="panel-collapse collapse">';
                     strData += '<div class="panel-body">';
                         strData += '<ul>';
                             for (var i = 0; i < subnivel.length; i++) {
-                                //alert(subnivel[i]['nom_cat']);
-                                strData += '<li><a href="#">' + subnivel[i]['nom_cat'] + ' </a></li>';
+                                strData += '<li>';
+                                    strData += '<a href="javascript:void(0)" onclick="buscarProductos(0,\'' + subnivel[i]['ids_cat'] + '\')" >';
+                                        strData += subnivel[i]['nom_cat'];
+                                    strData += '</a>';
+                                strData += '</li>';
                             }
                         strData += '</ul>';
                     strData += '</div>';
@@ -156,7 +163,7 @@ function llenarCategorias(data){
         }else{
             strData += '<div class="panel panel-default">';
                 strData += '<div class="panel-heading">';
-                    strData += '<h4 class="panel-title"><a href="#">' + data['nom_cat'] + '</a></h4>';
+                    strData += '<h4 class="panel-title"><a href="javascript:void(0)" onclick="buscarProductos(0,\'' + data['ids_cat'] + '\')" >' + data['nom_cat'] + '</a></h4>';
                 strData += '</div>';
             strData += '</div>';
             

@@ -65,20 +65,25 @@ class Tienda {
 
     public static function getProductoTienda($data){
         $arroout = array();
+        $page=1;//Valor por defecto 1
+        $idsCat=0;//Valor por defecto 0
         $tCount=Tienda::getCountProductoTienda();
-        //Utilities::putMessageLogFile($data);
-        $page=(isset($data["page"]))?$data["page"]:1;
+        Utilities::putMessageLogFile($data);
+        if(isset($data['page'])){$page=$data['page'];}
+        if(isset($data['idsCat'])){$idsCat=$data['idsCat'];}
+
         $rowsPerPage = \Yii::$app->params['pagePro'];
         $offset = ($page - 1) * $rowsPerPage;
-        //Utilities::putMessageLogFile($page);
-        //Utilities::putMessageLogFile($offset);
         $con = \Yii::$app->db_tienda;
         $sql="SELECT A.ids_pro,A.cod_art,A.des_com,B.p_venta,A.ruta_img
                 FROM " . $con->dbname . ".productos A
                   INNER JOIN " . $con->dbname . ".precios B
                     ON A.ids_pro=B.ids_pro
-              WHERE A.est_log=1 LIMIT ".$offset.", ".$rowsPerPage;
+              WHERE A.est_log=1 ";
+        $sql.=($idsCat!=0)?" AND A.ids_cat=$idsCat":"";
+        $sql.=" LIMIT ".$offset.", ".$rowsPerPage;
         $comando = $con->createCommand($sql);
+        Utilities::putMessageLogFile($sql);
         //$comando->bindParam(":med_id", $ids, \PDO::PARAM_INT);
         $rawData=$comando->queryAll();
         
