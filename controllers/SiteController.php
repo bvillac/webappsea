@@ -170,10 +170,16 @@ class SiteController extends Controller
         return $this->render('about');
     }
     
-    public function actionData(){
-        Utilities::putMessageLogFile("llego ajax");
-//        if (Yii::$app->request->isAjax) {
-//            Utilities::putMessageLogFile("llego ajax");
-//        }
+    public function actionProductodetalle()
+    {
+        $data = Yii::$app->request->get();
+        $ids=(isset($data["codigo"]))?$data["codigo"]:'';
+        //Utilities::putMessageLogFile($ids);
+        return $this->render('productodetalle', [
+            //'model' => json_encode(Tienda::getProductoDetalle($ids)),
+            'model' => Tienda::getProductoDetalle($ids),
+        ]);
     }
+    
+
 }

@@ -53,13 +53,17 @@ function buscarProductos(page,idsCat) {
         if (response.status == "OK") {
             var data = response.message;
             var n=0;
+            var fil=0;
             for (var i = 0; i < data.length; i++) {
                 //option_arr += '<a onclick="deleteComentario(\'' + data[i]['Ids'] + '\')" class="pull-right btn-box-tool" href="#"><i class="fa fa-times"></i></a>';
                 n=0;
                 strData+='<div class="row">';
                 while (n < 3) {
-                    strData += llenarItems(data[i]);
-                    n ++;                    
+                    if(typeof(data[fil]) != "undefined"){
+                        strData += llenarItems(data[fil]);
+                    } 
+                    fil++;
+                    n ++;  
                 }
                 strData+='</div>';
                 i=i+n;
@@ -86,8 +90,8 @@ function llenarItems(data){
             strData += '<div class="single-products">';
                 strData += '<div class="productinfo text-center">';
                     //strData += '<img src="img/productos/img1.jpg" alt="" />';
-                    strData += '<img src="'+ruta+'" alt="" />';
-                    strData += '<h2>$' + data['p_venta'] + '</h2>';
+                    strData += '<img onclick="verProducto(\'' + data['ids_pro'] + '\')" src="'+ruta+'" alt="" />';
+                    strData += '<h2>$' + roundNumber(data['p_venta'],2) + '</h2>';
                     strData += '<p>' + data['des_com'] + '</p>';
                     strData += '<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Agregar a Carrito</a>';
                 strData += '</div>';
@@ -171,6 +175,10 @@ function llenarCategorias(data){
     return strData;
 }
 
+function verProducto(ids){
+    var link = $('#txth_base').val() + "/site/productodetalle";
+    parent.window.location.href = link + "?codigo="+ids;
+}
 
 
 

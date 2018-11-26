@@ -738,5 +738,12 @@ class Utilities {
             $command->execute();
     }
     
-    
+    public static function round_out($value, $places = 0) {
+        if ($places < 0) {
+            $places = 0;
+        }
+        $mult = pow(10, $places);
+        return ($value >= 0 ? ceil($value * $mult) : floor($value * $mult)) / $mult;
+    }
+
 }

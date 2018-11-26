@@ -68,7 +68,7 @@ class Tienda {
         $page=1;//Valor por defecto 1
         $idsCat=0;//Valor por defecto 0
         $tCount=Tienda::getCountProductoTienda();
-        Utilities::putMessageLogFile($data);
+        //Utilities::putMessageLogFile($data);
         if(isset($data['page'])){$page=$data['page'];}
         if(isset($data['idsCat'])){$idsCat=$data['idsCat'];}
 
@@ -83,9 +83,10 @@ class Tienda {
         $sql.=($idsCat!=0)?" AND A.ids_cat=$idsCat":"";
         $sql.=" LIMIT ".$offset.", ".$rowsPerPage;
         $comando = $con->createCommand($sql);
-        Utilities::putMessageLogFile($sql);
+        
         //$comando->bindParam(":med_id", $ids, \PDO::PARAM_INT);
         $rawData=$comando->queryAll();
+        Utilities::putMessageLogFile($rawData);
         
         $arroout["status"] = TRUE;
         //$arroout["error"] = null;
@@ -108,6 +109,23 @@ class Tienda {
         if ($rawData === false)
             return 0; //en caso de que existe problema o no retorne nada tiene 1 por defecto 
         return $rawData;
+    }
+    
+    public static function getProductoDetalle($ids){
+        $con = \Yii::$app->db_tienda;        
+        $sql="SELECT A.ids_pro,A.cod_art,A.des_com,B.p_venta,A.ruta_img,C.nom_cat,
+		D.nom_mar
+                FROM " . $con->dbname . ".productos A
+                  INNER JOIN " . $con->dbname . ".precios B
+                    ON A.ids_pro=B.ids_pro
+                  INNER JOIN " . $con->dbname . ".categorias C
+                        ON C.ids_cat=A.ids_cat
+                  INNER JOIN " . $con->dbname . ".marca D
+                        ON D.cod_mar=A.cod_mar
+              WHERE A.est_log=1  AND A.ids_pro=:ids ;";
+        $comando = $con->createCommand($sql);
+        $comando->bindParam(":ids", $ids, \PDO::PARAM_INT);
+        return $comando->queryAll();
     }
     
 }

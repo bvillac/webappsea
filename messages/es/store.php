@@ -25,8 +25,6 @@ return [
     "Category" => "Categoría",
     "Recommended items" => "Artículos recomendados",
     "Features Items" => "Artículos",
-    "Recommended items" => "Artículos recomendados",
-    "Recommended items" => "Artículos recomendados",
     "Get it now" => "Consiguelo ahora",
     
     //FOOTER
@@ -43,8 +41,14 @@ return [
     'Careers' => 'Mensaje',
     'Store Location' => 'Ubicacón de la Tienda',
     'Affillate Program' => 'Solicitud de Crédito',
-    'Body' => 'Mensaje',
-    'Body' => 'Mensaje',
-    'Body' => 'Mensaje',
+    
+    //DETALLE
+    'Availability' => 'Disponibilidad',
+    'Condition' => 'Condición',
+    'New' => 'Nuevo',
+    'In Stock' => 'En Stock',
+    'New' => 'Nuevo',
+    'Quantity' => 'Cantidad',
+    'Add to cart' => 'Añadir al Carrito',
 ];
 

@@ -1,5 +1,5 @@
 mysql -u root -p  < db_admin.sql 
-
+https://demo.themeum.com/html/eshopper/product-details.html
 
     Model Class: app\models\Country
     Search Model Class: app\models\CountrySearch

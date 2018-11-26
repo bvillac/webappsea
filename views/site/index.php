@@ -19,7 +19,7 @@ $this->title = Yii::$app->params['alias']; //'My Yii Application';
         </div><!--/price-range-->
 
         <div class="shipping text-center"><!--shipping-->
-            <img src="images/home/shipping.jpg" alt="" />
+            <!--<img src="images/home/shipping.jpg" alt="" />-->
         </div><!--/shipping-->
 
     </div>
