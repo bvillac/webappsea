@@ -181,5 +181,10 @@ class SiteController extends Controller
         ]);
     }
     
+    public function actionCart()
+    {
+        return $this->render('cart');
+    }
+    
 
 }

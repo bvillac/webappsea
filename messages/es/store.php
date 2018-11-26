@@ -26,6 +26,7 @@ return [
     "Recommended items" => "Artículos recomendados",
     "Features Items" => "Artículos",
     "Get it now" => "Consiguelo ahora",
+    "Price Range" => "Rango de Precios",
     
     //FOOTER
     'Service' => 'Servicios',
@@ -50,5 +51,14 @@ return [
     'New' => 'Nuevo',
     'Quantity' => 'Cantidad',
     'Add to cart' => 'Añadir al Carrito',
+    
+    //CARRITO DE COMPRAS
+    
+    'Shopping Cart' => 'Carrito de Compras',
+    'Item' => 'Item',
+    'Price' => 'Precio',
+    'New' => 'Nuevo',
+    
+    
 ];
 

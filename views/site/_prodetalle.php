@@ -61,10 +61,11 @@ use yii\helpers\Url;
                 <span>$<?= app\models\Utilities::round_out($model[0]['p_venta'], 2) ?></span>
                 <label><?=Yii::t("store", "Quantity")?>:</label>
                 <input type="text" value="0" />
-                <button type="button" class="btn btn-fefault cart">
+                <?= Html::a(Yii::t("store", "Add to cart"), ['/site/cart'], ['class'=>'btn btn-fefault cart']) ?>
+                <?php //Html::button('<i class="fa fa-shopping-cart"></i>'.Yii::t("store", "Add to cart"), ['class' => 'btn btn-fefault cart'])?>
+<!--                <button type="button" class="btn btn-fefault cart">
                     <i class="fa fa-shopping-cart"></i>
-                    <?=Yii::t("store", "Add to cart")?>
-                </button>
+                </button>-->
             </span>
             <p><b><?=Yii::t("store", "Availability")?>:</b> <?=Yii::t("store", "In Stock")?></p>
             <p><b><?=Yii::t("store", "Condition")?>:</b> <?=Yii::t("store", "New")?></p>
