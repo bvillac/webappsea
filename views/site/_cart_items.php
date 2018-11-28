@@ -7,9 +7,6 @@
 use yii\helpers\Url;
 ?>
 
-
-
-
 <div class="table-responsive cart_info">
     <table class="table table-condensed">
         <thead>
@@ -25,14 +22,15 @@ use yii\helpers\Url;
         <tbody>
             <tr>
                 <td class="cart_product">
-                    <a href=""><img src="images/cart/one.png" alt=""></a>
+<!--                    <a href=""><img src="images/cart/one.png" alt=""></a>-->
+                    <a href=""><img class='imgProCarrito' src="<?= Url::base().Yii::$app->params["imgFolder"] ?>imgG.jpg" alt=""></a>
                 </td>
                 <td class="cart_description">
                     <h4><a href="">AGENDA EJECUTIVA 2016 F/DORADOS VERDE</a></h4>
                     <p>Web ID: 1089772</p>
                 </td>
                 <td class="cart_price">
-                    <p>$59</p>
+                    <p>$8.54</p>
                 </td>
                 <td class="cart_quantity">
                     <div class="cart_quantity_button">
@@ -52,14 +50,14 @@ use yii\helpers\Url;
             <tr>
                 <td class="cart_product">
 <!--                    <a href=""><img src="images/cart/two.png" alt=""></a>-->
-                    <a href=""><img src="<?= Url::base().Yii::$app->params["imgFolder"] ?>img1x.jpg" alt=""></a>
+                    <a href=""><img class='imgProCarrito' src="<?= Url::base().Yii::$app->params["imgFolder"] ?>imgG.jpg" alt=""></a>
                 </td>
                 <td class="cart_description">
                     <h4><a href="">CABEZAL HP C4812A ORIG.11 M.DESIN.100/110/500/INK.1000/1200</a></h4>
                     <p>Web ID: 1089772</p>
                 </td>
                 <td class="cart_price">
-                    <p>$59</p>
+                    <p>$117.00</p>
                 </td>
                 <td class="cart_quantity">
                     <div class="cart_quantity_button">

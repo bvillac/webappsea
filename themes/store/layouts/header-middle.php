@@ -13,7 +13,7 @@ use yii\helpers\Html;
         <div class="row">
             <div class="col-sm-4">
                 <div class="logo pull-left">
-                    <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
+                    <?= Html::a(Html::img(Url::base().'/web/img/home/LogoTienda.png', ['alt'=>'Logo Utimpor']), ['site/index']); ?>
                 </div>
 <!--                <div class="btn-group pull-right">
                     <div class="btn-group">

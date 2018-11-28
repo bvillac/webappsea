@@ -1627,7 +1627,7 @@ h2.title {
 }
 
 .cart_product {
-  display: block;
+  /*display: block; BYRON*/
   margin: 15px -70px 10px 25px;
 }
 
@@ -2530,6 +2530,13 @@ h2.title {
   */
   height:auto;
   width: 250px;
+  
+  
+}
+
+.imgProCarrito {
+  height:110px;
+  width: 110px;
   
   
 }

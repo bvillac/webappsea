@@ -37,7 +37,7 @@ class StoreAsset extends AssetBundle
         'plugins/datepicker/datepicker3.css',
         ];
     public $js = [
-        'js/jquery.js', 
+        //'js/jquery.js', 
         'js/bootstrap.min.js', 
         'js/jquery.scrollUp.min.js', 
         'js/price-range.js', 
