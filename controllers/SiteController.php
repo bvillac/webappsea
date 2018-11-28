@@ -84,6 +84,7 @@ class SiteController extends Controller
                     break;
                 case 'productos':
                     $resul = Tienda::getProductoTienda($data);
+                    Tienda::getProductoTiendaMasVendidos($data);
                     break;
                 default:
                    //echo "i no es igual a 0, 1 ni 2";

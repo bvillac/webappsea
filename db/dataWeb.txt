@@ -103,4 +103,20 @@ GRANT ALL PRIVILEGES ON `db_tienda`.* TO 'adminuser'@'localhost' IDENTIFIED BY '
 
 
 
+ALTER TABLE `db_tienda`.`productos` 
+CHANGE COLUMN `cod_mar` `cod_mar` VARCHAR(3) NULL DEFAULT NULL AFTER `ids_mar`,
+ADD COLUMN `est_ven` INT(3) NULL AFTER `ruta_img`;
+
+UPDATE `db_tienda`.`productos` SET `est_ven`='1' WHERE `ids_pro`='27';
+UPDATE `db_tienda`.`productos` SET `est_ven`='2' WHERE `ids_pro`='32';
+UPDATE `db_tienda`.`productos` SET `est_ven`='3' WHERE `ids_pro`='33';
+UPDATE `db_tienda`.`productos` SET `est_ven`='2' WHERE `ids_pro`='418';
+UPDATE `db_tienda`.`productos` SET `est_ven`='4' WHERE `ids_pro`='485';
+UPDATE `db_tienda`.`productos` SET `est_ven`='5' WHERE `ids_pro`='582';
+
+
+
+
+
+
 

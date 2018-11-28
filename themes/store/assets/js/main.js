@@ -41,6 +41,8 @@ $(document).ready(function () {
 });
 
 
+
+
 function buscarProductos(page,idsCat) {
     //$('.items').html('<div class="loading"><img src="images/loading.gif" width="70px" height="70px"/><br/>Un momento por favor...</div>');
     var strData = "";

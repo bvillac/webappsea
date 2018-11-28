@@ -6,8 +6,6 @@
  */
 use yii\helpers\Html;
 $CastPro=app\models\Tienda::getMarcaTienda();
-
-
 ?>
 
 <div class="brands_products"><!--brands_products-->

@@ -86,7 +86,7 @@ class Tienda {
         
         //$comando->bindParam(":med_id", $ids, \PDO::PARAM_INT);
         $rawData=$comando->queryAll();
-        Utilities::putMessageLogFile($rawData);
+        //Utilities::putMessageLogFile($rawData);
         
         $arroout["status"] = TRUE;
         //$arroout["error"] = null;
@@ -98,6 +98,27 @@ class Tienda {
         //return $comando->queryAll();
         
     }
+    
+    
+    public static function getProductoTiendaMasVendidos(){
+        //$arroout = array();
+        $con = \Yii::$app->db_tienda;
+        $sql="SELECT A.ids_pro,A.cod_art,A.des_com,B.p_venta,A.ruta_img
+                FROM " . $con->dbname . ".productos A
+                  INNER JOIN " . $con->dbname . ".precios B
+                    ON A.ids_pro=B.ids_pro
+              WHERE A.est_log=1 ";
+        $sql.=" AND A.est_ven IS NOT NULL ";
+        $sql.=" ORDER BY A.est_ven ASC ";
+        $comando = $con->createCommand($sql);        
+        //$comando->bindParam(":med_id", $ids, \PDO::PARAM_INT);
+        //$rawData=$comando->queryAll();
+        return $comando->queryAll();
+        //Utilities::putMessageLogFile($rawData);
+       
+        
+    }
+    
     public static function getCountProductoTienda(){
         $con = \Yii::$app->db_tienda;
         $sql="SELECT COUNT(*) tpro FROM " . $con->dbname . ".productos "
