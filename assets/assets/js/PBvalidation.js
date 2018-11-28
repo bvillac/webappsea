@@ -588,3 +588,77 @@ function roundNumber(num, scale) {
     return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
   }
 }
+
+
+function redondea(sVal, nDec) {
+    var sepDecimal = ".";
+    var n = parseFloat(sVal);
+    var s = "0.00";
+    if (!isNaN(n)) {
+        n = Math.round(n * Math.pow(10, nDec)) / Math.pow(10, nDec);
+        s = String(n);
+        //s += (s.indexOf(".") == -1? ".": "") + String(Math.pow(10, nDec)).substr(1);
+        s += (s.indexOf(sepDecimal) == -1 ? sepDecimal : "") + String(Math.pow(10, nDec)).substr(1);
+        //s = s.substr(0, s.indexOf(".") + nDec + 1);
+        s = s.substr(0, s.indexOf(sepDecimal) + nDec + 1);
+    }
+    return s;
+}
+function isEnter(e) {
+    //retornar verdadereo si presiona Enter
+    var key;
+    if (window.event) // IE
+    {
+        key = e.keyCode;
+        if (key == 13 || key == 9) {
+            return true;
+        }
+    } else if (e.which) { // Netscape/Firefox/Opera
+        key = e.which;
+        // NOTE: Backspace = 8, Enter = 13, '0' = 48, '9' = 57	
+        //var key = nav4 ? evt.which : evt.keyCode;	
+        if (key == 13 || key == 9) {
+            return true;
+        }
+    }
+    return false;
+}
+function soloDinero(e){
+    result.response = validarExpresion(/^((\d{1,9})(\.\d{1,2})?)$/,valor);
+            if(!result.response){
+                result.errorMessage = objLang.Only_numbers_and_decimal_point_for_;
+            }
+}
+function validaFloat(value){
+	return(value.match(/^[0-9]+(.[0-9]+)*$/))
+}
+
+
+
+function solonumeros(e)
+{
+    var key;
+    if (window.event) // IE
+    {
+        key = e.keyCode;
+        if (key < 48 || key > 57) {
+            return false;
+        }
+    } else if (e.which) { // Netscape/Firefox/Opera
+        key = e.which;
+        // NOTE: Backspace = 8, Enter = 13, '0' = 48, '9' = 57	
+        //var key = nav4 ? evt.which : evt.keyCode;	
+        return (key <= 13 || (key >= 48 && key <= 57));
+    }
+    return true;
+}
+
+function validarExpresion(cadena,valor){
+    var expresion = new RegExp(cadena);
+    if (valor.match(expresion)){
+        return true;
+    }else{
+        return false;
+    }
+}
+

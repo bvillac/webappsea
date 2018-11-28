@@ -93,7 +93,7 @@ function llenarItems(data){
                 strData += '<div class="productinfo text-center">';
                     //strData += '<img src="img/productos/img1.jpg" alt="" />';
                     strData += '<img onclick="verProducto(\'' + data['ids_pro'] + '\')" src="'+ruta+'" alt="" />';
-                    strData += '<h2>$' + roundNumber(data['p_venta'],2) + '</h2>';
+                    strData += '<h2>$' + redondea(data['p_venta'],2) + '</h2>';
                     strData += '<p>' + data['des_com'] + '</p>';
                     strData += '<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Agregar a Carrito</a>';
                 strData += '</div>';
