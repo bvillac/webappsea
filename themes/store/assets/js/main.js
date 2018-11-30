@@ -85,7 +85,8 @@ function buscarProductos(page,idsCat) {
 }
 
 function llenarItems(data){
-    var ruta=$('#txth_imgfolder').val()+'img1.jpg';
+    //var ruta=$('#txth_imgfolder').val()+'img1.jpg';
+    var ruta=$('#txth_imgfolder').val()+ data['cod_art']+'_G-01.jpg';
     var strData = "";//data[i]['p_venta']
     strData += '<div class="col-sm-4">';
         strData += '<div class="product-image-wrapper">';

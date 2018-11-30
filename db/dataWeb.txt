@@ -6,6 +6,8 @@ https://demo.themeum.com/html/eshopper/product-details.html
     Controller Class: app\controllers\CountryController
     @app/views/empresa
 
+https://getbootstrap.com/docs/3.3/components/#navbar
+
 https://www.yiiframework.com/doc/guide/2.0/es/security-authentication
 
 https://www.youtube.com/watch?v=6QHx9uT53So

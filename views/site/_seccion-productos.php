@@ -14,8 +14,7 @@ $seccion=\app\models\Tienda::getSeccionTienda();
     <div class="brands-name">
         <ul class="nav nav-pills nav-stacked">
             <?php for ($i = 0; $i < sizeof($seccion); $i++) {  ?>
-            <li><?php //Html::a('<span class="pull-right">('.$CastPro[$i]['rcount'].')</span>'.$CastPro[$i]['nom_mar'],['href' => 'javascript:verproducto(\'' . base64_encode($CastPro[$i]['ids_mar']) . '\');']); ?></li>
-            <li><?= Html::a($seccion[$i]['nom_cat'],null,['href' => 'javascript:mostrarCategoria(\'' . base64_encode($seccion[$i]['ids_cat']) . '\');']) ?></li>
+            <li><?= Html::a($seccion[$i]['nom_cat'], Url::to('#accordian'),['onclick' => 'javascript:mostrarCategoria(\'' . base64_encode($seccion[$i]['ids_cat']) . '\');']) ?></li>
             <?php }  ?>
         </ul>
     </div>

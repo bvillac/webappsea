@@ -7,6 +7,7 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 $ItemReco=app\models\Tienda::getProductoTiendaMasVendidos();
+$Ruta=Url::base() . Yii::$app->params["imgFolder"];
 ?>
 
 <div class="recommended_items"><!--recommended_items-->
@@ -25,9 +26,9 @@ $ItemReco=app\models\Tienda::getProductoTiendaMasVendidos();
                         <div class="col-sm-4">
                             <div class="product-image-wrapper">
                                 <div class="single-products">
-                                    <div class="productinfo text-center">
-                                        <?php //Html::a(Yii::t("store", "Add to cart"), ['/site/productodetalle'], ['class' => 'btn btn-fefault cart']) ?>
-                                        <img src="<?= Url::base() . Yii::$app->params["imgFolder"].$ItemReco[$fil]['cod_art'] ?>_G-01.jpg" alt="" />
+                                    <div class="productinfo text-center">                                        
+                                        <?php $imgData=Html::img($Ruta.$ItemReco[$fil]['cod_art']."_G-01.jpg",['class' => 'img-responsive ']); ?>
+                                        <?= Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_masvendidos']); ?> 
                                         <h2>$<?= app\models\Utilities::round_out($ItemReco[$fil]['p_venta'], 2) ?></h2>
                                         <p><?=$ItemReco[$fil]['des_com']?></p>
                                         <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i><?= Yii::t("store", "Add to cart") ?></a>

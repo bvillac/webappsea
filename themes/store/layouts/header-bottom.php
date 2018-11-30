@@ -12,16 +12,11 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
     <div class="container">
         <div class="row">
             <div class="col-sm-9">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="mainmenu pull-left">
-                    <ul class="nav navbar-nav collapse navbar-collapse">
+                <!----------------->
+                
+                <!----------------->
+                <div class="mainmenu pull-left ">
+                    <ul class="nav navbar-nav collapse navbar-collapse ">
                         <li><?= Html::a(Yii::t("store", "Home"), ['site/index'],['class' => 'active']); ?></li>                       
                         <li class="dropdown"><?= Html::a(Yii::t("store", "Shop").'<i class="fa fa-angle-down"></i> ', ['site/index']); ?></a>
                             <ul role="menu" class="sub-menu">
@@ -35,16 +30,18 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
                                 <li><?= Html::a(Yii::t("store", "Login"), ['site/login']); ?></li> -->
                             </ul>
                         </li> 
-<!--                        <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                            <ul role="menu" class="sub-menu">
-                                <li><a href="blog.html">Blog List</a></li>
-                                <li><a href="blog-single.html">Blog Single</a></li>
-                            </ul>
-                        </li> 
-                        <li><a href="404.html">404</a></li>                 -->
                         <li><?= Html::a(Yii::t("store", "Contact"), ['site/contact']); ?></li>      
                     </ul>
                 </div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                
             </div>
             <div class="col-sm-3">
                 <div class="search_box pull-right">
