@@ -18,5 +18,8 @@ return [
     'Body' => 'Mensaje',
     'required' => 'Requerido',
     'Verification Code' => 'Código de verificación',
+    'Login to your account'=>'Ingrese a su cuenta',
+    'New User Signup!' => 'Nuevo usuario de registro!',
+    
     
 ];
