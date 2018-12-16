@@ -37,6 +37,13 @@ $(document).ready(function () {
         var page = $(this).attr('data');
         buscarProductos(page,0);
     });
+    
+    
+    $('#cmd_login').click(function () {
+        verificarIngreso();
+    });
+    
+    
 
 });
 
@@ -183,5 +190,43 @@ function verProducto(ids){
     parent.window.location.href = link + "?codigo="+ids;
 }
 
+/*OPCIONES DE LOGIN*/
+function verificarIngreso() {
+    var link = $('#txth_base').val() + "/site/login";
+    var arrParams = new Object();
+    arrParams.USER = base64_encode($('#txt_email').val());
+    arrParams.PASS = base64_encode($('#txt_password').val());
+    //arrParams.ACCION = accion;
+    //var validation = validateForm();
+    //if (!validation) {
+        requestHttpAjax(link, arrParams, function (response) {
+            var message = response.message;
+            if (response.status == "OK") {
+                showAlert(response.status, response.type, {"wtmessage": message.info, "title":response.label});
+                //limpiarDatos();
+                var renderurl = $('#txth_base').val() + "/mceformulariotemp/index";
+                window.location = renderurl;
+            } else {
+                var renderurl = $('#txth_base').val() + "/site/login";
+                window.location = renderurl;
+                //showAlert(response.status, response.type, {"wtmessage": message.info, "title":response.label});
+            }
+        }, true);
+    //}
+    //showAlert('NO_OK', 'error', {"wtmessage": 'Debe Aceptar los términos de la Declaración Jurada', "title":'Información'});
+}
+
+function dataUser() {
+    var datArray = new Array();
+    var objDat = new Object();
+    objDat.user = $('#txt_email').val();
+    objDat.pass = $('#txt_password').val();
+    datArray[0] = objDat;
+    //sessionStorage.dataPersona = JSON.stringify(datArray);
+    return datArray;
+}
+
+
+/*FIN OPCIONES DE LOGIN*/
 
 

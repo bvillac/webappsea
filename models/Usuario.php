@@ -159,9 +159,8 @@ class Usuario extends ActiveRecord implements IdentityInterface  {
      * Validates password
      */
     public function validatePassword($password) {
-        $security = new Security();
-        return TRUE;
-        //return ($this->usu_sha === $security->decryptByPassword(base64_decode($this->usu_password), $password));
+        $security = new Security();//admin AdminUt3g17
+        return ($this->usu_sha === $security->decryptByPassword(base64_decode($this->usu_password), $password));
     }
     
     public function setPassword($password) {
@@ -183,7 +182,6 @@ class Usuario extends ActiveRecord implements IdentityInterface  {
             $session->open();
             //$session->close();
             $model_persona = Persona::findIdentity($this->per_id);
-
             $nombre_persona = $model_persona->per_nombre;
             $apellido_persona = $model_persona->per_apellido;
             $session->set('PB_isuser', true);

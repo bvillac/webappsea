@@ -18,6 +18,14 @@ use app\vendor\penblu\blockui\BlockuiAsset;
 use app\vendor\penblu\magnificpopup\MagnificPopupAsset;
 //AppAsset::register($this);
 
+$session = Yii::$app->session;
+$isUser = FALSE;
+$isUser = $session->get('PB_isuser', FALSE);
+if ($isUser != FALSE && $session->isActive ){
+    //echo $session->isActive;//Sesion Activa
+}
+
+
 $assetsStore= StoreAsset::register($this);
 $assetsApp = AppAsset::register($this);
 $assetsFont = FontAwesomeAsset::register($this);
@@ -78,6 +86,8 @@ $directoryAsset = $assetsStore->baseUrl;
             <?= $this->render('footer-widget.php',['directoryAsset' => $directoryAsset]) ?> 
             <?= $this->render('footer.php') ?> 
         </footer><!--/Footer-->
+        <!-- Modal -->
+        <?= $this->render('modal.php',['directoryAsset' => $directoryAsset]); ?>
 </div> 
 <!--    <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKq8Ruomuy6eniHPeTyDHxlZs54LGipDk&callback=initMap">

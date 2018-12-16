@@ -69,14 +69,16 @@ class LoginForm extends Model
      * @return bool whether the user is logged in successfully
      */
     //*****************INICIO TODO ************/
-    public function login()
-    {
-        //$usuario=new Usuario();
+    public function login($user,$pass){
+
+        $this->username=$user;
+        $this->password=$pass;
+        $usuario=new Usuario();
         /*if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
         }
         return false;*/
-        if ($this->validate()) {
+        //if ($this->validate()) {
             $usuario = Usuario::findByUsername($this->username);
             if (isset($usuario)) {
                 $status = $usuario->validatePassword($this->password);
@@ -106,11 +108,11 @@ class LoginForm extends Model
                 Yii::$app->session->setFlash('error', Yii::t("login", "<h4>Error</h4>Incorrect username or password."));
                 return false;
             }
-        } else {
-            $this->setErrorSession(true);
-            Yii::$app->session->setFlash('error', Yii::t("login", "<h4>Error</h4>Incorrect username or password."));
-            return false;
-        }
+        //} else {
+        //    $this->setErrorSession(true);
+        //    Yii::$app->session->setFlash('error', Yii::t("login", "<h4>Error</h4>Incorrect username or password."));
+        //    return false;
+        //}
 
         
     }

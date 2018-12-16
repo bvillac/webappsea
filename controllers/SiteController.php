@@ -40,13 +40,12 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    //'logout' => ['post'],
                 ],
             ],
             
         ];
     }
-
     /**
      * {@inheritdoc}
      */
@@ -115,19 +114,46 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+        
+        /*if (!Yii::$app->user->isGuest) {
             return $this->goHome();
-        }
-
+        }*/
+        $arroout = array();
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        /*if ($model->load(Yii::$app->request->post()) && $model->login()) {
         //if ($model->login()) {
-            return $this->goBack();
+            
+        }*/
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $user = isset($data['USER']) ? base64_decode($data['USER']) : "NULL";
+            $pass= isset($data['PASS']) ? base64_decode($data['PASS']) : "NULL";
+            if($user!="NULL" || $pass!="NULL"){
+                if ($model->login($user,$pass)) {
+                    $arroout["status"]= true;
+                    return $this->goHome();
+                }
+            }else{
+                $arroout["status"]= false;
+                //return $this->goBack();
+            }
+            //return $this->render('login');
+            if ($resul['status']) {
+                $message = ["info" => Yii::t('exception', '<strong>Well done!</strong> your information was successfully saved.')];
+                echo Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', $message,$resul);
+            }else{
+                $message = ["info" => Yii::t('exception', 'The above error occurred while the Web server was processing your request.')];
+                echo Utilities::ajaxResponse('NO_OK', 'alert', Yii::t('jslang', 'Error'), 'false', $message);
+            }
+            return;
+            
+            
         }
+            
 
-        $model->password = '';
+        //$model->password = '';
         return $this->render('login', [
-            'model' => $model,
+            //'model' => $model,
         ]);
     }
 
@@ -138,9 +164,11 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        $usuario = new Usuario();
+        $usuario->destroySession();
         Yii::$app->user->logout();
-
         return $this->goHome();
+        //return $this->redirect(Url::base(true).'/site/login');
     }
 
     /**

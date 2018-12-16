@@ -28,6 +28,7 @@ return [
     'Remember Me' => 'Recordarme',
     'rememberMe' => 'Recordarme',
     'Sign In' => 'Ingresar',
+    'OR' => 'O',
     'Sign Out' => 'Salir',
     'The country brand Ecuador loves life can be requested by individuals or corporations, national or foreign, public and private sector. It is free and lasts for 2 years with option to be renewed.' => 'La Marca País Ecuador Ama la vida puede ser solicitada por personas naturales o jurídicas, nacionales o extranjeras, del sector público y privado. Es gratuita y tiene una duración de 2 años con posibilidad de ser renovada.',
     'Username' => 'Nombre de usuario',

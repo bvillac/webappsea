@@ -11,6 +11,7 @@ return [
     'Search' => 'Buscar',
     'Version' => 'Versión',
     'Address' => 'Dirección',
+    'Email Address' => 'Dirección Correo',
     'Email' => 'Correo',
     'Name' => 'Nombre',
     'Phone' => 'Teléfono',

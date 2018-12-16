@@ -6,6 +6,9 @@
  */
 use yii\helpers\Url;
 use yii\helpers\Html;
+$session = Yii::$app->session;
+$isUser = FALSE;
+$isUser = $session->get('PB_isuser', FALSE);
 ?>
 
 <div class="header-middle"><!--header-middle-->
@@ -42,12 +45,20 @@ use yii\helpers\Html;
             <div class="col-sm-8">
                 <div class="shop-menu pull-right">
                     <ul class="nav navbar-nav">
-                        <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("store", "Account"), ['site/index']); ?></li>
+                        <?php if ($isUser != FALSE && $session->isActive ){ ?>
+                            <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("login", "Account"), ['site/index']); ?></li>
+                        <?php }else{ ?>
+                            <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("login", "Create Account"), ['site/index']); ?></li>
+                        <?php } ?>
+                        <li><?php //Html::a('<i class="fa fa-user"></i> '.Yii::t("store", "Account"), ['site/index']); ?></li>
                         <li><?= Html::a('<i class="fa fa-star"></i> '.Yii::t("store", "Wishlist"), ['site/index']); ?></li>
                         <li><?= Html::a('<i class="fa fa-crosshairs"></i> '.Yii::t("store", "Checkout"), ['site/checkout']); ?></li>
                         <li><?= Html::a('<i class="fa fa-shopping-cart"></i> '.Yii::t("store", "Cart"), ['site/cart']); ?></li>
-                        <li><?= Html::a('<i class="fa fa-lock"></i> '.Yii::t("store", "Login"), ['site/login']); ?></li>
-                   
+                        <?php if ($isUser != FALSE && $session->isActive ){ ?>
+                            <li><?= Html::a('<i class="glyphicon glyphicon-log-out"></i> '.Yii::$app->user->identity->usu_username.' ('.Yii::t("login", "Sign Out").')', ['site/logout']); ?></li>
+                        <?php }else{ ?>
+                            <li><?= Html::a('<i class="fa fa-lock"></i> '.Yii::t("login", "Login"), ['site/login']); ?></li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
