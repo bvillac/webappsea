@@ -8,6 +8,40 @@ var RGBChange = function () {
 		
 /*scroll to top*/
 
+function retornarIndexArray(array, property, value) {
+    var index = -1;
+    for (var i = 0; i < array.length; i++) {
+        //alert(array[i][property]+'-'+value)
+        if (array[i][property] == value) {
+            index = i;
+            return index;
+        }
+    }
+    return index;
+}
+
+function codigoExiste(value, property, lista) {
+    if (lista) {
+        var array = JSON.parse(lista);
+        for (var i = 0; i < array.length; i++) {
+            if (array[i][property] == value) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function findAndRemove(array, property, value) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i][property] == value) {
+            array.splice(i, 1);
+        }
+    }
+    return array;
+}
+
+
 $(document).ready(function () {
     buscarProductos(1,0);
     mostrarCategoria(base64_encode('1'));
@@ -103,7 +137,7 @@ function llenarItems(data){
                     strData += '<img onclick="verProducto(\'' + data['ids_pro'] + '\')" src="'+ruta+'" alt="" />';
                     strData += '<h2>$' + redondea(data['p_venta'],2) + '</h2>';
                     strData += '<p>' + data['des_com'] + '</p>';
-                    strData += '<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Agregar a Carrito</a>';
+                    strData += '<a onclick="addCarrito(\'' + data['ids_pro'] + '\,\'' + data['cod_art'] + '\,\'' + data['des_com'] + '\'.\'' + data['p_venta'] + '\')" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Agregar a Carrito</a>';
                 strData += '</div>';
                 /*strData += '<div class="product-overlay">';
                     strData += '<div class="overlay-content">';

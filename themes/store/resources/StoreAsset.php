@@ -43,6 +43,7 @@ class StoreAsset extends AssetBundle
         'js/price-range.js', 
         'js/jquery.prettyPhoto.js', 
         'js/main.js',
+        'js/carrito.js',
         //'js/app.min.js',  
         'plugins/fastclick/fastclick.min.js',
         'plugins/iCheck/icheck.min.js',

@@ -290,7 +290,8 @@ ul.sub-menu {
 	position: absolute;
 	top: 30px;
 	left: 0;
-	background: rgba(0, 0, 0, 0.6);
+	/*background: rgba(0, 0, 0, 0.6); byron */
+        background: #005B25;
 	list-style: none;
 	padding: 0;
 	margin: 0;
