@@ -96,7 +96,7 @@ function addCarrito(Ids,CodIds,Nombre,Pvta){
         if (size > 0) {
             //Varios Items
             if (codigoExiste(CodIds, 'cod_art', sessionStorage.dts_carrito)) {//Verifico si el Codigo Existe  para no Dejar ingresar Repetidos
-                arr_carrito[size] = objProductoCar(size); //objAntDep(retornarIndexArray(JSON.parse(sessionStorage.atc_antDeporte),'DEP_NOMBRE',valor),JSON.parse(sessionStorage.atc_antDeporte));
+                arr_carrito[size] = objProductoCar(size,Ids,CodIds,Nombre,Pvta); //objAntDep(retornarIndexArray(JSON.parse(sessionStorage.atc_antDeporte),'DEP_NOMBRE',valor),JSON.parse(sessionStorage.atc_antDeporte));
                 sessionStorage.dts_carrito = JSON.stringify(arr_carrito);
                 //addVariosItemProducto(tGrid, arr_carrito, -1);
                 //limpiarDetalle();
