@@ -745,5 +745,14 @@ class Utilities {
         $mult = pow(10, $places);
         return ($value >= 0 ? ceil($value * $mult) : floor($value * $mult)) / $mult;
     }
+    
+    public static function orderItems() {
+        return [
+            '0' => Yii::t("formulario", "-Select-"),
+            '1' => Yii::t("perfil", "A - Z"),
+            '2' => Yii::t("perfil", "Z - A"),
+                  
+        ];
+    }
 
 }

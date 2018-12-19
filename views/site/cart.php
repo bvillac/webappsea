@@ -15,6 +15,7 @@ $model = 0;
             </ol>
         </div>
         <?= $this->render('_cart_items.php', ['directoryAsset' => $directoryAsset, 'model' => $model]) ?> 
+        <?= $this->render('_footerPedido.php', ['directoryAsset' => $directoryAsset, 'model' => $model]) ?> 
     </div>
 </section><!--#cart_items-->
 <script>

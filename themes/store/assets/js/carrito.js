@@ -83,7 +83,7 @@ $(document).ready(function () {
 });
 
 function addCarrito(Ids,CodIds,Nombre,Pvta){
-    //alert(Ids);
+    alert(Ids);
 
     var arr_carrito = new Array();
     if (sessionStorage.dts_carrito) {
@@ -126,6 +126,11 @@ function objProductoCar(indice,Ids,CodIds,Nombre,Pvta) {
     rowGrid.des_com =Nombre;
     rowGrid.p_venta =Pvta;
     rowGrid.can_des =1;
+    rowGrid.t_venta =Pvta*1;
+    rowGrid.por_des =0;
+    rowGrid.val_des =0;
+    rowGrid.i_m_iva =0;
+    rowGrid.val_iva =0;
     rowGrid.accion = "new";
     return rowGrid;
 }
@@ -140,7 +145,12 @@ function recargarGridProductoCar() {
             for (var i = 0; i < arr_Grid.length; i++) {
                 $('#' + tGrid + ' > tbody:last-child').append(retornaFilaProductoCar(i, arr_Grid, tGrid, true));
             }
+        }else{
+            $('#' + tGrid + ' > tbody').html("NO TIENE ITEMS AGREGADOS A SU LISTA");
         }
+        //findCantotal(Grid,'ids_pro',Ids,cant)
+    }else{
+        $('#' + tGrid + ' > tbody').html("NO TIENE ITEMS AGREGADOS A SU LISTA");
     }
 }
 
@@ -153,27 +163,29 @@ function retornaFilaProductoCar(c, Grid, TbGtable, op) {
     
     strFila += '<td style="display:none; border:none;">' + Grid[c]['ids_pro'] + '</td>';
     strFila += '<td class="cart_product">';
-        strFila += '<a href=""><img class="imgProCarrito" src="'+ruta+'"  alt=""></a>';
+        //strFila += '<a href=""><img class="imgProCarrito" src="'+ruta+'"  alt=""></a>';
+        strFila += '<img class="imgProCarrito" onclick="verProducto(\'' + Grid[c]['ids_pro'] + '\')" src="'+ruta+'" alt="" />';
     strFila += '</td>';
     strFila += '<td class="cart_description">';
         strFila += '<h4><a href="">' + Grid[c]['des_com'] + '</a></h4>';
         strFila += '<p>Web ID: ' + Grid[c]['cod_art'] + '</p>';
     strFila += '</td>';
     strFila += '<td class="cart_price">';
-        strFila += '<p>$' + Grid[c]['p_venta'] + '</p>';
+        strFila += '<p>$' + redondea(Grid[c]['p_venta'], Ndecimal) + '</p>';
     strFila += '</td>';
     strFila += '<td class="cart_quantity">';
         strFila += '<div class="cart_quantity_button">';
             strFila += '<a class="cart_quantity_up" href=""> + </a>';
             strFila += '<input class="cart_quantity_input" type="text" name="quantity" value="1" ';
-                    strFila += ' onkeydown="pedidoEnterGrid(isEnter(event),this,' + Grid[c]['ids_pro'] + ')"';
+                    strFila += 'onkeydown="pedidoEnterGrid(isEnter(event),this,' + Grid[c]['ids_pro'] + ')"';
                     //strFila += ' autocomplete="off" size="2">';
+                    strFila += 'onblur="javascript:return pedidoEnterGrid(true,this,' + Grid[c]['ids_pro'] + ')" ';
                     strFila += ' autocomplete="off" size="2">';
             strFila += '<a class="cart_quantity_down" href=""> - </a>';
         strFila += '</div>';
     strFila += '</td>';
     strFila += '<td class="cart_total">';
-        strFila += '<p class="cart_total_price">$8.54</p>';
+        strFila += '<p class="cart_total_price">' + Grid[c]['p_venta'] + '</p>';
     strFila += '</td>';
     strFila += '<td class="cart_delete">';
         strFila += '<a onclick="eliminarItemsCarrito(\'' + Grid[c]['ids_pro'] + '\',\'' + TbGtable + '\')" class="cart_quantity_delete" ><i class="fa fa-times"></i></a>';
@@ -201,8 +213,6 @@ function retornaFilaProductoCar(c, Grid, TbGtable, op) {
 }
 
 function eliminarItemsCarrito(val, TbGtable) {
-    
-    //alert('eliminar');
     var ids = "";
     //var count=0;
     if (sessionStorage.dts_carrito) {
@@ -224,14 +234,64 @@ function eliminarItemsCarrito(val, TbGtable) {
 
 function pedidoEnterGrid(valor,control,Ids){
     if (valor) {//Si el usuario Presiono Enter= True
-         control.value = redondea(control.value, Ndecimal);
+         control.value = control.value;//redondea(control.value, Ndecimal);
          //var p_venta=parseFloat(control.value);
          var cant=control.value;
-         calculaTotal(cant,Ids);
+         var Grid = JSON.parse(sessionStorage.dts_carrito);
+         var array =findCantotal(Grid,'ids_pro',Ids,cant)
+         sessionStorage.dts_carrito = JSON.stringify(array);
+         //calculaTotal(cant,Ids);
     }
 }
 
-function calculaTotal( cant,Ids) {
+function findCantotal(array, property, value, cant) {
+    var TbGtable = 'TbG_ProductosCar';
+    var precio = 0;
+    var valor = 0;
+    var total = 0;
+    var vtot = 0;
+
+    for (var i = 0; i < array.length; i++) {
+        //ENCONTRO LA PROPIEDAD        
+        if (array[i][property] == value) {
+            array[i]['can_des'] = cant;
+            array[i]['t_venta'] = cant * parseFloat(array[i]['p_venta']);
+            //array[i]['por_des']
+            //array[i]['val_des']
+            //array[i]['i_m_iva']
+            //array[i]['val_iva']
+            //Remplaza datos en Detalle
+            $('#' + TbGtable + ' tr').each(function () {
+                var idstable = $(this).find("td").eq(0).html();
+                
+                if (idstable == value) {
+                    //console.log("econtro");
+                    //precio = $(this).find("td").eq(3).html();
+                    //alert('precio'+precio)
+                    valor = redondea(array[i]['t_venta'], Ndecimal);//redondea(precio * cant, Ndecimal);
+                    valor = '<p class="cart_total_price">' + valor + '</p>';
+                    $(this).find("td").eq(5).html(valor);
+                    return;
+                    //return false;//salir del each
+                }
+                //console.log("no rnvonyto");
+
+            });
+            //vtot = vtot+redondea(array[i]['t_venta'], Ndecimal);
+        }else{
+            //vtot = vtot+redondea(, Ndecimal);
+        }
+        vtot =vtot+parseFloat(array[i]['t_venta']);
+        //alert(redondea(vtot, Ndecimal));
+        
+    }
+    $('#lbl_subtotal').text(redondea(vtot, Ndecimal))
+    $('#lbl_total').text(redondea(vtot, Ndecimal))
+    return array;
+}
+
+
+function calculaTotal(cant,Ids) {
     var precio = 0;
     var valor=0;
     var total=0;
@@ -239,17 +299,18 @@ function calculaTotal( cant,Ids) {
     var TbGtable = 'TbG_ProductosCar';
     $('#' + TbGtable + ' tr').each(function () {
         var idstable = $(this).find("td").eq(0).html();
-        if (idstable==Ids) {
-            precio = $(this).find("td").eq(5).html();
+        if (idstable==Ids) {            
+            precio = $(this).find("td").eq(3).html();
+            alert('precio'+precio)
             valor=redondea(precio * cant, Ndecimal);
-            $(this).find("td").eq(6).html(valor);
+            $(this).find("td").eq(5).html(valor);
         }
-        if (idstable!='') {
-            vtot=parseFloat($(this).find("td").eq(6).html());
+        if (idstable!='') {//Recoroor Total
+            vtot=parseFloat($(this).find("td").eq(5).html());
             total+=(vtot>0)?vtot:0;
         }
     });
-    $('#lbl_total').text(redondea(total, Ndecimal))
+    //$('#lbl_total').text(redondea(total, Ndecimal))
 }
 
 

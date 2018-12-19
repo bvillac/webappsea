@@ -46,7 +46,7 @@ $isUser = $session->get('PB_isuser', FALSE);
                 <div class="shop-menu pull-right">
                     <ul class="nav navbar-nav">
                         <?php if ($isUser != FALSE && $session->isActive ){ ?>
-                            <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("login", "Account"), ['site/index']); ?></li>
+                            <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("store", "Account"), ['site/index']); ?></li>
                         <?php }else{ ?>
                             <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("login", "Create Account"), ['site/index']); ?></li>
                         <?php } ?>

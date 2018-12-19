@@ -33,14 +33,14 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
                         <li><?= Html::a(Yii::t("store", "Contact"), ['site/contact']); ?></li>      
                     </ul>
                 </div>
-                <div class="navbar-header">
+<!--                <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                </div>
+                </div>-->
                 
             </div>
             <div class="col-sm-3">

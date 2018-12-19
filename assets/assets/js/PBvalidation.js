@@ -9,6 +9,13 @@ var FileExtensions = ['jpg', 'png', 'pdf'];
 var browseLabel = " Examinar..";
 var FileSize = 1024;
 var nsegundos = 3000;//3000ms = 3s
+var Ndecimal = 2;
+var Nprodecimal = 4;
+var PorIva = 12;
+//var RutaImagenAccion = $('#txth_base').val() + "/themes/" + $('#txth_theme').val() + "/images/acciones/";
+var t_show = 0;
+var t_hide = 5000;
+var t_transi = 1500;
 /* variable globales */
 var ico = new Object();
 ico.hidden = {

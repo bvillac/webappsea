@@ -77,6 +77,10 @@ $(document).ready(function () {
         verificarIngreso();
     });
     
+    $('#cmb_orden').change(function () {
+        var page = $(this).attr('data');
+        buscarProductos(page,0);
+    });
     
 
 });
@@ -88,9 +92,11 @@ function buscarProductos(page,idsCat) {
     //$('.items').html('<div class="loading"><img src="images/loading.gif" width="70px" height="70px"/><br/>Un momento por favor...</div>');
     var strData = "";
     var link = $('#txth_base').val() + "/site/index";
+    var orderBy=$('#cmb_orden option:selected').val();
     var arrParams = new Object();
     arrParams.page = (page!=0)?page:1;
     arrParams.idsCat = (idsCat!=0)?idsCat:0;
+    arrParams.orderBy = orderBy;
     arrParams.op = 'productos';
     requestHttpAjax(link, arrParams, function (response) {
         if (response.status == "OK") {

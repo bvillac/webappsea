@@ -65,12 +65,14 @@ class Tienda {
 
     public static function getProductoTienda($data){
         $arroout = array();
+        $tipOrderby="ASC";
         $page=1;//Valor por defecto 1
         $idsCat=0;//Valor por defecto 0
         $tCount=Tienda::getCountProductoTienda();
         //Utilities::putMessageLogFile($data);
         if(isset($data['page'])){$page=$data['page'];}
         if(isset($data['idsCat'])){$idsCat=$data['idsCat'];}
+        if(isset($data['orderBy'])){$tipOrderby=($data['orderBy']==2)?"DESC":"ASC";}
 
         $rowsPerPage = \Yii::$app->params['pagePro'];
         $offset = ($page - 1) * $rowsPerPage;
@@ -80,8 +82,13 @@ class Tienda {
                   INNER JOIN " . $con->dbname . ".precios B
                     ON A.ids_pro=B.ids_pro
               WHERE A.est_log=1 ";
-        $sql.=($idsCat!=0)?" AND A.ids_cat=$idsCat":"";
+        $sql.=($idsCat!=0)?" AND A.ids_cat=$idsCat":"";   
+        $sql.=" ORDER BY A.des_com ". $tipOrderby;
         $sql.=" LIMIT ".$offset.", ".$rowsPerPage;
+        
+        
+        
+        
         $comando = $con->createCommand($sql);
         
         //$comando->bindParam(":med_id", $ids, \PDO::PARAM_INT);
