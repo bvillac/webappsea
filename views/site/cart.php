@@ -17,5 +17,10 @@ $model = 0;
         <?= $this->render('_cart_items.php', ['directoryAsset' => $directoryAsset, 'model' => $model]) ?> 
     </div>
 </section><!--#cart_items-->
-
+<script>
+    
+    
+</script>
+    
+    
 

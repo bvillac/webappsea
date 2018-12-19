@@ -77,17 +77,14 @@ VALUES
 <{usuario: }>);
 */
 
+$(document).ready(function () {
+    //aquí el código que deseas ejecutar
+    recargarGridProductoCar();
+});
 
 function addCarrito(Ids,CodIds,Nombre,Pvta){
-    alert(Ids);
-    /*var datArray = new Array();
-    var objDat = new Object();
-    objDat.ids_pro = ids;
-    //objDat.cod_art = $('#txt_password').val();
-    datArray[0] = objDat;
-    //sessionStorage.dataPersona = JSON.stringify(datArray);
-    return datArray;*/
-    
+    //alert(Ids);
+
     var arr_carrito = new Array();
     if (sessionStorage.dts_carrito) {
         /*Agrego a la Sesion*/
@@ -96,7 +93,7 @@ function addCarrito(Ids,CodIds,Nombre,Pvta){
         if (size > 0) {
             //Varios Items
             if (codigoExiste(CodIds, 'cod_art', sessionStorage.dts_carrito)) {//Verifico si el Codigo Existe  para no Dejar ingresar Repetidos
-                arr_carrito[size] = objProductoCar(size,Ids,CodIds,Nombre,Pvta); //objAntDep(retornarIndexArray(JSON.parse(sessionStorage.atc_antDeporte),'DEP_NOMBRE',valor),JSON.parse(sessionStorage.atc_antDeporte));
+                arr_carrito[size] = objProductoCar(size,Ids,CodIds,Nombre,Pvta);
                 sessionStorage.dts_carrito = JSON.stringify(arr_carrito);
                 //addVariosItemProducto(tGrid, arr_carrito, -1);
                 //limpiarDetalle();
@@ -133,6 +130,127 @@ function objProductoCar(indice,Ids,CodIds,Nombre,Pvta) {
     return rowGrid;
 }
 
+function recargarGridProductoCar() {
+    //alert('ingreso');
+    var tGrid = 'TbG_ProductosCar';
+    if (sessionStorage.dts_carrito) {
+        var arr_Grid = JSON.parse(sessionStorage.dts_carrito);
+        if (arr_Grid.length > 0) {
+            $('#' + tGrid + ' > tbody').html("");
+            for (var i = 0; i < arr_Grid.length; i++) {
+                $('#' + tGrid + ' > tbody:last-child').append(retornaFilaProductoCar(i, arr_Grid, tGrid, true));
+            }
+        }
+    }
+}
+
+function retornaFilaProductoCar(c, Grid, TbGtable, op) {
+    //var RutaImagenAccion='ruta IMG'//$('#txth_rutaImg').val();
+    var ruta=$('#txth_imgfolder').val()+ Grid[c]['cod_art']+'_G-01.jpg';
+    var strFila = "";
+    //var imgCol='<img class="btn-img" src="'+RutaImagenAccion+'/acciones/eliminar.png" >';
+    //[{"ids_pos":0,"ids_pro":"4","cod_art":"A0004","des_com":"ALMOHADILLA KORES (BENE) PLASTICA MED.","p_venta":"0.9000","can_des":1,"accion":"new"},{"ids_pos":1,"ids_pro":"1","cod_art":"A0001","des_com":"AGENDA EJECUTIVA 2016 F/DORADOS VERDE","p_venta":"8.5376","can_des":1,"accion":"new"}]
+    
+    strFila += '<td style="display:none; border:none;">' + Grid[c]['ids_pro'] + '</td>';
+    strFila += '<td class="cart_product">';
+        strFila += '<a href=""><img class="imgProCarrito" src="'+ruta+'"  alt=""></a>';
+    strFila += '</td>';
+    strFila += '<td class="cart_description">';
+        strFila += '<h4><a href="">' + Grid[c]['des_com'] + '</a></h4>';
+        strFila += '<p>Web ID: ' + Grid[c]['cod_art'] + '</p>';
+    strFila += '</td>';
+    strFila += '<td class="cart_price">';
+        strFila += '<p>$' + Grid[c]['p_venta'] + '</p>';
+    strFila += '</td>';
+    strFila += '<td class="cart_quantity">';
+        strFila += '<div class="cart_quantity_button">';
+            strFila += '<a class="cart_quantity_up" href=""> + </a>';
+            strFila += '<input class="cart_quantity_input" type="text" name="quantity" value="1" ';
+                    strFila += ' onkeydown="pedidoEnterGrid(isEnter(event),this,' + Grid[c]['ids_pro'] + ')"';
+                    //strFila += ' autocomplete="off" size="2">';
+                    strFila += ' autocomplete="off" size="2">';
+            strFila += '<a class="cart_quantity_down" href=""> - </a>';
+        strFila += '</div>';
+    strFila += '</td>';
+    strFila += '<td class="cart_total">';
+        strFila += '<p class="cart_total_price">$8.54</p>';
+    strFila += '</td>';
+    strFila += '<td class="cart_delete">';
+        strFila += '<a onclick="eliminarItemsCarrito(\'' + Grid[c]['ids_pro'] + '\',\'' + TbGtable + '\')" class="cart_quantity_delete" ><i class="fa fa-times"></i></a>';
+    strFila += '</td>';
+    
+    
+    
+    
+    /*strFila += '<td style="display:none; border:none;">' + Grid[c]['ids_reb'] + '</td>';
+    strFila += '<td>' + Grid[c]['nom_ban'] + '</td>';
+    strFila += '<td>' + Grid[c]['tip_cta'] + '</td>';
+    strFila += '<td>' + Grid[c]['num_cta'] + '</td>';
+    strFila += '<td>' + Grid[c]['cre_ban'] + '</td>';
+    
+    //strFila +='<td>'+ Grid[c]['pro_detalle_uso']+'</td>';
+    strFila += '<td>';//¿Está seguro de eliminar este elemento?
+    //strFila +='<a class="btn-img" onclick="eliminarItemsProducto('+Grid[c]['DEP_ID']+',\''+TbGtable+'\')" >'+imgCol+'</a>';
+    strFila += '<a onclick="eliminarItemsBanco(\'' + Grid[c]['ids_reb'] + '\',\'' + TbGtable + '\')" ><span class="glyphicon glyphicon-trash"></span></a>';
+    strFila += '</td>';*/
+
+    if (op) {
+        strFila = '<tr>' + strFila + '</tr>';
+    }
+    return strFila;
+}
+
+function eliminarItemsCarrito(val, TbGtable) {
+    
+    //alert('eliminar');
+    var ids = "";
+    //var count=0;
+    if (sessionStorage.dts_carrito) {
+        var Grid = JSON.parse(sessionStorage.dts_carrito);
+        if (Grid.length > 0) {
+            $('#' + TbGtable + ' tr').each(function () {
+                ids = $(this).find("td").eq(0).html();
+                //alert(ids);
+                if (ids == val) {
+                    var array = findAndRemove(Grid, 'ids_pro', ids);
+                    sessionStorage.dts_carrito = JSON.stringify(array);
+                    //if (count==0){sessionStorage.removeItem('detalleGrid')}
+                    $(this).remove();
+                }
+            });
+        }
+    }
+}
+
+function pedidoEnterGrid(valor,control,Ids){
+    if (valor) {//Si el usuario Presiono Enter= True
+         control.value = redondea(control.value, Ndecimal);
+         //var p_venta=parseFloat(control.value);
+         var cant=control.value;
+         calculaTotal(cant,Ids);
+    }
+}
+
+function calculaTotal( cant,Ids) {
+    var precio = 0;
+    var valor=0;
+    var total=0;
+    var vtot=0;
+    var TbGtable = 'TbG_ProductosCar';
+    $('#' + TbGtable + ' tr').each(function () {
+        var idstable = $(this).find("td").eq(0).html();
+        if (idstable==Ids) {
+            precio = $(this).find("td").eq(5).html();
+            valor=redondea(precio * cant, Ndecimal);
+            $(this).find("td").eq(6).html(valor);
+        }
+        if (idstable!='') {
+            vtot=parseFloat($(this).find("td").eq(6).html());
+            total+=(vtot>0)?vtot:0;
+        }
+    });
+    $('#lbl_total').text(redondea(total, Ndecimal))
+}
 
 
 /* INFORMACION DE BANCOS REFERENCIA*/

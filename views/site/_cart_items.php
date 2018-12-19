@@ -8,7 +8,7 @@ use yii\helpers\Url;
 ?>
 
 <div class="table-responsive cart_info">
-    <table class="table table-condensed">
+    <table id="TbG_ProductosCar" class="table table-condensed">
         <thead>
             <tr class="cart_menu">
                 <td class="image"><?=Yii::t("store", "Item")?></td>
