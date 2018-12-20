@@ -6,12 +6,18 @@
  */
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use kartik\date\DatePicker;
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
+
+
 $SeccPro=app\models\Tienda::getSeccionTienda();
 ?>
 <div class="header-bottom"><!--header-bottom-->
     <div class="container">
         <div class="row">
-            <div class="col-sm-9">
+            <div class="col-sm-6">
                 <!----------------->
                 
                 <!----------------->
@@ -43,9 +49,33 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
                 </div>-->
                 
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-6">
                 <div class="search_box pull-right">
-                    <input type="text" placeholder="Search"/>
+                        <?=
+                        AutoComplete::widget([
+                            'name' => 'txt_buscarData',
+                            'id' => 'txt_buscarData',
+                            'clientOptions' => [
+                                'autoFill' => true,
+                                'minLength' => '3',
+                                'source' => new JsExpression("function( request, response ) {
+                                            autocompletarBuscarPaciente(request, response,'txt_buscarData','COD-NOM');
+                                            }"),
+                                'select' => new JsExpression("function( event, ui ) {
+                                                    //alert(ui.item.id);
+                                                    //actualizaBuscarPersona(ui.item.PER_ID); 
+                                                    $('#txth_ids').val(ui.item.Cedula);
+                                                    //actualizarGrid();
+                                             }")
+                            ],
+                            'options' => [
+                                'class' => 'form-control',
+                                'Onkeyup' => 'clearGrid()',
+                                'placeholder' => Yii::t("formulario", "Buscar productos")
+                            ],
+                        ]);
+                        ?>
+             
                 </div>
             </div>
         </div>
