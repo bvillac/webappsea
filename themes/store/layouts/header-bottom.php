@@ -59,18 +59,18 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
                                 'autoFill' => true,
                                 'minLength' => '3',
                                 'source' => new JsExpression("function( request, response ) {
-                                            autocompletarBuscarPaciente(request, response,'txt_buscarData','COD-NOM');
+                                            autocompletarBuscarProducto(request, response,'txt_buscarData','COD-NOM');
                                             }"),
                                 'select' => new JsExpression("function( event, ui ) {
                                                     //alert(ui.item.id);
                                                     //actualizaBuscarPersona(ui.item.PER_ID); 
-                                                    $('#txth_ids').val(ui.item.Cedula);
+                                                    //$('#txth_ids').val(ui.item.nombre);
                                                     //actualizarGrid();
                                              }")
                             ],
                             'options' => [
                                 'class' => 'form-control',
-                                'Onkeyup' => 'clearGrid()',
+                                //'Onkeyup' => 'clearGrid()',
                                 'placeholder' => Yii::t("formulario", "Buscar productos")
                             ],
                         ]);

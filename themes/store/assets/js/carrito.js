@@ -460,3 +460,111 @@ function objProducto(indice) {
 
 
 /* FIN INFORMACION DE BANCOS REFERENCIA*/
+
+function autocompletarBuscarProducto(request, response,control,op){    
+    var strData = "";
+    var link = $('#txth_base').val() + "/site/buscararticulo";
+    var arrParams = new Object();
+    arrParams.valor = $('#'+control).val();
+    arrParams.op=op;
+    requestHttpAjax(link, arrParams, function (response) {
+        if (response.status == "OK") {
+            var arrayList =new Array;
+            var data = response.data;
+            var count=data.length;
+            for(var i=0;i<count;i++){
+                row=new Object();
+                //ids_pro ids,cod_art codigo,des_com nombre
+                row.ids=data[i]['ids'];
+                row.codigo=data[i]['codigo'];
+                row.nombre=data[i]['nombre'];
+
+                // Campos Importandes relacionados con el  CJuiAutoComplete
+                row.id=data[i]['ids'];
+                row.label=data[i]['codigo']+' - '+data[i]['nombre'];//+' - '+data[i]['SEGURO_SOCIAL'];//Lo sugerido
+                //row.value=data[i]['IdentificacionComprador'];//lo que se almacena en en la caja de texto
+                row.value=data[i]['nombre'];//lo que se almacena en en la caja de texto
+                arrayList[i] = row;
+            }
+            sessionStorage.src_buscIndex = JSON.stringify(arrayList);//dss=>DataSessionStore
+            response(arrayList);  
+            
+        }
+        
+        /*if (response.status == "OK") {
+            var data = response.message;
+            for (var i = 0; i < data.length; i++) {
+                //alert(data[i]['nom_cat']);
+                //option_arr += '<a onclick="deleteComentario(\'' + data[i]['Ids'] + '\')" class="pull-right btn-box-tool" href="#"><i class="fa fa-times"></i></a>';
+                strData += llenarCategorias(data[i]);
+            }
+            $("#listaCategorias").html(strData);
+        }*/
+    }, true);
+    //return false;
+    
+    
+    
+    /*$.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url:link,
+        data:{
+            valor: $('#'+control).val(),
+            op: op
+        },
+        success:function(data){
+            var arrayList =new Array;
+            var count=data.length;
+            for(var i=0;i<count;i++){
+                row=new Object();
+                row.IdentificacionComprador=data[i]['IdentificacionComprador'];
+                row.RazonSocialComprador=data[i]['RazonSocialComprador'];
+
+                // Campos Importandes relacionados con el  CJuiAutoComplete
+                row.id=data[i]['IdentificacionComprador'];
+                row.label=data[i]['RazonSocialComprador']+' - '+data[i]['IdentificacionComprador'];//+' - '+data[i]['SEGURO_SOCIAL'];//Lo sugerido
+                //row.value=data[i]['IdentificacionComprador'];//lo que se almacena en en la caja de texto
+                row.value=data[i]['RazonSocialComprador'];//lo que se almacena en en la caja de texto
+                arrayList[i] = row;
+            }
+            sessionStorage.src_buscIndex = JSON.stringify(arrayList);//dss=>DataSessionStore
+            response(arrayList);  
+        }
+    }) */           
+}
+
+
+
+function buscarDataIndex(control,op){ 
+    control=(control=='')?'txt_PER_CEDULA':control;
+    var link=$('#txth_controlador').val()+"/Index";
+    //var link=$('#txth_controlador').val()+"/BuscaDataIndex";
+    $.fn.yiiGridView.update('TbG_DOCUMENTO', {
+        type: 'POST',
+        url:link,
+        data:{
+            "CONT_BUSCAR": controlBuscarIndex(control,op)
+        }
+    }); 
+}
+
+function controlBuscarIndex(control,op){
+    var buscarArray = new Array();
+    var buscarIndex=new Object();
+    if(sessionStorage.src_buscIndex){
+        var arrayList = JSON.parse(sessionStorage.src_buscIndex);
+        buscarIndex.CEDULA=retornarIndLista(arrayList,'RazonSocialComprador',$('#'+control).val(),'IdentificacionComprador');
+    }else{
+        buscarIndex.CEDULA='';
+    }
+    buscarIndex.OP=op;
+    buscarIndex.TIPO_APR=$('#cmb_tipoApr option:selected').val();
+    buscarIndex.RAZONSOCIAL=$('#'+control).val(),
+   
+    buscarIndex.F_INI=$('#dtp_fec_ini').val();
+    buscarIndex.F_FIN=$('#dtp_fec_fin').val();
+    buscarArray[0] = buscarIndex;
+    return JSON.stringify(buscarArray);
+}
+

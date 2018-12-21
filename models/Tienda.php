@@ -156,4 +156,53 @@ class Tienda {
         return $comando->queryAll();
     }
     
+    public function retornarBuscArticulo($valor, $op) {
+        $con = \Yii::$app->db_tienda; 
+        $rawData = array();
+        //Patron de Busqueda
+        /* http://www.mclibre.org/consultar/php/lecciones/php_expresiones_regulares.html */
+        $patron = "/^[[:digit:]]+$/"; //Los patrones deben empezar y acabar con el carácter / (barra).
+        if (preg_match($patron, $valor)) {
+            $op = "COD"; //La cadena son sólo números.
+        } else {
+            $op = "NOM"; //La cadena son Alfanumericos.
+            //Las separa en un array 
+            $aux = explode(" ", $valor);
+            $condicion = " ";
+            for ($i = 0; $i < count($aux); $i++) {
+                //Crea la Sentencia de Busqueda
+                //$condicion .=" AND (PER_NOMBRE LIKE '%$aux[$i]%' OR PER_APELLIDO LIKE '%$aux[$i]%' ) ";
+                $condicion .=" AND des_com LIKE '%$aux[$i]%' ";
+            }
+        }
+        /*$sql = "SELECT A.IdentificacionComprador,A.RazonSocialComprador
+                    FROM " . $con->dbname . ".NubeFactura A
+                  WHERE A.Estado<>0	GROUP BY IdentificacionComprador ";*/
+        
+        $sql = "SELECT ids_pro ids,cod_art codigo,des_com nombre "
+                    . " FROM " . $con->dbname . ".productos "
+                    . " WHERE est_log=1  ";
+
+        switch ($op) {
+            case 'COD':
+                $sql .=" AND cod_art LIKE '%$valor%' ";
+                break;
+            case 'NOM':
+                $sql .=$condicion;
+                break;
+            default:
+        }
+        //\Yii::$app->params['copyright']
+        $sql .= " LIMIT " . \Yii::$app->params['limitRow'] ;
+        //Utilities::putMessageLogFile($sql);
+        //echo $sql;
+        $comando = $con->createCommand($sql);
+        //$comando->bindParam(":ids", $ids, \PDO::PARAM_INT);
+        $rawData=$comando->queryAll();
+        
+        //$rawData = $con->createCommand($sql)->queryAll();
+        //$con->active = false;
+        return $rawData;
+    }
+    
 }

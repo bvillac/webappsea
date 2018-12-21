@@ -41,6 +41,18 @@ function findAndRemove(array, property, value) {
     return array;
 }
 
+function retornarIndLista(array,property,value,ids){
+    var index=-1;
+    for(var i=0; i<array.length; i++){
+        if(array[i][property]==value){
+            index=array[i][ids];
+            return index;
+        }
+    }
+    //Retorna  -1 si no esta en ls lista
+    return index;
+}
+
 
 $(document).ready(function () {
     buscarProductos(1,0);

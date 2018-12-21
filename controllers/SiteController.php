@@ -215,5 +215,26 @@ class SiteController extends Controller
         return $this->render('cart');
     }
     
+    public function actionBuscararticulo() {
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $valor = isset($data['valor']) ? $data['valor'] : "";
+            
+            $op = isset($data['op']) ? $data['op'] : "";
+            
+            //$valor = isset($_POST['valor']) ? $_POST['valor'] : "";
+            //$op = isset($_POST['op']) ? $_POST['op'] : "";
+            $arrayData = array();
+            $dataTienda = new Tienda();
+            $arrayData = $dataTienda->retornarBuscArticulo($valor, $op);
+            //Utilities::putMessageLogFile($arrayData);
+            //echo json_encode($arrayData);
+            echo Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', '',$arrayData);
+            return;
+            //header('Content-type: application/json');
+            //echo CJavaScript::jsonEncode($arrayData);
+        }
+    }
+    
 
 }
