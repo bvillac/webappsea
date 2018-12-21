@@ -229,7 +229,8 @@ class SiteController extends Controller
             $arrayData = $dataTienda->retornarBuscArticulo($valor, $op);
             //Utilities::putMessageLogFile($arrayData);
             //echo json_encode($arrayData);
-            echo Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', '',$arrayData);
+            
+            return Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', $arrayData,null);
             return;
             //header('Content-type: application/json');
             //echo CJavaScript::jsonEncode($arrayData);

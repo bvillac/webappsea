@@ -158,7 +158,7 @@ class Tienda {
     
     public function retornarBuscArticulo($valor, $op) {
         $con = \Yii::$app->db_tienda; 
-        $rawData = array();
+        //$rawData = array();
         //Patron de Busqueda
         /* http://www.mclibre.org/consultar/php/lecciones/php_expresiones_regulares.html */
         $patron = "/^[[:digit:]]+$/"; //Los patrones deben empezar y acabar con el carácter / (barra).
@@ -198,11 +198,12 @@ class Tienda {
         //echo $sql;
         $comando = $con->createCommand($sql);
         //$comando->bindParam(":ids", $ids, \PDO::PARAM_INT);
-        $rawData=$comando->queryAll();
+        //$rawData=$comando->queryAll();
+        return $comando->queryAll();
         
         //$rawData = $con->createCommand($sql)->queryAll();
         //$con->active = false;
-        return $rawData;
+        //return $rawData;
     }
     
 }

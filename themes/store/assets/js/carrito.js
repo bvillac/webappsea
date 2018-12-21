@@ -461,7 +461,9 @@ function objProducto(indice) {
 
 /* FIN INFORMACION DE BANCOS REFERENCIA*/
 
-function autocompletarBuscarProducto(request, response,control,op){    
+/* BUSCAR DATOS PRODUCTOS*/
+
+function autocompletarBuscarProducto(request, responseGrid,control,op){    
     var strData = "";
     var link = $('#txth_base').val() + "/site/buscararticulo";
     var arrParams = new Object();
@@ -470,14 +472,18 @@ function autocompletarBuscarProducto(request, response,control,op){
     requestHttpAjax(link, arrParams, function (response) {
         if (response.status == "OK") {
             var arrayList =new Array;
-            var data = response.data;
+            var data = response.message;
+            //var data = response;//JSON.stringify(response);
+            //alert(data.toSource());
             var count=data.length;
+            //alert(count);
             for(var i=0;i<count;i++){
                 row=new Object();
                 //ids_pro ids,cod_art codigo,des_com nombre
                 row.ids=data[i]['ids'];
                 row.codigo=data[i]['codigo'];
                 row.nombre=data[i]['nombre'];
+                //alert(data[i]['nombre']);
 
                 // Campos Importandes relacionados con el  CJuiAutoComplete
                 row.id=data[i]['ids'];
@@ -487,7 +493,7 @@ function autocompletarBuscarProducto(request, response,control,op){
                 arrayList[i] = row;
             }
             sessionStorage.src_buscIndex = JSON.stringify(arrayList);//dss=>DataSessionStore
-            response(arrayList);  
+            responseGrid(arrayList);  
             
         }
         

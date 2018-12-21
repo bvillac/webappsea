@@ -62,7 +62,7 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
                                             autocompletarBuscarProducto(request, response,'txt_buscarData','COD-NOM');
                                             }"),
                                 'select' => new JsExpression("function( event, ui ) {
-                                                    //alert(ui.item.id);
+                                                    alert(ui.item.id);
                                                     //actualizaBuscarPersona(ui.item.PER_ID); 
                                                     //$('#txth_ids').val(ui.item.nombre);
                                                     //actualizarGrid();
