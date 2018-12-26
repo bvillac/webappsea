@@ -17,7 +17,7 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
 <div class="header-bottom"><!--header-bottom-->
     <div class="container">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <!----------------->
                 
                 <!----------------->
@@ -49,8 +49,9 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
                 </div>-->
                 
             </div>
-            <div class="col-sm-6">
-                <div class="search_box pull-right">
+            <div class="col-sm-4">
+<!--                <div class="search_box pull-right">-->
+                    <div>    
                         <?=
                         AutoComplete::widget([
                             'name' => 'txt_buscarData',
@@ -62,7 +63,8 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
                                             autocompletarBuscarProducto(request, response,'txt_buscarData','COD-NOM');
                                             }"),
                                 'select' => new JsExpression("function( event, ui ) {
-                                                    alert(ui.item.id);
+                                                    //alert(ui.item.id);
+                                                    verProducto(ui.item.id);
                                                     //actualizaBuscarPersona(ui.item.PER_ID); 
                                                     //$('#txth_ids').val(ui.item.nombre);
                                                     //actualizarGrid();
@@ -70,6 +72,7 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
                             ],
                             'options' => [
                                 'class' => 'form-control',
+                                'onkeydown' => 'buscarEnterProducto(isEnter(event),this)',
                                 //'Onkeyup' => 'clearGrid()',
                                 'placeholder' => Yii::t("formulario", "Buscar productos")
                             ],

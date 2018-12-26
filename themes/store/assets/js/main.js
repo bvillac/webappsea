@@ -70,7 +70,7 @@ $(document).ready(function () {
             scrollTrigger: false, // Set a custom triggering element. Can be an HTML string or jQuery object
             //scrollTarget: false, // Set a custom target element for scrolling to the top
             scrollText: '<i class="fa fa-angle-up"></i>', // Text for element, can contain HTML
-            scrollTitle: false, // Set a custom <a> title if required.
+            scrollTitle: false, // Set a custom <a> title if requirSOBRE ed.
             scrollImg: false, // Set true to use image
             activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
             zIndex: 2147483647 // Z-Index for the overlay
@@ -97,7 +97,11 @@ $(document).ready(function () {
 
 });
 
-
+function buscarEnterProducto(valor,control){
+    if (valor) {//Si el usuario Presiono Enter= True
+         buscarProductos(0,0);
+    }
+}
 
 
 function buscarProductos(page,idsCat) {
@@ -105,9 +109,12 @@ function buscarProductos(page,idsCat) {
     var strData = "";
     var link = $('#txth_base').val() + "/site/index";
     var orderBy=$('#cmb_orden option:selected').val();
+    var desCom=$('#txt_buscarData').val();
+    
     var arrParams = new Object();
     arrParams.page = (page!=0)?page:1;
     arrParams.idsCat = (idsCat!=0)?idsCat:0;
+    arrParams.desCom = desCom;
     arrParams.orderBy = orderBy;
     arrParams.op = 'productos';
     requestHttpAjax(link, arrParams, function (response) {

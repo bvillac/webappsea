@@ -68,10 +68,12 @@ class Tienda {
         $tipOrderby="ASC";
         $page=1;//Valor por defecto 1
         $idsCat=0;//Valor por defecto 0
+        $desCom="";
         $tCount=Tienda::getCountProductoTienda();
         //Utilities::putMessageLogFile($data);
         if(isset($data['page'])){$page=$data['page'];}
         if(isset($data['idsCat'])){$idsCat=$data['idsCat'];}
+        if(isset($data['desCom'])){$desCom=$data['desCom'];}
         if(isset($data['orderBy'])){$tipOrderby=($data['orderBy']==2)?"DESC":"ASC";}
 
         $rowsPerPage = \Yii::$app->params['pagePro'];
@@ -82,7 +84,8 @@ class Tienda {
                   INNER JOIN " . $con->dbname . ".precios B
                     ON A.ids_pro=B.ids_pro
               WHERE A.est_log=1 ";
-        $sql.=($idsCat!=0)?" AND A.ids_cat=$idsCat":"";   
+        $sql.=($idsCat!=0)?" AND A.ids_cat=$idsCat":"";  
+        $sql.=($desCom!="")?" AND A.des_com LIKE '%$desCom%' ":"";
         $sql.=" ORDER BY A.des_com ". $tipOrderby;
         $sql.=" LIMIT ".$offset.", ".$rowsPerPage;
         
@@ -171,14 +174,11 @@ class Tienda {
             $condicion = " ";
             for ($i = 0; $i < count($aux); $i++) {
                 //Crea la Sentencia de Busqueda
-                //$condicion .=" AND (PER_NOMBRE LIKE '%$aux[$i]%' OR PER_APELLIDO LIKE '%$aux[$i]%' ) ";
-                $condicion .=" AND des_com LIKE '%$aux[$i]%' ";
+                $condicion .=" AND (des_com LIKE '%$aux[$i]%' OR cod_art LIKE '%$aux[$i]%' ) ";
+                //$condicion .=" AND des_com LIKE '%$aux[$i]%' ";
             }
         }
-        /*$sql = "SELECT A.IdentificacionComprador,A.RazonSocialComprador
-                    FROM " . $con->dbname . ".NubeFactura A
-                  WHERE A.Estado<>0	GROUP BY IdentificacionComprador ";*/
-        
+
         $sql = "SELECT ids_pro ids,cod_art codigo,des_com nombre "
                     . " FROM " . $con->dbname . ".productos "
                     . " WHERE est_log=1  ";
