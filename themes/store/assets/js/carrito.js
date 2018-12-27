@@ -82,8 +82,10 @@ $(document).ready(function () {
     recargarGridProductoCar();
 });
 
-function addCarrito(Ids,CodIds,Nombre,Pvta){
-    alert(Ids);
+function addCarrito(Ids,CodIds,Nombre,Pvta,CantVal){
+    //alert('dat');
+    var Cant=(CantVal==0)?0:$('#'+CantVal).val();
+    //alert(Cant);
 
     var arr_carrito = new Array();
     if (sessionStorage.dts_carrito) {
@@ -93,7 +95,7 @@ function addCarrito(Ids,CodIds,Nombre,Pvta){
         if (size > 0) {
             //Varios Items
             if (codigoExiste(CodIds, 'cod_art', sessionStorage.dts_carrito)) {//Verifico si el Codigo Existe  para no Dejar ingresar Repetidos
-                arr_carrito[size] = objProductoCar(size,Ids,CodIds,Nombre,Pvta);
+                arr_carrito[size] = objProductoCar(size,Ids,CodIds,Nombre,Pvta,Cant);
                 sessionStorage.dts_carrito = JSON.stringify(arr_carrito);
                 //addVariosItemProducto(tGrid, arr_carrito, -1);
                 //limpiarDetalle();
@@ -110,7 +112,7 @@ function addCarrito(Ids,CodIds,Nombre,Pvta){
     } else {
         //No existe la Session
         //Primer Items
-        arr_carrito[0] = objProductoCar(0,Ids,CodIds,Nombre,Pvta);
+        arr_carrito[0] = objProductoCar(0,Ids,CodIds,Nombre,Pvta,Cant);
         sessionStorage.dts_carrito = JSON.stringify(arr_carrito);
         //addPrimerItemProducto(tGrid, arr_carrito, 0);
         //limpiarDetalle();
@@ -118,14 +120,14 @@ function addCarrito(Ids,CodIds,Nombre,Pvta){
     
 }
 
-function objProductoCar(indice,Ids,CodIds,Nombre,Pvta) {
+function objProductoCar(indice,Ids,CodIds,Nombre,Pvta,Cant) {
     var rowGrid = new Object();
     rowGrid.ids_pos = indice;
     rowGrid.ids_pro = Ids;
     rowGrid.cod_art =CodIds;
     rowGrid.des_com =Nombre;
     rowGrid.p_venta =Pvta;
-    rowGrid.can_des =1;
+    rowGrid.can_des =Cant;
     rowGrid.t_venta =Pvta*1;
     rowGrid.por_des =0;
     rowGrid.val_des =0;
@@ -175,13 +177,13 @@ function retornaFilaProductoCar(c, Grid, TbGtable, op) {
     strFila += '</td>';
     strFila += '<td class="cart_quantity">';
         strFila += '<div class="cart_quantity_button">';
-            strFila += '<a class="cart_quantity_up" href=""> + </a>';
+            //strFila += '<a class="cart_quantity_up" href=""> + </a>';
             strFila += '<input class="cart_quantity_input" type="text" name="quantity" value="1" ';
                     strFila += 'onkeydown="pedidoEnterGrid(isEnter(event),this,' + Grid[c]['ids_pro'] + ')"';
                     //strFila += ' autocomplete="off" size="2">';
                     strFila += 'onblur="javascript:return pedidoEnterGrid(true,this,' + Grid[c]['ids_pro'] + ')" ';
                     strFila += ' autocomplete="off" size="2">';
-            strFila += '<a class="cart_quantity_down" href=""> - </a>';
+            //strFila += '<a class="cart_quantity_down" href=""> - </a>';
         strFila += '</div>';
     strFila += '</td>';
     strFila += '<td class="cart_total">';
@@ -190,21 +192,6 @@ function retornaFilaProductoCar(c, Grid, TbGtable, op) {
     strFila += '<td class="cart_delete">';
         strFila += '<a onclick="eliminarItemsCarrito(\'' + Grid[c]['ids_pro'] + '\',\'' + TbGtable + '\')" class="cart_quantity_delete" ><i class="fa fa-times"></i></a>';
     strFila += '</td>';
-    
-    
-    
-    
-    /*strFila += '<td style="display:none; border:none;">' + Grid[c]['ids_reb'] + '</td>';
-    strFila += '<td>' + Grid[c]['nom_ban'] + '</td>';
-    strFila += '<td>' + Grid[c]['tip_cta'] + '</td>';
-    strFila += '<td>' + Grid[c]['num_cta'] + '</td>';
-    strFila += '<td>' + Grid[c]['cre_ban'] + '</td>';
-    
-    //strFila +='<td>'+ Grid[c]['pro_detalle_uso']+'</td>';
-    strFila += '<td>';//¿Está seguro de eliminar este elemento?
-    //strFila +='<a class="btn-img" onclick="eliminarItemsProducto('+Grid[c]['DEP_ID']+',\''+TbGtable+'\')" >'+imgCol+'</a>';
-    strFila += '<a onclick="eliminarItemsBanco(\'' + Grid[c]['ids_reb'] + '\',\'' + TbGtable + '\')" ><span class="glyphicon glyphicon-trash"></span></a>';
-    strFila += '</td>';*/
 
     if (op) {
         strFila = '<tr>' + strFila + '</tr>';
@@ -507,37 +494,7 @@ function autocompletarBuscarProducto(request, responseGrid,control,op){
             $("#listaCategorias").html(strData);
         }*/
     }, true);
-    //return false;
-    
-    
-    
-    /*$.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url:link,
-        data:{
-            valor: $('#'+control).val(),
-            op: op
-        },
-        success:function(data){
-            var arrayList =new Array;
-            var count=data.length;
-            for(var i=0;i<count;i++){
-                row=new Object();
-                row.IdentificacionComprador=data[i]['IdentificacionComprador'];
-                row.RazonSocialComprador=data[i]['RazonSocialComprador'];
-
-                // Campos Importandes relacionados con el  CJuiAutoComplete
-                row.id=data[i]['IdentificacionComprador'];
-                row.label=data[i]['RazonSocialComprador']+' - '+data[i]['IdentificacionComprador'];//+' - '+data[i]['SEGURO_SOCIAL'];//Lo sugerido
-                //row.value=data[i]['IdentificacionComprador'];//lo que se almacena en en la caja de texto
-                row.value=data[i]['RazonSocialComprador'];//lo que se almacena en en la caja de texto
-                arrayList[i] = row;
-            }
-            sessionStorage.src_buscIndex = JSON.stringify(arrayList);//dss=>DataSessionStore
-            response(arrayList);  
-        }
-    }) */           
+        
 }
 
 

@@ -162,7 +162,7 @@ function llenarItems(data){
                     strData += '<img onclick="verProducto(\'' + data['ids_pro'] + '\')" src="'+ruta+'" alt="" />';
                     strData += '<h2>$' + redondea(data['p_venta'],2) + '</h2>';
                     strData += '<p>' + data['des_com'] + '</p>';
-                    strData += '<a onclick="addCarrito(\'' + data['ids_pro'] + '\',\'' + data['cod_art'] + '\',\'' + data['des_com'] + '\',\'' + data['p_venta'] + '\')" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Agregar a Carrito</a>';
+                    strData += '<a onclick="addCarrito(\'' + data['ids_pro'] + '\',\'' + data['cod_art'] + '\',\'' + data['des_com'] + '\',\'' + data['p_venta'] + '\',0)" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Agregar a Carrito</a>';
                 strData += '</div>';
                 /*strData += '<div class="product-overlay">';
                     strData += '<div class="overlay-content">';
