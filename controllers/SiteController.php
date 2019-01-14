@@ -108,6 +108,22 @@ class SiteController extends Controller
     }
     
     /**
+     * PRODUCTOS
+     * @return Response|string
+     */
+     public function actionProductos() {
+        $resul=array();
+        if (Yii::$app->request->isAjax) {
+            
+        }
+        $resul = Tienda::getProductoTienda(null);
+        return $this->render('productos', [
+                    'models' => $resul['data'],
+                    'pages' => $resul['trows'],
+        ]);
+     }
+    
+    /**
      * Login action.
      *
      * @return Response|string
@@ -178,7 +194,7 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
-        $model = new ContactForm();
+        $model = new ContactForm();        
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
 

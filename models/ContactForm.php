@@ -42,7 +42,7 @@ class ContactForm extends Model
             'name' => Yii::t("app", "Name"),
             'email' => Yii::t("app", "Email"),
             'subject' => Yii::t("app", "Subject"),
-            'body' => Yii::t("app", "body"),
+            'body' => Yii::t("app", "Mensaje"),
             'required' => Yii::t("app", "required"),
         ];
     }

@@ -53,10 +53,20 @@ function retornarIndLista(array,property,value,ids){
     return index;
 }
 
-
 $(document).ready(function () {
+    //buscarIndex();
     buscarProductos(1,0);
     mostrarCategoria(base64_encode('1'));
+
+    $("#categoria > li").click(function () {
+        $("li").removeClass("active");
+        $(this).addClass("active");
+    });
+    
+    $("#subNivel > li").click(function () {
+        $("li").removeClass("active");
+        $(this).addClass("active");
+    });
     
     $(function () {
         $.scrollUp({
@@ -96,6 +106,17 @@ $(document).ready(function () {
     
 
 });
+
+function buscarIndex(){
+    alert(document.location);
+    alert('llego');
+    var indexData=document.location;
+    if(indexData.indexOf("index")>-1){//!=
+        alert('encontro');
+    }else{
+        alert('no encontro');
+    }
+}
 
 function buscarEnterProducto(valor,control){
     if (valor) {//Si el usuario Presiono Enter= True
@@ -221,7 +242,7 @@ function llenarCategorias(data){
                
                 strData += '<div id="' + data['nom_cat'] + '" class="panel-collapse collapse">';
                     strData += '<div class="panel-body">';
-                        strData += '<ul>';
+                        strData += '<ul id="subNivel" class="nav nav-pills nav-stacked">';
                             for (var i = 0; i < subnivel.length; i++) {
                                 strData += '<li>';
                                     strData += '<a href="javascript:void(0)" onclick="buscarProductos(0,\'' + subnivel[i]['ids_cat'] + '\')" >';

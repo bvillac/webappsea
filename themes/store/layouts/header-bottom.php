@@ -26,8 +26,8 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
                         <li><?= Html::a(Yii::t("store", "Home"), ['site/index'],['class' => 'active']); ?></li>                       
                         <li class="dropdown"><?= Html::a(Yii::t("store", "Shop").'<i class="fa fa-angle-down"></i> ', ['site/index']); ?></a>
                             <ul role="menu" class="sub-menu">
-                                <?php for ($i = 0; $i < sizeof($SeccPro); $i++) {  ?>
-                                <li><?= Html::a($SeccPro[$i]['nom_cat'], Url::to('#'),['onclick' => 'javascript:mostrarCategoria(\'' . base64_encode($SeccPro[$i]['ids_cat']) . '\');']); ?></li>
+                                <?php for ($i = 0; $i < sizeof($SeccPro); $i++) { //Url::to('#') ?>
+                                <li><?= Html::a($SeccPro[$i]['nom_cat'], ['site/productos'],['onclick' => 'javascript:mostrarCategoria(\'' . base64_encode($SeccPro[$i]['ids_cat']) . '\');']); ?></li>
                                 <?php }  ?>
 <!--                            <li><?= Html::a(Yii::t("store", "Products"), ['site/shop']); ?></li>
                                 <li><?= Html::a(Yii::t("store", "Product Details"), ['site/product-details']); ?></li> 
@@ -39,7 +39,7 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
                         <li><?= Html::a(Yii::t("store", "Contact"), ['site/contact']); ?></li>      
                     </ul>
                 </div>
-<!--                <div class="navbar-header">
+<!--            <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>

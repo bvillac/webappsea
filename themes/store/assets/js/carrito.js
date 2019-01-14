@@ -117,8 +117,19 @@ function addCarrito(Ids,CodIds,Nombre,Pvta,CantVal){
         //addPrimerItemProducto(tGrid, arr_carrito, 0);
         //limpiarDetalle();
     }
+    mostrarCountCar();
     
 }
+function mostrarCountCar(){
+    if (sessionStorage.dts_carrito) {
+        arr_carrito = JSON.parse(sessionStorage.dts_carrito);
+        var size = arr_carrito.length;
+        $('#lbl_countCar').text(" ("+size+") ");         
+    }else{
+        $('#lbl_countCar').text("");    
+    }
+}
+
 
 function objProductoCar(indice,Ids,CodIds,Nombre,Pvta,Cant) {
     var rowGrid = new Object();
@@ -154,6 +165,8 @@ function recargarGridProductoCar() {
     }else{
         $('#' + tGrid + ' > tbody').html("NO TIENE ITEMS AGREGADOS A SU LISTA");
     }
+    
+    mostrarCountCar();
 }
 
 function retornaFilaProductoCar(c, Grid, TbGtable, op) {
@@ -217,6 +230,7 @@ function eliminarItemsCarrito(val, TbGtable) {
             });
         }
     }
+    mostrarCountCar();
 }
 
 function pedidoEnterGrid(valor,control,Ids){
