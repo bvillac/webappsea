@@ -32,7 +32,7 @@ use yii\helpers\Url;
                                         <li>Máximo desempeño para su impresión!!.</li>
                                     </ul>
                                 </p>
-                                <button type="button" class="btn btn-default get"><?=Yii::t("store", "Get it now")?></button>
+                                <button type="button" onclick="verProducto(3044)" class="btn btn-default get"><?=Yii::t("store", "Get it now")?></button>
                             </div>
                             <div class="col-sm-6">
                                 <img src="<?=Url::base()?>/web/img/portada/slider-1.jpg" class="girl img-responsive" alt="" />
@@ -50,7 +50,7 @@ use yii\helpers\Url;
                                 </ul>
                                 
                                 </p>
-                                <button type="button" class="btn btn-default get"><?=Yii::t("store", "Get it now")?></button>
+                                <button type="button"  class="btn btn-default get"><?=Yii::t("store", "Get it now")?></button>
                             </div>
                             <div class="col-sm-6">
                                 <img src="<?=Url::base()?>/web/img/portada/slider-2.jpg" class="girl img-responsive" alt="" />
@@ -62,7 +62,7 @@ use yii\helpers\Url;
                                 <h1><span>C</span>artuchos de inyección </h1>
                                 <h2> Para impresora HP y consumibles tinta. </h2>
                                 <p>Disfrute las ventajas de la calidad superior de HP a bajo costo. Produzca documentos, informes y fotos en colores intensos, mientras mantiene bajos los costos de impresión, utilizando cartuchos de tinta HP originales.</p>
-                                <button type="button" class="btn btn-default get"><?=Yii::t("store", "Get it now")?></button>
+                                <button type="button" onclick="verProducto(4096)" class="btn btn-default get"><?=Yii::t("store", "Get it now")?></button>
                             </div>
                             <div class="col-sm-6">
                                 <img src="<?=Url::base()?>/web/img/portada/slider-3.jpg" class="girl img-responsive" alt="" />

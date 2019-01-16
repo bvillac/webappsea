@@ -84,9 +84,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-lg-7">
                 
                     <p>
-                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"> Ventas:</span> <a href="mailto:<?= Yii::$app->params['ventasEmail']; ?>"><?= Yii::$app->params['ventasEmail']; ?></a><br>
-                        <span class="glyphicon glyphicon-wrench" aria-hidden="true"> Soporte:</span> <?= Yii::$app->params['soporte']; ?><br>
                         <span class="glyphicon glyphicon-home" aria-hidden="true"> Dirección:</span> <?= Yii::$app->params['direccion']; ?><br>
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"> Ventas:</span> <a href="mailto:<?= Yii::$app->params['ventasEmail']; ?>"><?= Yii::$app->params['ventasEmail']; ?></a><br>
+                        <span class="glyphicon glyphicon-wrench" aria-hidden="true"> Soporte:</span> <?= Yii::$app->params['soporte']; ?><br>                        
                         <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"> PBX:</span><?= Yii::$app->params['telefonos']; ?><br>
                     </p>
                
@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $coordEmpresa = new LatLng(['lat' => -2.146441, 'lng' => -79.898044]);
                     $map = new Map([
                         'center' => $coordEmpresa,
-                        'zoom' => 14,
+                        'zoom' => 16,
                     ]);
                     
                     // setup just one waypoint (Google allows a max of 8)

@@ -64,7 +64,7 @@ $Ruta=Url::base() . Yii::$app->params["imgFolder"];
                 <input id="txt_cant" type="text" value="0" />
                 <?php //Html::a(Yii::t("store", "Add to cart"), ['/site/cart'], ['class' => 'btn btn-fefault cart']) ?>
                 <?= Html::button('<i class="fa fa-shopping-cart"></i>'.Yii::t("store", "Add to cart"), 
-                                ['class' => 'btn btn-fefault cart','onclick'=>'adCarrito(\''.$model[0]["ids_pro"].'\',\''.$model[0]["cod_art"].'\',\''.$model[0]["des_com"].'\',\''.$model[0]["p_venta"].'\',\'txt_cant\')'])?>
+                                ['class' => 'btn btn-fefault cart','onclick'=>'addCarrito(\''.$model[0]["ids_pro"].'\',\''.$model[0]["cod_art"].'\',\''.$model[0]["des_com"].'\',\''.$model[0]["p_venta"].'\',\'txt_cant\')'])?>
         
             </span>
             <p><b><?= Yii::t("store", "Availability") ?>:</b> <?= Yii::t("store", "In Stock") ?></p>

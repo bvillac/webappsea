@@ -1,3 +1,8 @@
+API GOOGLE MAP
+CLAVE:
+AIzaSyCmRPgy-jGZbT9LYO9tTckRQPjLGptYoFE
+https://*.utimpor.com/*
+
 mysql -u root -p  < db_admin.sql 
 https://demo.themeum.com/html/eshopper/product-details.html
 

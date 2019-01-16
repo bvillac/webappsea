@@ -16,6 +16,7 @@ namespace app\models;
 
 use yii;
 use yii\data\ArrayDataProvider;
+use yii\helpers\Url;
 
 class Tienda {
     //put your code here
@@ -88,16 +89,15 @@ class Tienda {
         $sql.=($desCom!="")?" AND A.des_com LIKE '%$desCom%' ":"";
         $sql.=" ORDER BY A.des_com ". $tipOrderby;
         $sql.=" LIMIT ".$offset.", ".$rowsPerPage;
-        
-        
-        
-        
+
         $comando = $con->createCommand($sql);
         
         //$comando->bindParam(":med_id", $ids, \PDO::PARAM_INT);
         $rawData=$comando->queryAll();
         //Utilities::putMessageLogFile($rawData);
         
+        //Tienda::existeImgLista($rawData);
+
         $arroout["status"] = TRUE;
         //$arroout["error"] = null;
         //$arroout["message"] = null;
@@ -109,7 +109,25 @@ class Tienda {
         
     }
     
-    
+    public static function existeImgLista($rawData) {
+        //prueba rutatas
+        Utilities::putMessageLogFile(sizeof("PARTE2"));
+        Utilities::putMessageLogFile(sizeof($rawData));
+        
+        for ($i = 0; $i < sizeof($rawData); $i++) {
+            $nombre_fichero = \Yii::getAlias('@webroot').'/img/productos/'.$rawData[$i]['cod_art'].'_P-01.jpg';
+            //$rawData[$i]['cod_art'] = Tienda::getSubNivelTienda($rawData[$i]['ids_cat']);
+            if (file_exists($nombre_fichero)) {
+                //echo "El fichero $nombre_fichero existe";
+                //Utilities::putMessageLogFile($nombre_fichero);
+            } else {
+                //echo "El fichero ".$rawData[$i]['cod_art']." no existe<br>";
+                Utilities::putMessageLogFile($nombre_fichero);
+                //Utilities::putMessageLogFile("El fichero ".$rawData[$i]['cod_art']." no existe<br>");
+            }
+        }
+    }
+
     public static function getProductoTiendaMasVendidos(){
         //$arroout = array();
         $con = \Yii::$app->db_tienda;

@@ -83,7 +83,7 @@ $(document).ready(function () {
 });
 
 function addCarrito(Ids,CodIds,Nombre,Pvta,CantVal){
-    //alert('dat');
+    //alert(CantVal);
     var Cant=(CantVal==0)?0:$('#'+CantVal).val();
     //alert(Cant);
 

@@ -89,9 +89,9 @@ $directoryAsset = $assetsStore->baseUrl;
         <!-- Modal -->
         <?= $this->render('modal.php',['directoryAsset' => $directoryAsset]); ?>
 </div> 
-<!--    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKq8Ruomuy6eniHPeTyDHxlZs54LGipDk&callback=initMap">
-    </script>-->
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmRPgy-jGZbT9LYO9tTckRQPjLGptYoFE&callback=initMap">
+    </script>
 <?php $this->endBody() ?>
 </body>
 </html>
