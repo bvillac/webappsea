@@ -14,14 +14,14 @@ use yii\web\JsExpression;
 
 $SeccPro=app\models\Tienda::getSeccionTienda();
 ?>
-<div class="header-bottom"><!--header-bottom-->
+<div class="header-bottom colorMenu"><!--header-bottom-->
     <div class="container">
-        <div class="row">
+        <div class="row ">
             <div class="col-sm-8">
                 <!----------------->
                 
                 <!----------------->
-                <div class="mainmenu pull-left ">
+                <div class="mainmenu  pull-left ">
                     <ul class="nav navbar-nav collapse navbar-collapse ">
                         <li><?= Html::a(Yii::t("store", "Home"), ['site/index'],['class' => 'active']); ?></li>                       
                         <li class="dropdown"><?= Html::a(Yii::t("store", "Shop").'<i class="fa fa-angle-down"></i> ', ['site/index']); ?></a>
@@ -49,39 +49,9 @@ $SeccPro=app\models\Tienda::getSeccionTienda();
                 </div>-->
                 
             </div>
-            <div class="col-sm-4">
-<!--                <div class="search_box pull-right">-->
-                    <div>    
-                        <?=
-                        AutoComplete::widget([
-                            'name' => 'txt_buscarData',
-                            'id' => 'txt_buscarData',
-                            'clientOptions' => [
-                                'autoFill' => true,
-                                'minLength' => '3',
-                                'source' => new JsExpression("function( request, response ) {
-                                            autocompletarBuscarProducto(request, response,'txt_buscarData','COD-NOM');
-                                            }"),
-                                'select' => new JsExpression("function( event, ui ) {
-                                                    //alert(ui.item.id);
-                                                    verProducto(ui.item.id);
-                                                    //actualizaBuscarPersona(ui.item.PER_ID); 
-                                                    //$('#txth_ids').val(ui.item.nombre);
-                                                    //actualizarGrid();
-                                             }")
-                            ],
-                            'options' => [
-                                'class' => 'form-control',
-                                'onkeydown' => 'buscarEnterProducto(isEnter(event),this)',
-                                //'Onkeyup' => 'clearGrid()',
-                                'placeholder' => Yii::t("formulario", "Buscar productos")
-                            ],
-                        ]);
-                        ?>
-             
-                </div>
-            </div>
+            
         </div>
     </div>
 </div><!--/header-bottom-->
+<br>
 

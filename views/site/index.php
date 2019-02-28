@@ -28,9 +28,9 @@ $this->title = Yii::$app->params['alias']; //'My Yii Application';
 
 
 <div class="col-sm-9 padding-right">
-    <?= $this->render('_features_items.php', ['directoryAsset' => $directoryAsset,'pages' => $pages]) ?> 
+    <?php //$this->render('_features_items.php', ['directoryAsset' => $directoryAsset,'pages' => $pages]) ?> 
     <?php //$this->render('_category-tab.php', ['directoryAsset' => $directoryAsset]) ?> 
-    <?php echo $this->render('_recommended_items.php', ['directoryAsset' => $directoryAsset]) ?> 			
+    <?php echo $this->render('_recommended_items_index.php', ['directoryAsset' => $directoryAsset]) ?> 			
 </div>
 
 
@@ -41,6 +41,4 @@ $this->title = Yii::$app->params['alias']; //'My Yii Application';
     //var varData = ('<?php //echo $data; ?>') ;
      
     //loadDataIndex();
-    
-
 </script>

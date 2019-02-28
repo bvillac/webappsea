@@ -13,6 +13,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\Tienda;
 //use odaialali\yii2toastr\ToastrAsset;
 use app\vendor\penblu\blockui\BlockuiAsset;
 use app\vendor\penblu\magnificpopup\MagnificPopupAsset;
@@ -55,7 +56,7 @@ $directoryAsset = $assetsStore->baseUrl;
     <![endif]-->
     <?php Menu::generateJSLang("messages", Yii::$app->language); ?>
     
-    <?php $this->head() ?>
+    <?php $this->head(); ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -65,8 +66,11 @@ $directoryAsset = $assetsStore->baseUrl;
             <?= $this->render('header') ?> 
             <?= $this->render('header_top.php',['directoryAsset' => $directoryAsset]) ?> 
             <?= $this->render('header-middle.php',['directoryAsset' => $directoryAsset]) ?> 
-            <?= $this->render('header-bottom.php',['directoryAsset' => $directoryAsset]) ?> 
+            <?php //$this->render('header-bottom.php',['directoryAsset' => $directoryAsset]) ?> 
+            <?=$this->render('menu-middle.php',['directoryAsset' => $directoryAsset]) ?> 
+            <?php //$this->render('menu-middle_1.php',['directoryAsset' => $directoryAsset]) ?> 
 	</header><!--/header-->
+        
         
         
 
@@ -89,9 +93,9 @@ $directoryAsset = $assetsStore->baseUrl;
         <!-- Modal -->
         <?= $this->render('modal.php',['directoryAsset' => $directoryAsset]); ?>
 </div> 
-    <script async defer
+<!--    <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmRPgy-jGZbT9LYO9tTckRQPjLGptYoFE&callback=initMap">
-    </script>
+    </script>-->
 <?php $this->endBody() ?>
 </body>
 </html>

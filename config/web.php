@@ -56,17 +56,17 @@ $config = [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
-//        'assetManager' => [
-//            'bundles' => [
-//                'dosamigos\google\maps\MapAsset' => [
-//                    'options' => [
-//                        'key' => 'AIzaSyCmRPgy-jGZbT9LYO9tTckRQPjLGptYoFE',
-//                        'language' => 'es',
-//                        'version' => '3.1.18'
-//                    ]
-//                ]
-//            ]
-//        ],
+        'assetManager' => [
+            'bundles' => [
+                'dosamigos\google\maps\MapAsset' => [
+                    'options' => [
+                        'key' => 'AIzaSyCmRPgy-jGZbT9LYO9tTckRQPjLGptYoFE',
+                        'language' => 'es',
+                        'version' => '3.1.18'
+                    ]
+                ]
+            ]
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

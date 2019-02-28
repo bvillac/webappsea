@@ -26,7 +26,10 @@ $this->title = Yii::$app->params['alias']; //'My Yii Application';
 
 
 <div class="col-sm-9 padding-right">
-    <?= $this->render('_features_items.php', ['directoryAsset' => $directoryAsset,'pages' => $pages]) ?> 		
+    <?= $this->render('_barrabuscar.php') ?> 
+    <?php echo $this->render('_recommended_items.php', ['directoryAsset' => $directoryAsset]) ?> 
+    <?php //$this->render('_features_items.php', ['directoryAsset' => $directoryAsset,'pages' => $pages]) ?> 
+    <?= $this->render('_features_items.php', ['directoryAsset' => $directoryAsset,'models'=> $models,'pages' => $pages]) ?> 
 </div>
 
 

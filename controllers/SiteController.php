@@ -102,8 +102,8 @@ class SiteController extends Controller
         //$pages=1;
         $resul = Tienda::getProductoTienda(null);
         return $this->render('index', [
-                    'models' => $resul['data'],
-                    'pages' => $resul['trows'],
+                    //'models' => $resul['data'],
+                    //'pages' => $resul['trows'],
         ]);
     }
     
@@ -113,10 +113,14 @@ class SiteController extends Controller
      */
      public function actionProductos() {
         $resul=array();
+        $data = Yii::$app->request->get();
+        $ids=isset($data["codigo"]) ? base64_decode($data['codigo']) : "NULL";
+        
         if (Yii::$app->request->isAjax) {
             
-        }
-        $resul = Tienda::getProductoTienda(null);
+        }        
+        $resul = Tienda::getProductoTienda2(0,$ids);
+        
         return $this->render('productos', [
                     'models' => $resul['data'],
                     'pages' => $resul['trows'],

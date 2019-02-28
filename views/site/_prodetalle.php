@@ -75,40 +75,42 @@ $Ruta=Url::base() . Yii::$app->params["imgFolder"];
     </div>
 </div><!--/product-details-->
 
+<?php
+/*
 <!--DETALLE DEL PRODUCTO-->
-
-<div class="category-tab shop-details-tab"><!--category-tab-->
+<!--category-tab-->
+<div class="category-tab shop-details-tab">
     <div class="col-sm-12">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#reviews" data-toggle="tab">Detalles</a></li>
             <li><a href="#details" data-toggle="tab">Especificaciones</a></li>
-            
+
         </ul>
     </div>
     <div class="tab-content">
         <div class="tab-pane fade" id="details" >
             <p>
                 Otenga color definido y calidad de imagen fotográfica exacta.
-Las fórmulas de tintas patentadas basadas en colorantes de los cartuchos de tinta color HP 11 permiten resultados profesionales de modo fácil y confiable, otorgando un valor excelente.
-Calidad de impresión excepcional y constante.
-Impresión sencilla de bajo mantenimiento.
-La fiabilidad de HP le permite ahorrar tiempo, aumentar su productividad y obtener una gran relación calidad-precio. 
+                Las fórmulas de tintas patentadas basadas en colorantes de los cartuchos de tinta color HP 11 permiten resultados profesionales de modo fácil y confiable, otorgando un valor excelente.
+                Calidad de impresión excepcional y constante.
+                Impresión sencilla de bajo mantenimiento.
+                La fiabilidad de HP le permite ahorrar tiempo, aumentar su productividad y obtener una gran relación calidad-precio. 
             </p>
-            
-             
-   
+
+
+
         </div>
 
         <div class="tab-pane fade active in" id="reviews" >
             <div class="col-sm-12">
-                
-                <strong>Color(es) de cartuchos de impresión:&nbsp;</strong>Amarillo<br>
-<strong>Gota de tinta:&nbsp;</strong>4 pl<br>
-<strong>Tipos de tinta compatible:&nbsp;</strong>Basada en colorantes<br>
-<strong>Rendimiento de la página (color):&nbsp;</strong>2.550 páginas<br>
-<br>             
 
-<!--                <form action="#">
+                <strong>Color(es) de cartuchos de impresión:&nbsp;</strong>Amarillo<br>
+                <strong>Gota de tinta:&nbsp;</strong>4 pl<br>
+                <strong>Tipos de tinta compatible:&nbsp;</strong>Basada en colorantes<br>
+                <strong>Rendimiento de la página (color):&nbsp;</strong>2.550 páginas<br>
+                <br>             
+
+                <!-- <form action="#">
                     <span>
                         <input type="text" placeholder="Your Name"/>
                         <input type="email" placeholder="Email Address"/>
@@ -124,4 +126,6 @@ La fiabilidad de HP le permite ahorrar tiempo, aumentar su productividad y obten
 
     </div>
 </div><!--/category-tab-->
+  */                      
+?>
 

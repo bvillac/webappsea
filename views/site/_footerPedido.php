@@ -16,7 +16,8 @@
 			</div>-->
 			<div class="row">
 				<div class="col-sm-6">
-					<div class="chose_area">
+                                    <?php
+					/*<div class="chose_area">
 						<ul class="user_option">
 							<li>
 								<input type="checkbox">
@@ -58,20 +59,22 @@
 							</li>
 						</ul>
 						
-					</div>
+					</div> */
+                                                ?>
 				</div>
-				<div class="col-sm-6">
-					<div class="total_area">
-						<ul>
-                                                    <li>Sub Total <span id="lbl_subtotal">$0.00</span></li>
-<!--							<li>Eco Tax <span>$2</span></li>-->
-							<li>Costo Envío<span>Gratis</span></li>
-							<li>Total <span id="lbl_total">$0.00</span></li>
-						</ul>
-<!--							<a class="btn btn-default update" href="">Update</a>-->
-							<a class="btn btn-default check_out" href="">Guardar</a>
-					</div>
-				</div>
+                            <div class="col-sm-6">
+                                <div class="total_area">
+                                    <ul>
+                                        <li>Sub Total <span id="lbl_subtotal">0.00</span></li>
+                                        <!--<li>Eco Tax <span>$2</span></li>-->
+                                        <!--<li>Costo Envío<span>Gratis</span></li>-->
+                                        <li>Iva 12.00% <span id="lbl_valIva">0.00</span></li>
+                                        <li>Total <span id="lbl_total">0.00</span></li>
+                                    </ul>
+                                    <!--							<a class="btn btn-default update" href="">Update</a>-->
+                                    <a class="btn btn-default check_out" href="">Continuar</a>
+                                </div>
+                            </div>
 			</div>
 		</div>
 	</section><!--/#do_action-->

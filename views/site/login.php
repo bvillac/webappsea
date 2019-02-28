@@ -44,7 +44,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-sm-4">
                     <div class="signup-form"><!--sign up form-->
-                        <h2><?= Yii::t("app", "New User Signup!") ?></h2>
+<!--                        <h2><?= Yii::t("app", "New User Signup!") ?></h2>-->
+                        <h2>Nuevo Usuario? <br>Crear Cuenta</h2>
                         <form action="#">
                             <input type="text" placeholder="<?= Yii::t("app", "Name") ?>"/>
                             <input type="email" placeholder="<?= Yii::t("app", "Email Address") ?>"/>
@@ -57,8 +58,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </section><!--/form-->
 
-    <!--    <div class="col-lg-offset-1" style="color:#999;">
+    <!--<div class="col-lg-offset-1" style="color:#999;">
             You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
             To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-        </div>-->
+    </div>-->
 </div>

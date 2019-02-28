@@ -84,7 +84,8 @@ $(document).ready(function () {
 
 function addCarrito(Ids,CodIds,Nombre,Pvta,CantVal){
     //alert(CantVal);
-    var Cant=(CantVal==0)?0:$('#'+CantVal).val();
+    var Cant=(CantVal==0)?1:$('#'+CantVal).val();//Se agrega por defecto el Valor de 1
+    var i_m_iva=1;//indeice de Graba IVA recuperado de la base
     //alert(Cant);
 
     var arr_carrito = new Array();
@@ -95,7 +96,7 @@ function addCarrito(Ids,CodIds,Nombre,Pvta,CantVal){
         if (size > 0) {
             //Varios Items
             if (codigoExiste(CodIds, 'cod_art', sessionStorage.dts_carrito)) {//Verifico si el Codigo Existe  para no Dejar ingresar Repetidos
-                arr_carrito[size] = objProductoCar(size,Ids,CodIds,Nombre,Pvta,Cant);
+                arr_carrito[size] = objProductoCar(size,Ids,CodIds,Nombre,Pvta,Cant,i_m_iva);
                 sessionStorage.dts_carrito = JSON.stringify(arr_carrito);
                 //addVariosItemProducto(tGrid, arr_carrito, -1);
                 //limpiarDetalle();
@@ -112,7 +113,7 @@ function addCarrito(Ids,CodIds,Nombre,Pvta,CantVal){
     } else {
         //No existe la Session
         //Primer Items
-        arr_carrito[0] = objProductoCar(0,Ids,CodIds,Nombre,Pvta,Cant);
+        arr_carrito[0] = objProductoCar(0,Ids,CodIds,Nombre,Pvta,Cant,i_m_iva);
         sessionStorage.dts_carrito = JSON.stringify(arr_carrito);
         //addPrimerItemProducto(tGrid, arr_carrito, 0);
         //limpiarDetalle();
@@ -131,7 +132,7 @@ function mostrarCountCar(){
 }
 
 
-function objProductoCar(indice,Ids,CodIds,Nombre,Pvta,Cant) {
+function objProductoCar(indice,Ids,CodIds,Nombre,Pvta,Cant,i_m_iva) {
     var rowGrid = new Object();
     rowGrid.ids_pos = indice;
     rowGrid.ids_pro = Ids;
@@ -139,11 +140,16 @@ function objProductoCar(indice,Ids,CodIds,Nombre,Pvta,Cant) {
     rowGrid.des_com =Nombre;
     rowGrid.p_venta =Pvta;
     rowGrid.can_des =Cant;
-    rowGrid.t_venta =Pvta*1;
+    
     rowGrid.por_des =0;
     rowGrid.val_des =0;
-    rowGrid.i_m_iva =0;
+    rowGrid.i_m_iva =i_m_iva;
     rowGrid.val_iva =0;
+    rowGrid.t_venta =Pvta*Cant;
+    if(i_m_iva==1){
+        rowGrid.val_iva=redondea(parseFloat(rowGrid.t_venta)*parseFloat(PorIva),Ndecimal);
+        rowGrid.t_venta=redondea(parseFloat(rowGrid.t_venta)+parseFloat(rowGrid.val_iva),Ndecimal);
+    }
     rowGrid.accion = "new";
     return rowGrid;
 }
@@ -165,14 +171,17 @@ function recargarGridProductoCar() {
     }else{
         $('#' + tGrid + ' > tbody').html("NO TIENE ITEMS AGREGADOS A SU LISTA");
     }
-    
+    sumaTotal();
     mostrarCountCar();
 }
 
 function retornaFilaProductoCar(c, Grid, TbGtable, op) {
     //var RutaImagenAccion='ruta IMG'//$('#txth_rutaImg').val();
+    Grid[c]['t_venta'] = parseFloat(Grid[c]['can_des'])  * parseFloat(Grid[c]['p_venta']);
     var ruta=$('#txth_imgfolder').val()+ Grid[c]['cod_art']+'_G-01.jpg';
     var strFila = "";
+    
+  
     //var imgCol='<img class="btn-img" src="'+RutaImagenAccion+'/acciones/eliminar.png" >';
     //[{"ids_pos":0,"ids_pro":"4","cod_art":"A0004","des_com":"ALMOHADILLA KORES (BENE) PLASTICA MED.","p_venta":"0.9000","can_des":1,"accion":"new"},{"ids_pos":1,"ids_pro":"1","cod_art":"A0001","des_com":"AGENDA EJECUTIVA 2016 F/DORADOS VERDE","p_venta":"8.5376","can_des":1,"accion":"new"}]
     
@@ -191,7 +200,7 @@ function retornaFilaProductoCar(c, Grid, TbGtable, op) {
     strFila += '<td class="cart_quantity">';
         strFila += '<div class="cart_quantity_button">';
             //strFila += '<a class="cart_quantity_up" href=""> + </a>';
-            strFila += '<input class="cart_quantity_input" type="text" name="quantity" value="1" ';
+            strFila += '<input class="cart_quantity_input" type="text" name="quantity" value="' + Grid[c]['can_des'] + '" ';
                     strFila += 'onkeydown="pedidoEnterGrid(isEnter(event),this,' + Grid[c]['ids_pro'] + ')"';
                     //strFila += ' autocomplete="off" size="2">';
                     strFila += 'onblur="javascript:return pedidoEnterGrid(true,this,' + Grid[c]['ids_pro'] + ')" ';
@@ -200,7 +209,7 @@ function retornaFilaProductoCar(c, Grid, TbGtable, op) {
         strFila += '</div>';
     strFila += '</td>';
     strFila += '<td class="cart_total">';
-        strFila += '<p class="cart_total_price">' + Grid[c]['p_venta'] + '</p>';
+        strFila += '<p class="cart_total_price">' + redondea(Grid[c]['t_venta'], Ndecimal) + '</p>';
     strFila += '</td>';
     strFila += '<td class="cart_delete">';
         strFila += '<a onclick="eliminarItemsCarrito(\'' + Grid[c]['ids_pro'] + '\',\'' + TbGtable + '\')" class="cart_quantity_delete" ><i class="fa fa-times"></i></a>';
@@ -245,6 +254,36 @@ function pedidoEnterGrid(valor,control,Ids){
     }
 }
 
+function sumaTotal() {
+    var TbGtable = 'TbG_ProductosCar';
+    var baseGra=0;
+    var baseNoGra=0;
+    var subtotal=0;
+    var valIva=0;
+    var total = 0;
+    if (sessionStorage.dts_carrito) {
+        var array = JSON.parse(sessionStorage.dts_carrito);
+        if (array.length > 0) {
+            for (var i = 0; i < array.length; i++) {
+                subtotal = parseFloat(array[i]['can_des']) * parseFloat(array[i]['p_venta']);                
+                if(array[i]['i_m_iva']==1){
+                    //baseGra+=(subtotal*parseFloat(PorIva)/100)+subtotal;
+                    baseGra+=subtotal;
+                }else{
+                    baseNoGra+=subtotal;
+                }                
+                //subtotal = subtotal + parseFloat(array[i]['t_venta']);
+                subtotal=baseGra+baseNoGra;
+            }
+        }
+        valIva=(parseFloat(baseGra)*parseFloat(PorIva))/100;
+        total=subtotal+valIva;
+    }
+    $('#lbl_subtotal').text(redondea(subtotal, Ndecimal))
+    $('#lbl_valIva').text(redondea(valIva, Ndecimal))    
+    $('#lbl_total').text(redondea(total, Ndecimal))
+}
+
 function findCantotal(array, property, value, cant) {
     var TbGtable = 'TbG_ProductosCar';
     var precio = 0;
@@ -263,8 +302,7 @@ function findCantotal(array, property, value, cant) {
             //array[i]['val_iva']
             //Remplaza datos en Detalle
             $('#' + TbGtable + ' tr').each(function () {
-                var idstable = $(this).find("td").eq(0).html();
-                
+                var idstable = $(this).find("td").eq(0).html();                
                 if (idstable == value) {
                     //console.log("econtro");
                     //precio = $(this).find("td").eq(3).html();
@@ -278,16 +316,11 @@ function findCantotal(array, property, value, cant) {
                 //console.log("no rnvonyto");
 
             });
-            //vtot = vtot+redondea(array[i]['t_venta'], Ndecimal);
-        }else{
-            //vtot = vtot+redondea(, Ndecimal);
         }
-        vtot =vtot+parseFloat(array[i]['t_venta']);
-        //alert(redondea(vtot, Ndecimal));
-        
     }
-    $('#lbl_subtotal').text(redondea(vtot, Ndecimal))
-    $('#lbl_total').text(redondea(vtot, Ndecimal))
+    sumaTotal();
+    //$('#lbl_subtotal').text(redondea(vtot, Ndecimal))
+    //$('#lbl_total').text(redondea(vtot, Ndecimal))
     return array;
 }
 
@@ -302,7 +335,7 @@ function calculaTotal(cant,Ids) {
         var idstable = $(this).find("td").eq(0).html();
         if (idstable==Ids) {            
             precio = $(this).find("td").eq(3).html();
-            alert('precio'+precio)
+            //alert('precio'+precio)
             valor=redondea(precio * cant, Ndecimal);
             $(this).find("td").eq(5).html(valor);
         }
@@ -544,4 +577,7 @@ function controlBuscarIndex(control,op){
     buscarArray[0] = buscarIndex;
     return JSON.stringify(buscarArray);
 }
+
+
+
 

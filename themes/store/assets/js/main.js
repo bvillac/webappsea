@@ -53,10 +53,33 @@ function retornarIndLista(array,property,value,ids){
     return index;
 }
 
+
 $(document).ready(function () {
     //buscarIndex();
     buscarProductos(1,0);
     mostrarCategoria(base64_encode('1'));
+    
+    /*$(".dropdown").hover(            
+        function() {
+            $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true,true).slideDown("400");
+            $(this).toggleClass('open');        
+        },
+        function() {
+            $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true,true).slideUp("400");
+            $(this).toggleClass('open');       
+        }
+    );*/
+    
+    $(".dropdown").hover(            
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+            $(this).toggleClass('open');        
+        },
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+            $(this).toggleClass('open');       
+        }
+    );
 
     $("#categoria > li").click(function () {
         $("li").removeClass("active");
@@ -108,8 +131,8 @@ $(document).ready(function () {
 });
 
 function buscarIndex(){
-    alert(document.location);
-    alert('llego');
+    //alert(document.location);
+    //alert('llego');
     var indexData=document.location;
     if(indexData.indexOf("index")>-1){//!=
         alert('encontro');
@@ -172,6 +195,7 @@ function buscarProductos(page,idsCat) {
 }
 
 function llenarItems(data){
+    var link = $('#txth_base').val() + "/site/cart";
     //var ruta=$('#txth_imgfolder').val()+'img1.jpg';
     var ruta=$('#txth_imgfolder').val()+ data['cod_art']+'_P-01.jpg';
     var strData = "";//data[i]['p_venta']
@@ -182,7 +206,7 @@ function llenarItems(data){
                     //strData += '<img src="img/productos/img1.jpg" alt="" />';
                     strData += '<img onclick="verProducto(\'' + data['ids_pro'] + '\')" src="'+ruta+'" alt="" />';
                     strData += '<h2>$' + redondea(data['p_venta'],2) + '</h2>';
-                    strData += '<p>' + data['cod_art']+' '+ data['des_com'] + '</p>';
+                    strData += '<p>' + data['des_com'] + '</p>';
                     strData += '<a onclick="addCarrito(\'' + data['ids_pro'] + '\',\'' + data['cod_art'] + '\',\'' + data['des_com'] + '\',\'' + data['p_venta'] + '\',0)" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Agregar a Carrito</a>';
                 strData += '</div>';
                 /*strData += '<div class="product-overlay">';
@@ -196,7 +220,7 @@ function llenarItems(data){
             strData += '<div class="choose">';
                 strData += '<ul class="nav nav-pills nav-justified">';
                     strData += '<li><a href="#"><i class="fa fa-plus-square"></i>Agregar a lista de pedidos</a></li>';
-                    strData += '<li><a href="#"><i class="fa fa-plus-square"></i>Comparacion</a></li>';
+                    strData += '<li><a href="' + link + '"><i class="fa fa-plus-square"></i>Ver Carrito</a></li>';
                 strData += '</ul>';
             strData += '</div>';
         strData += '</div>';
@@ -205,6 +229,7 @@ function llenarItems(data){
 }
 
 function mostrarCategoria(ids) {
+    //alert(ids);
     var strData = "";
     var link = $('#txth_base').val() + "/site/index";
     var arrParams = new Object();

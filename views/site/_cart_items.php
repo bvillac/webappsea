@@ -47,32 +47,7 @@ use yii\helpers\Url;
                 </td>
             </tr>
 
-            <tr>
-                <td class="cart_product">
-<!--                    <a href=""><img src="images/cart/two.png" alt=""></a>-->
-                    <a href=""><img class='imgProCarrito' src="<?= Url::base().Yii::$app->params["imgFolder"] ?>imgG.jpg" alt=""></a>
-                </td>
-                <td class="cart_description">
-                    <h4><a href="">CABEZAL HP C4812A ORIG.11 M.DESIN.100/110/500/INK.1000/1200</a></h4>
-                    <p>Web ID: 1089772</p>
-                </td>
-                <td class="cart_price">
-                    <p>$117.00</p>
-                </td>
-                <td class="cart_quantity">
-                    <div class="cart_quantity_button">
-                        <a class="cart_quantity_up" href=""> + </a>
-                        <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                        <a class="cart_quantity_down" href=""> - </a>
-                    </div>
-                </td>
-                <td class="cart_total">
-                    <p class="cart_total_price">117.00</p>
-                </td>
-                <td class="cart_delete">
-                    <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                </td>
-            </tr>
+            
 
         </tbody>
     </table>

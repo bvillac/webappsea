@@ -6,7 +6,7 @@
  */
 use yii\helpers\Url;
 use yii\helpers\Html;
-$ItemReco=app\models\Tienda::getProductoTiendaMasVendidos();
+$ItemReco=app\models\Tienda::getProductoTiendaMasVendidos('PRO');
 $Ruta=Url::base() . Yii::$app->params["imgFolder"];
 ?>
 

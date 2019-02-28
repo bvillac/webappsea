@@ -12,6 +12,7 @@ https://demo.themeum.com/html/eshopper/product-details.html
     @app/views/empresa
 
 https://getbootstrap.com/docs/3.3/components/#navbar
+https://getbootstrap.com/docs/4.2/components/badge/
 
 https://www.yiiframework.com/doc/guide/2.0/es/security-authentication
 
@@ -162,7 +163,6 @@ FIN LOGIN FORM
 
 
 
-
-
+https://bootsnipp.com/tags/menu?page=11
 
 

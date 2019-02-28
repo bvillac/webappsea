@@ -1,0 +1,90 @@
+<?php
+/* @var $this NubeGuiaRemisionController */
+/* @var $model NubeGuiaRemision */
+
+$this->breadcrumbs=array(
+	'Nube Guia Remisions'=>array('index'),
+	'Manage',
+);
+
+$this->menu=array(
+	array('label'=>'List NubeGuiaRemision', 'url'=>array('index')),
+	array('label'=>'Create NubeGuiaRemision', 'url'=>array('create')),
+);
+
+Yii::$app->clientScript->registerScript('search', "
+$('.search-button').click(function(){
+	$('.search-form').toggle();
+	return false;
+});
+$('.search-form form').submit(function(){
+	$('#nube-guia-remision-grid').yiiGridView('update', {
+		data: $(this).serialize()
+	});
+	return false;
+});
+");
+?>
+
+<h1>Manage Nube Guia Remisions</h1>
+
+<p>
+You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
+or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
+</p>
+
+<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
+<div class="search-form" style="display:none">
+<?php $this->renderPartial('_search',array(
+	'model'=>$model,
+)); ?>
+</div><!-- search-form -->
+
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'nube-guia-remision-grid',
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
+	'columns'=>array(
+		'IdGuiaRemision',
+		'AutorizacionSRI',
+		'FechaAutorizacion',
+		'Ambiente',
+		'TipoEmision',
+		'RazonSocial',
+		/*
+		'NombreComercial',
+		'Ruc',
+		'ClaveAcceso',
+		'CodigoDocumento',
+		'Establecimiento',
+		'PuntoEmision',
+		'Secuencial',
+		'DireccionMatriz',
+		'DireccionEstablecimiento',
+		'DireccionPartida',
+		'RazonSocialTransportista',
+		'TipoIdentificacionTransportista',
+		'IdentificacionTransportista',
+		'Rise',
+		'ObligadoContabilidad',
+		'ContribuyenteEspecial',
+		'FechaInicioTransporte',
+		'FechaFinTransporte',
+		'Placa',
+		'UsuarioCreador',
+		'EmailResponsable',
+		'EstadoDocumento',
+		'DescripcionError',
+		'CodigoError',
+		'DirectorioDocumento',
+		'NombreDocumento',
+		'GeneradoXls',
+		'SecuencialERP',
+		'Estado',
+		'IdLote',
+		*/
+		array(
+			'class'=>'CButtonColumn',
+		),
+	),
+)); ?>
