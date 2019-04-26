@@ -8,8 +8,8 @@ $this->title = Yii::$app->params['alias']; //'My Yii Application';
 <!--/slider-->
 <div class="col-sm-3">
     <div class="left-sidebar">
-        <?= $this->render('_seccion-productos.php', ['directoryAsset' => $directoryAsset]) ?> 
-        <?= $this->render('_category-products.php', ['directoryAsset' => $directoryAsset]) ?> 
+        <?php //$this->render('_seccion-productos.php', ['directoryAsset' => $directoryAsset]) ?> 
+        <?php //$this->render('_category-products.php', ['directoryAsset' => $directoryAsset]) ?> 
         <?php //$this->render('_brands_products.php', ['directoryAsset' => $directoryAsset]) ?> 
         <div class="price-range"><!--price-range-->
             <h2><?= Yii::t("store", "Price Range")?></h2>

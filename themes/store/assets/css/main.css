@@ -174,7 +174,7 @@ a#scrollUp i{
 }
 
 .btn-group.open .dropdown-toggle {
-  background: rgba(0, 0, 0, 0);
+  background: rgba(0, 0, 0, 0); 
   box-shadow: none;
 }
 
@@ -2663,6 +2663,7 @@ body {
 }
 .mega-dropdown-menu {
     padding: 20px 0px;
+    background-color: #e8f1d1;
     width: 100%;
     box-shadow: none;
     -webkit-box-shadow: none;
@@ -2709,7 +2710,7 @@ body {
     color: #fff;
     background-color: transparent;
 }
-
+ 
 /* Items Menu*/
 
 .itemsubmenu a{

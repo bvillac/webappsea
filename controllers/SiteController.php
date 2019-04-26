@@ -151,7 +151,7 @@ class SiteController extends Controller
             if($user!="NULL" || $pass!="NULL"){
                 if ($model->login($user,$pass)) {
                     $arroout["status"]= true;
-                    return $this->goHome();
+                    //return $this->goHome();//retonra al login en acceso
                 }
             }else{
                 $arroout["status"]= false;

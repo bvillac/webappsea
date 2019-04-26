@@ -25,6 +25,10 @@ $isUser = $session->get('PB_isuser', FALSE);
 if ($isUser != FALSE && $session->isActive ){
     //echo $session->isActive;//Sesion Activa
 }
+//if(!$isUser){
+    //return Yii::$app->response->redirect(Url::to(['site/login', 'id' => id]));
+    //return Yii::$app->response->redirect(Url::to(['site/login']));
+//}
 
 
 $assetsStore= StoreAsset::register($this);
