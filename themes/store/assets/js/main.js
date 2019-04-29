@@ -335,3 +335,12 @@ function dataUser() {
 /*FIN OPCIONES DE LOGIN*/
 
 
+
+$('.openBtn').on('click',function(){
+    $('.modal-body').load('../site/nuevacuenta.php',function(){
+        $('#myModal').modal({show:true});
+    });
+});
+
+
+

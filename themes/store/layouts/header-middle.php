@@ -21,6 +21,7 @@ $isUser = $session->get('PB_isuser', FALSE);
             </div>
             <div class="col-sm-8">
                 <div class="shop-menu pull-right">
+                    <button type="button" class="btn btn-success openBtn">Open Modal</button>
                     <ul class="nav navbar-nav">
                         <?php if ($isUser != FALSE && $session->isActive ){ ?>
                             <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("store", "Account"), ['site/index']); ?></li>
