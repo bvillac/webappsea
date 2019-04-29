@@ -337,9 +337,10 @@ function dataUser() {
 
 
 $('.openBtn').on('click',function(){
-    $('.modal-body').load('../site/nuevacuenta.php',function(){
+    //alert('ingreso9');
+    //$('.modal-body').load('nuevacuenta.php',function(){
         $('#myModal').modal({show:true});
-    });
+    //});
 });
 
 

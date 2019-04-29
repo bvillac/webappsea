@@ -38,7 +38,7 @@
  *
  */
 ?>
-<!--<div class="modal fade" id="myModalPB" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myModalPB" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-</div>-->
+</div>
 
 <!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -82,17 +82,47 @@
     </div>
   </div>
 </div>-->
-https://programacion.net/articulo/como_cargar_contenido_dinamico_en_un_modal_de_bootstrap_1867
-<!-- Modal -->
+
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4 class="modal-title">Modal with Dynamic Content</h4>
+                <h4 class="modal-title">Crear una Cuenta Utimpor S.A.</h4>
             </div>
             <div class="modal-body">
+               <form>
+                    <div class="form-group">
+<!--                        <label for="recipient-name" class="col-form-label">Recipient:</label>-->
+                        <input type="text" class="form-control" id="txt_per_nombre" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txt_per_apellido" placeholder="Apellido">
+                    </div>
+                   <div class="form-group">
+                        <input type="text" class="form-control" id="txt_per_correo" placeholder="Email (Será su nomobre de usuario)">
+                   </div>
+                   <div class="form-group">
+                        <input type="text" class="form-control" id="txt_dper_telefono" placeholder="Teléfono de Contacto">
+                   </div>
+                   <div class="form-group">
+                       <input type="password" class="form-control" id="txt_usu_password" placeholder="Escoge una clave">
+                   </div>
+                   <div class="form-group">
+                       <input type="password" class="form-control" id="txt_usu_password2" placeholder="Vuelve a escribir la clave">
+                   </div>
+                   <div class="form-group">
+                       <label for="conditions_cii29" id="label_conditions_cii29">
+		       <input name="txt_conditions" id="txt_conditions" value="1" type="checkbox">
+                            He leído y acepto las <a href="https://www.utimpor.com/condiciones-de-uso.php" title="Leer condiciones" target="_blank">condiciones de uso</a> y la <a href="https://www.utimpor.com/condiciones-de-uso.php" title="Leer política de privacidad" target="_blank">política de privacidad</a>							</label>
+                   </div>
+                   <div class="form-group">
+                       <button type="button" class="btn btn-primary">Nueva Cuenta</button>
+                   </div>
+                       
+                       
+                </form>
 
             </div>
             <div class="modal-footer">
