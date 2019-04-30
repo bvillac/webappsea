@@ -83,7 +83,7 @@
   </div>
 </div>-->
 
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="registroModal" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -120,15 +120,72 @@
                    <div class="form-group">
                        <button type="button" class="btn btn-primary">Nueva Cuenta</button>
                    </div>
+                   <div class="form-group">
+                       <p>
+                           Rellena el formulario y te enviaremos un correo electrónico de confirmación para que finalices el proceso de creación de la cuenta. 
+                       </p>
+                       
+                   </div>
                        
                        
                 </form>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+               <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+<!--           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-primary">Send message</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="loginModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Acceder a mi cuenta de usuario</h4>
+            </div>
+            <div class="modal-body">
+               <form>                    
+                    <div class="form-group">
+                       <?php if (Yii::$app->session->hasFlash('error')): ?>
+                        <div class="alert alert-danger">
+                            <?= Yii::$app->session->getFlash('error') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (Yii::$app->session->hasFlash('success')): ?>
+                        <div class="alert alert-success">
+                            <?= Yii::$app->session->getFlash('success') ?>
+                        </div>
+                    <?php endif; ?>
+                    </div>
+                   <div class="form-group">
+                        <input type="email" id="txt_email" class="form-control" placeholder="<?= Yii::t("app", "Email Address") ?>" />
+                   </div>
+                   <div class="form-group">
+                        <input type="password" id="txt_password" class="form-control" placeholder="<?= Yii::t("login", "Password") ?>"/>
+                   </div>
+                  
+                   <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="id_check">
+                        <label class="form-check-label" ><?= Yii::t("login", "Remember Me") ?></label>
+                   </div>
+                   <div class="form-group">
+                        <button id="cmd_login" type="submit" class="btn btn-primary"><?= Yii::t("login", "Login") ?></button>
+                   </div>
+                   <div class="form-group">
+                       <a href="javascript: void(0);" title="Recordar contraseña" rel="nofollow" onclick="javascript: _cii29showRemember();">Recuperar contraseña</a>
+                   </div>
+                   <div class="form-group">
+                       <a href="javascript: void(0);" title="Crear cuenta" onclick="javascript:nuevaCuentaModal();">Crear una cuenta en Utimpor S.A.</a>                       
+                   </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

@@ -22,6 +22,7 @@ return [
     
     //MARCAS
     "Brands" => "MARCAS",
+    "Brand" => "Marca",
     "Category" => "Categoría",
     "Recommended items" => "Artículos recomendados",
     "Features Items" => "Artículos",
@@ -55,7 +56,7 @@ return [
     //CARRITO DE COMPRAS
     
     'Shopping Cart' => 'Carrito de Compras',
-    'Item' => 'Item',
+    'Item' => 'Detalle',
     'Price' => 'Precio',
     'New' => 'Nuevo',
     

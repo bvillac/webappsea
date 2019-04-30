@@ -21,21 +21,22 @@ $isUser = $session->get('PB_isuser', FALSE);
             </div>
             <div class="col-sm-8">
                 <div class="shop-menu pull-right">
-                    <button type="button" class="btn btn-success openBtn">Open Modal</button>
+<!--                    <button type="button" class="btn btn-success openBtn">Open Modal</button>-->
                     <ul class="nav navbar-nav">
                         <?php if ($isUser != FALSE && $session->isActive ){ ?>
                             <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("store", "Account"), ['site/index']); ?></li>
                         <?php }else{ ?>
-                            <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("login", "Create Account"), ['site/index']); ?></li>
+                            <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("login", "Create Account"), Url::to('#'),['onclick'=>'javascript:nuevaCuentaModal();']); ?></li>
                         <?php } ?>
                         <li><?php //Html::a('<i class="fa fa-user"></i> '.Yii::t("store", "Account"), ['site/index']); ?></li>
                         <li><?= Html::a('<i class="fa fa-star"></i> '.Yii::t("store", "Wishlist"), ['site/index']); ?></li>
                         <li><?= Html::a('<i class="fa fa-crosshairs"></i> '.Yii::t("store", "Checkout"), ['site/checkout']); ?></li>
-                        <li><?= Html::a('<i id="lbl_countCar" class="fa fa-shopping-cart"></i> '.Yii::t("store", "Cart"), ['site/cart']); ?></li>
+                        <li><?= Html::a('<i id="lbl_countCar" class="fa fa-shopping-cart"></i> '.Yii::t("store", "Cart"), ['site/carrito']); ?></li>
                         <?php if ($isUser != FALSE && $session->isActive ){ ?>
                             <li><?= Html::a('<i class="glyphicon glyphicon-log-out"></i> '.Yii::$app->user->identity->usu_username.' ('.Yii::t("login", "Sign Out").')', ['site/logout']); ?></li>
                         <?php }else{ ?>
-                            <li><?= Html::a('<i class="fa fa-lock"></i> '.Yii::t("login", "Login"), ['site/login']); ?></li>
+                            <!--<li><?php //Html::a('<i class="fa fa-lock"></i> '.Yii::t("login", "Login"), ['site/login']); ?></li>-->
+                            <li><?= Html::a('<i class="fa fa-lock"></i> '.Yii::t("login", "Login"), Url::to('#'),['onclick'=>'javascript:loginModal();']); ?></li>
                         <?php } ?>
                     </ul>
                 </div>

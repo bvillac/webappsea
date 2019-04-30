@@ -82,14 +82,21 @@ $(document).ready(function () {
     recargarGridProductoCar();
 });
 
-function addCarrito(Ids,CodIds,Nombre,Pvta,CantVal){
-    //alert(CantVal);
-    var Cant=(CantVal==0)?1:$('#'+CantVal).val();//Se agrega por defecto el Valor de 1
+function addCarrito(Ids,CodIds,Nombre,Pvta,CantVal){    
+    //se debe pasar el nombre del control en caso de tener un valor cantidad
+    //esto es cuando no existe un control de cantidad.
+    //var Cant=(CantVal==0)?1:$('#'+CantVal).val();//Se agrega por defecto el Valor de 1
+    var Cant=1;//Valor por defecto
+    if(CantVal!='0'){
+        //enviar el valor de 0 solo cuando no existan caja de texto en pedidos
+        Cant=$('#'+CantVal).val();
+    }
+    //alert(Cant);
     var i_m_iva=1;//indeice de Graba IVA recuperado de la base
     //alert(Cant);
 
     var arr_carrito = new Array();
-    if (sessionStorage.dts_carrito) {
+    if (sessionStorage.dts_carrito) {        
         /*Agrego a la Sesion*/
         arr_carrito = JSON.parse(sessionStorage.dts_carrito);
         var size = arr_carrito.length;
@@ -105,12 +112,12 @@ function addCarrito(Ids,CodIds,Nombre,Pvta,CantVal){
             }
         } else {
             /*Agrego a la Sesion*/
-            //Primer Items                   
+            //Primer Items
+            arr_carrito[0] = objProductoCar(0,Ids,CodIds,Nombre,Pvta,Cant,i_m_iva);
             sessionStorage.dts_carrito = JSON.stringify(arr_carrito);
-            //addPrimerItemProducto(tGrid, arr_carrito, 0);
             //limpiarDetalle();
         }
-    } else {
+    } else {        
         //No existe la Session
         //Primer Items
         arr_carrito[0] = objProductoCar(0,Ids,CodIds,Nombre,Pvta,Cant,i_m_iva);
@@ -132,7 +139,7 @@ function mostrarCountCar(){
 }
 
 
-function objProductoCar(indice,Ids,CodIds,Nombre,Pvta,Cant,i_m_iva) {
+function objProductoCar(indice,Ids,CodIds,Nombre,Pvta,Cant,i_m_iva) {    
     var rowGrid = new Object();
     rowGrid.ids_pos = indice;
     rowGrid.ids_pro = Ids;
@@ -145,7 +152,7 @@ function objProductoCar(indice,Ids,CodIds,Nombre,Pvta,Cant,i_m_iva) {
     rowGrid.val_des =0;
     rowGrid.i_m_iva =i_m_iva;
     rowGrid.val_iva =0;
-    rowGrid.t_venta =Pvta*Cant;
+    rowGrid.t_venta =Pvta*Cant;    
     if(i_m_iva==1){
         rowGrid.val_iva=redondea(parseFloat(rowGrid.t_venta)*parseFloat(PorIva),Ndecimal);
         rowGrid.t_venta=redondea(parseFloat(rowGrid.t_venta)+parseFloat(rowGrid.val_iva),Ndecimal);

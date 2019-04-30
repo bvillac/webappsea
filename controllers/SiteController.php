@@ -151,7 +151,7 @@ class SiteController extends Controller
             if($user!="NULL" || $pass!="NULL"){
                 if ($model->login($user,$pass)) {
                     $arroout["status"]= true;
-                    //return $this->goHome();//retonra al login en acceso
+                    return $this->goHome();//retonra al login en acceso
                 }
             }else{
                 $arroout["status"]= false;
@@ -187,8 +187,13 @@ class SiteController extends Controller
         $usuario = new Usuario();
         $usuario->destroySession();
         Yii::$app->user->logout();
-        return $this->goHome();
+        //return $this->goHome();
         //return $this->redirect(Url::base(true).'/site/login');
+        //return $this->redirect(Url::base(true).'/site/index');
+        //$arroout["status"]= true;
+        //return;
+        //return $this->refresh();
+        return $this->goBack();
     }
 
     /**
@@ -230,9 +235,9 @@ class SiteController extends Controller
         ]);
     }
     
-    public function actionCart()
+    public function actionCarrito()
     {
-        return $this->render('cart');
+        return $this->render('carrito');
     }
     
     public function actionBuscararticulo() {
@@ -255,6 +260,11 @@ class SiteController extends Controller
             //header('Content-type: application/json');
             //echo CJavaScript::jsonEncode($arrayData);
         }
+    }
+    
+    public function actionConfirmarpedido()
+    {
+        return $this->render('confirmarpedido');
     }
     
 

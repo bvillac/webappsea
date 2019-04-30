@@ -29,13 +29,13 @@ $Ruta=Url::base() . Yii::$app->params["imgFolder"];
                             <?= Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_masvendidos']); ?> 
                             <h2>$<?= app\models\Utilities::round_out($ItemReco[$fil]['p_venta'], 2) ?></h2>
                             <p><?=$ItemReco[$fil]['des_com']?></p>                                         
-                            <a onclick="addCarrito('<?= $ItemReco[$fil]['ids_pro'] ?>','<?= $ItemReco[$fil]['cod_art']?>','<?= $ItemReco[$fil]['des_com']?>','<?= $ItemReco[$fil]['p_venta']?>')" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i><?= Yii::t("store", "Add to cart") ?></a>
+                            <a onclick="addCarrito('<?= $ItemReco[$fil]['ids_pro'] ?>','<?= $ItemReco[$fil]['cod_art']?>','<?= $ItemReco[$fil]['des_com']?>','<?= $ItemReco[$fil]['p_venta']?>','0')" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i><?= Yii::t("store", "Add to cart") ?></a>
                         </div>
                     </div>
                     <div class="choose">
                         <ul class="nav nav-pills nav-justified">
                             <li><a href="#"><i class="fa fa-plus-square"></i>Agregar a lista de pedidos</a></li>
-                            <li><?= Html::a("<i class='fa fa-plus-square'></i>Ver Carrito", ['/site/cart']); ?></li>                            
+                            <li><?= Html::a("<i class='fa fa-plus-square'></i>Ver Carrito", ['/site/carrito']); ?></li>                            
                         </ul>
                     </div>
                 </div>

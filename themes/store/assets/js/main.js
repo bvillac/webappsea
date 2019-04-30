@@ -334,14 +334,48 @@ function dataUser() {
 
 /*FIN OPCIONES DE LOGIN*/
 
-
-
-$('.openBtn').on('click',function(){
+//$('.openBtn').on('click',function(){
     //alert('ingreso9');
     //$('.modal-body').load('nuevacuenta.php',function(){
-        $('#myModal').modal({show:true});
+        //$('#myModal').modal({show:true});
     //});
-});
+//});
+
+function nuevaCuentaModal(){
+    $('#loginModal').modal('hide');
+    $('#registroModal').modal({show:true});
+}
+function loginModal(){    
+    $('#loginModal').modal({show:true});
+}
 
 
+function menssajeModal(valor, tipo, body, title, accion, evento, op) {
+    switch (op) {
+        case '1':
+            //alerta Normal
+            var message = {
+                "wtmessage": body,
+                "title": title,
+            };
+            break;
+        case '2':
+            var message = {
+                "wtmessage": body,
+                "title": title,
+                "acciones": [
+                    {
+                        "id": "btnl",
+                        "class": "btn-primary clclass",
+                        "value": accion,
+                        "callback": evento, //guardafuncion
+                    },
+                ],
+            };
+            break;
+        default:
+
+    }
+    showAlert(valor, tipo, message);
+}
 

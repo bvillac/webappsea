@@ -5,7 +5,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+use yii\helpers\Html;
+use yii\widgets\LinkPager;
+use yii\helpers\Url;
 ?>
 
 <section id="do_action">
@@ -71,8 +73,9 @@
                                         <li>Iva 12.00% <span id="lbl_valIva">0.00</span></li>
                                         <li>Total <span id="lbl_total">0.00</span></li>
                                     </ul>
-                                    <!--							<a class="btn btn-default update" href="">Update</a>-->
-                                    <a class="btn btn-default check_out" href="">Continuar</a>
+                                    <!--<a class="btn btn-default update" href="">Update</a>-->
+                                    <!--<a class="btn btn-default check_out" href="">Continuar</a>-->
+                                    <?= Html::a('Confirmar Pedido', ['site/confirmarpedido'],['class' => 'btn btn-primary check_out']); ?>
                                 </div>
                             </div>
 			</div>
