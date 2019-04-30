@@ -170,6 +170,9 @@ function recargarGridProductoCar() {
             $('#' + tGrid + ' > tbody').html("");
             for (var i = 0; i < arr_Grid.length; i++) {
                 $('#' + tGrid + ' > tbody:last-child').append(retornaFilaProductoCar(i, arr_Grid, tGrid, true));
+                if($("#imgVisto_"+arr_Grid[i]['cod_art'])){//si existe el elemento en el sistio
+                    $($("#imgVisto_"+arr_Grid[i]['cod_art'])).show();
+                }
             }
         }else{
             $('#' + tGrid + ' > tbody').html("NO TIENE ITEMS AGREGADOS A SU LISTA");
