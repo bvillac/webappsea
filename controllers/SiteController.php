@@ -267,5 +267,10 @@ class SiteController extends Controller
         return $this->render('confirmarpedido');
     }
     
+    public function actionMicuenta()
+    {
+        return $this->render('micuenta');
+    }
+    
 
 }

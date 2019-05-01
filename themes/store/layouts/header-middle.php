@@ -24,7 +24,7 @@ $isUser = $session->get('PB_isuser', FALSE);
 <!--                    <button type="button" class="btn btn-success openBtn">Open Modal</button>-->
                     <ul class="nav navbar-nav">
                         <?php if ($isUser != FALSE && $session->isActive ){ ?>
-                            <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("store", "Account"), ['site/index']); ?></li>
+                            <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("store", "Account"), ['site/micuenta']); ?></li>
                         <?php }else{ ?>
                             <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("login", "Create Account"), Url::to('#'),['onclick'=>'javascript:nuevaCuentaModal();']); ?></li>
                         <?php } ?>
@@ -33,7 +33,7 @@ $isUser = $session->get('PB_isuser', FALSE);
                         <li><?= Html::a('<i class="fa fa-crosshairs"></i> '.Yii::t("store", "Checkout"), ['site/checkout']); ?></li>
                         <li><?= Html::a('<i id="lbl_countCar" class="fa fa-shopping-cart"></i> '.Yii::t("store", "Cart"), ['site/carrito']); ?></li>
                         <?php if ($isUser != FALSE && $session->isActive ){ ?>
-                            <li><?= Html::a('<i class="glyphicon glyphicon-log-out"></i> '.Yii::$app->user->identity->usu_username.' ('.Yii::t("login", "Sign Out").')', ['site/logout']); ?></li>
+                            <li> <?= Html::a('<i class="glyphicon glyphicon-log-out"></i>Hola '.Yii::$app->user->identity->usu_username.' ('.Yii::t("login", "Sign Out").')', ['site/logout']); ?></li>
                         <?php }else{ ?>
                             <!--<li><?php //Html::a('<i class="fa fa-lock"></i> '.Yii::t("login", "Login"), ['site/login']); ?></li>-->
                             <li><?= Html::a('<i class="fa fa-lock"></i> '.Yii::t("login", "Login"), Url::to('#'),['onclick'=>'javascript:loginModal();']); ?></li>

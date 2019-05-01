@@ -1,5 +1,6 @@
 "twbs/bootstrap": "4.1.3",
 "yiisoft/yii2-bootstrap": "~2.0.0",
+"yiisoft/yii2-bootstrap4": "~1.0.0",
 API GOOGLE MAP
 CLAVE:
 AIzaSyCmRPgy-jGZbT9LYO9tTckRQPjLGptYoFE
@@ -166,5 +167,8 @@ FIN LOGIN FORM
 
 
 https://bootsnipp.com/tags/menu?page=11
+http://demos.krajee.com/grid#pjax
 
-
+https://www.deskidea.com/
+byron_villacresesf@hotmail.com
+12345

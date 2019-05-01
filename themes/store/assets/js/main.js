@@ -113,6 +113,7 @@ $(document).ready(function () {
 
 
     $('.pagination li a').on('click', function () {
+        alert('Paginado');
         var page = $(this).attr('data');
         buscarProductos(page,0);
     });

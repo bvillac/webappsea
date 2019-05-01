@@ -38,6 +38,9 @@ runtime/*
 web/assets/*
 composer.lock
 
+#Carpeta de imaganes 01-05-2019
+web/img/productos/*
+
 # vim
 .*.sw[a-z]
 *.un~
