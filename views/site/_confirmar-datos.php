@@ -94,3 +94,7 @@ use yii\helpers\Url;
     </div>
 </form>
 <br>
+<div class="alert alert-success" role="alert">
+    Por motivos de seguridad guardaremos su IP actual, SU IP (<?= yii::$app->request->userIP?>) ha sido guardada en nuestra base de datos. 
+</div>
+<br>
