@@ -51,6 +51,18 @@ class Tienda {
         return $result;
     }
     
+    public static function getNivelSuperior($ids){
+        $con = \Yii::$app->db_tienda;
+        $sql="SELECT ids_cat,ids_scat,nom_cat  FROM " . $con->dbname . ".categorias "
+                . " WHERE ids_cat=:ids AND est_log=1 ORDER BY ids_cat;";
+        $comando = $con->createCommand($sql);
+        $comando->bindParam(":ids", $ids, \PDO::PARAM_INT);
+        $result=$comando->queryAll();
+        if ($result === false)
+            return 0; //en caso de que existe problema o no retorne nada tiene 1 por defecto 
+        return $result;
+    }
+    
     public static function getNivelTienda($ids){
         $rawData = array();
         $rawData=Tienda::getSubNivelTienda($ids);
@@ -128,7 +140,7 @@ class Tienda {
     }
     
     
-    public static function getProductoTienda2($page,$idsCat){
+    public static function getProductoTiendaIndex($page,$idsCat){
         $arroout = array();
         $tipOrderby="ASC";
         //$page=1;//Valor por defecto 1
@@ -144,7 +156,7 @@ class Tienda {
         $rowsPerPage = \Yii::$app->params['pagePro'];
         $offset = ($page - 1) * $rowsPerPage;
         $con = \Yii::$app->db_tienda;
-        $sql="SELECT A.ids_pro,A.cod_art,A.des_com,B.p_venta,A.ruta_img
+        $sql="SELECT A.ids_pro,A.cod_art,A.des_com,B.p_venta,A.ruta_img,A.ids_cat
                 FROM " . $con->dbname . ".productos A
                   INNER JOIN " . $con->dbname . ".precios B
                     ON A.ids_pro=B.ids_pro

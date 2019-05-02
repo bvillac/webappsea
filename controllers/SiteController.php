@@ -113,16 +113,19 @@ class SiteController extends Controller
      */
      public function actionProductos() {
         $resul=array();
+        $nivel=array();
         $data = Yii::$app->request->get();
-        $ids=isset($data["codigo"]) ? base64_decode($data['codigo']) : "NULL";
-        
+        $ids=isset($data["codigo"]) ? base64_decode($data['codigo']) : "NULL";        
         if (Yii::$app->request->isAjax) {
             
-        }        
-        $resul = Tienda::getProductoTienda2(0,$ids);
-        
+        }  
+        $resul = Tienda::getProductoTiendaIndex(0,$ids);
+        $IdsScat=Tienda::getNivelSuperior($resul['data'][0]['ids_cat']);//Obtiene nivel superior
+        $nivel = Tienda::getNivelTienda($IdsScat[0]['ids_scat']);//obtiene categoria de nivel
+        //Utilities::putMessageLogFile($nivel);
         return $this->render('productos', [
                     'models' => $resul['data'],
+                    'subnivel' => $nivel,
                     'pages' => $resul['trows'],
         ]);
      }
@@ -228,10 +231,12 @@ class SiteController extends Controller
     {
         $data = Yii::$app->request->get();
         $ids=(isset($data["codigo"]))?$data["codigo"]:'';
+        $cant=(isset($data["cant"]))?$data["cant"]:1;
         //Utilities::putMessageLogFile($ids);
         return $this->render('productodetalle', [
             //'model' => json_encode(Tienda::getProductoDetalle($ids)),
             'model' => Tienda::getProductoDetalle($ids),
+            'cant' => $cant,
         ]);
     }
     

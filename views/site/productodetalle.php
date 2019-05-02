@@ -10,7 +10,7 @@
 
 
 <div class="col-sm-9 padding-right">
-    <?= $this->render('_prodetalle.php', ['directoryAsset' => $directoryAsset,'model' => $model]) ?> 
+    <?= $this->render('_prodetalle.php', ['directoryAsset' => $directoryAsset,'model' => $model,'cant' => $cant]) ?> 
     <?php //$this->render('_category-tab.php', ['directoryAsset' => $directoryAsset]) ?> 
     <?php //$this->render('_recommended_items.php', ['directoryAsset' => $directoryAsset]) ?> 			
 </div>

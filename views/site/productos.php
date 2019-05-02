@@ -16,8 +16,9 @@ $this->title = Yii::$app->params['alias']; //'My Yii Application';
 ?>
 <div class="col-sm-3">
     <div class="left-sidebar">
-        <?= $this->render('_seccion-productos.php', ['directoryAsset' => $directoryAsset]) ?> 
-        <?= $this->render('_category-products.php', ['directoryAsset' => $directoryAsset]) ?> 
+        <?= $this->render('_seccion-sub-productos.php', ['directoryAsset' => $directoryAsset,'seccion' => $subnivel]) ?> 
+        <?php //$this->render('_seccion-productos.php', ['directoryAsset' => $directoryAsset]) ?> 
+        <?php //$this->render('_category-products.php', ['directoryAsset' => $directoryAsset]) ?> 
         <?php //$this->render('_brands_products.php', ['directoryAsset' => $directoryAsset]) ?> 
         
 

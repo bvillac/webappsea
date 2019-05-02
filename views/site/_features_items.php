@@ -44,7 +44,10 @@ $num_total_rows= Tienda::getCountProductoTienda();
                         <div class="productinfo text-center">                                        
                             <?php $imgData=Html::img($Ruta.$ItemReco[$fil]['cod_art']."_P-01.jpg",['class' => 'img-responsive ']); ?>
                             <?= Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_masvendidos']); ?> 
-                            <h2>$<?= app\models\Utilities::round_out($ItemReco[$fil]['p_venta'], 2) ?></h2>
+                            <h2>
+                                $<?= app\models\Utilities::round_out($ItemReco[$fil]['p_venta'], 2) ?>
+                                <img id="imgVisto_<?= $ItemReco[$fil]['cod_art']?>" style="display:none;" class="imgProVisto" src="<?= Url::base() ?>/web/img/product-details/VistoBueno.png" alt="" />
+                            </h2>
                             <p><?=$ItemReco[$fil]['des_com']?></p>                                         
                             <a onclick="addCarrito('<?= $ItemReco[$fil]['ids_pro'] ?>','<?= $ItemReco[$fil]['cod_art']?>','<?= $ItemReco[$fil]['des_com']?>','<?= $ItemReco[$fil]['p_venta']?>')" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i><?= Yii::t("store", "Add to cart") ?></a>
                         </div>

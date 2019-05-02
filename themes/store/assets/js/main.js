@@ -205,7 +205,7 @@ function llenarItems(data){
             strData += '<div class="single-products">';
                 strData += '<div class="productinfo text-center">';
                     //strData += '<img src="img/productos/img1.jpg" alt="" />';
-                    strData += '<img onclick="verProducto(\'' + data['ids_pro'] + '\')" src="'+ruta+'" alt="" />';
+                    strData += '<img onclick="verProducto(\'' + data['ids_pro'] + '\',1)" src="'+ruta+'" alt="" />';
                     strData += '<h2>$' + redondea(data['p_venta'],2) + '</h2>';
                     strData += '<p>' + data['des_com'] + '</p>';
                     strData += '<a onclick="addCarrito(\'' + data['ids_pro'] + '\',\'' + data['cod_art'] + '\',\'' + data['des_com'] + '\',\'' + data['p_venta'] + '\',0)" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Agregar a Carrito</a>';
@@ -291,9 +291,10 @@ function llenarCategorias(data){
     return strData;
 }
 
-function verProducto(ids){
+function verProducto(ids,txt_cant){
     var link = $('#txth_base').val() + "/site/productodetalle";
-    parent.window.location.href = link + "?codigo="+ids;
+    var cant=('#'+txt_cant)?$('#'+txt_cant).val():1;//Si existe el control pasa el valor caso contrario manda el valor por defecto= 1
+    parent.window.location.href = link + "?codigo="+ids+"&cant="+cant;
 }
 
 /*OPCIONES DE LOGIN*/

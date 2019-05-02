@@ -126,6 +126,7 @@ function addCarrito(Ids,CodIds,Nombre,Pvta,CantVal){
         //limpiarDetalle();
     }
     mostrarCountCar();
+    mostrarVisto(CodIds)
     
 }
 function mostrarCountCar(){
@@ -170,9 +171,7 @@ function recargarGridProductoCar() {
             $('#' + tGrid + ' > tbody').html("");
             for (var i = 0; i < arr_Grid.length; i++) {
                 $('#' + tGrid + ' > tbody:last-child').append(retornaFilaProductoCar(i, arr_Grid, tGrid, true));
-                if($("#imgVisto_"+arr_Grid[i]['cod_art'])){//si existe el elemento en el sistio
-                    $($("#imgVisto_"+arr_Grid[i]['cod_art'])).show();
-                }
+                mostrarVisto(arr_Grid[i]['cod_art']);
             }
         }else{
             $('#' + tGrid + ' > tbody').html("NO TIENE ITEMS AGREGADOS A SU LISTA");
@@ -183,6 +182,13 @@ function recargarGridProductoCar() {
     }
     sumaTotal();
     mostrarCountCar();
+}
+
+function mostrarVisto(ids) {
+    //OPCION DE VISTO EN EL PRODUCTOS
+    if ($("#imgVisto_" + ids)) {//si existe el elemento en el sistio
+        $($("#imgVisto_" + ids)).show();
+    }
 }
 
 function retornaFilaProductoCar(c, Grid, TbGtable, op) {
@@ -198,7 +204,7 @@ function retornaFilaProductoCar(c, Grid, TbGtable, op) {
     strFila += '<td style="display:none; border:none;">' + Grid[c]['ids_pro'] + '</td>';
     strFila += '<td class="cart_product">';
         //strFila += '<a href=""><img class="imgProCarrito" src="'+ruta+'"  alt=""></a>';
-        strFila += '<img class="imgProCarrito" onclick="verProducto(\'' + Grid[c]['ids_pro'] + '\')" src="'+ruta+'" alt="" />';
+        strFila += '<img class="imgProCarrito" onclick="verProducto(\'' + Grid[c]['ids_pro'] + '\',\'txt_cant' + Grid[c]['ids_pro'] + '\')" src="'+ruta+'" alt="" />';
     strFila += '</td>';
     strFila += '<td class="cart_description">';
         strFila += '<h4><a href="">' + Grid[c]['des_com'] + '</a></h4>';
@@ -210,7 +216,8 @@ function retornaFilaProductoCar(c, Grid, TbGtable, op) {
     strFila += '<td class="cart_quantity">';
         strFila += '<div class="cart_quantity_button">';
             //strFila += '<a class="cart_quantity_up" href=""> + </a>';
-            strFila += '<input class="cart_quantity_input" type="text" name="quantity" value="' + Grid[c]['can_des'] + '" ';
+            strFila += '<input class="cart_quantity_input" type="text" name="txt_cant'+ Grid[c]['ids_pro']+'" value="' + Grid[c]['can_des'] + '" ';
+                    strFila += 'id="txt_cant'+ Grid[c]['ids_pro']+ '"';
                     strFila += 'onkeydown="pedidoEnterGrid(isEnter(event),this,' + Grid[c]['ids_pro'] + ')"';
                     //strFila += ' autocomplete="off" size="2">';
                     strFila += 'onblur="javascript:return pedidoEnterGrid(true,this,' + Grid[c]['ids_pro'] + ')" ';

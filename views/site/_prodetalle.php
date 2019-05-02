@@ -54,14 +54,14 @@ $Ruta=Url::base() . Yii::$app->params["imgFolder"];
     </div>
     <div class="col-sm-7">
         <div class="product-information"><!--/product-information-->
-            <img src="<?= Url::base() ?>/web/img/product-details/new.jpg" class="newarrival" alt="" />
+<!--            <img src="<?= Url::base() ?>/web/img/product-details/new.jpg" class="newarrival" alt="" />-->
             <h2><?= $model[0]['des_com'] ?></h2>
             <p>PARTE ID: <?= $model[0]['cod_art'] ?></p>
             <img src="<?= Url::base() ?>/web/img/product-details/rating.png" alt="" />
             <span>
                 <span>$<?= app\models\Utilities::round_out($model[0]['p_venta'], 2) ?></span>
                 <label><?= Yii::t("store", "Quantity") ?>:</label>
-                <input id="txt_cant" type="text" value="0" />
+                <input id="txt_cant" type="text" value="<?= $cant ?>" />
                 <?php //Html::a(Yii::t("store", "Add to cart"), ['/site/cart'], ['class' => 'btn btn-fefault cart']) ?>
                 <?= Html::button('<i class="fa fa-shopping-cart"></i>'.Yii::t("store", "Add to cart"), 
                                 ['class' => 'btn btn-fefault cart','onclick'=>'addCarrito(\''.$model[0]["ids_pro"].'\',\''.$model[0]["cod_art"].'\',\''.$model[0]["des_com"].'\',\''.$model[0]["p_venta"].'\',\'txt_cant\')'])?>

@@ -26,7 +26,7 @@ $Ruta=Url::base() . Yii::$app->params["imgFolder"];
                     <div class="single-products">
                         <div class="productinfo text-center">                                        
                             <?php $imgData=Html::img($Ruta.$ItemReco[$fil]['cod_art']."_G-01.jpg",['class' => 'img-responsive ']); ?>
-                            <?= Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_masvendidos']); ?> 
+                            <?= Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro'],'cant' => 1], ['id' => 'btn_masvendidos']); ?> 
                             <h2>$<?= app\models\Utilities::round_out($ItemReco[$fil]['p_venta'], 2) ?>
                                 <img id="imgVisto_<?= $ItemReco[$fil]['cod_art']?>" style="display:none;" class="imgProVisto" src="<?= Url::base() ?>/web/img/product-details/VistoBueno.png" alt="" />
                             </h2>
