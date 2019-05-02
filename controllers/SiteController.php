@@ -271,6 +271,13 @@ class SiteController extends Controller
     {
         return $this->render('micuenta');
     }
-    
+    public function actionMispedidos()
+    {
+        return $this->render('mispiedidos');
+    }
+    public function actionMislistas()
+    {
+        return $this->render('mislistas');
+    }
 
 }

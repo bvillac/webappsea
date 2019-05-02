@@ -88,8 +88,10 @@ use yii\helpers\Url;
         </div>
         
         <div class="scp_submit_pay">
+<!--            <button type="button" class="btn btn-primary btn-lg">Botón grande</button>-->
             <?= Html::a('Pedir y Finalizar', ['site/confirmarpedido'],['class' => 'btn btn-primary check_out']); ?>
         </div>
+        
         <div><br>Al pulsar el botón "Pagar y Finalizar" confirmo que he leído y acepto las <a href="https://www.utimpor.com/condiciones-de-uso.php" target="_blank" title="Leer condiciones generales de venta">condiciones generales de venta</a> y la <a href="https://www.utimpor.com/politica-de-privacidad.php" title="Leer política de privacidad" target="_blank">política de privacidad</a></div>
     </div>
 </form>
