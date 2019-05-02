@@ -11,7 +11,7 @@ use yii\helpers\Url;
 app\models\Utilities::putMessageLogFile($seccion);
 ?>
 <div class="brands_products"><!--brands_products-->
-    <h2><?=Yii::t("store", "Sub Categoria")?></h2>
+    <h2><?=Yii::t("store", $nomCat)?></h2>
     <div class="brands-name">
         <ul id="categoria" class="nav nav-pills nav-stacked">
             <?php for ($i = 0; $i < sizeof($seccion); $i++) {  ?>

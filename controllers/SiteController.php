@@ -127,6 +127,7 @@ class SiteController extends Controller
                     'models' => $resul['data'],
                     'subnivel' => $nivel,
                     'pages' => $resul['trows'],
+                    'nomCat' => $IdsScat[0]['nom_cat'],
         ]);
      }
     
