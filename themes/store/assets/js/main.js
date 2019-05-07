@@ -56,8 +56,8 @@ function retornarIndLista(array,property,value,ids){
 
 $(document).ready(function () {
     //buscarIndex();
-    buscarProductos(1,0);
-    mostrarCategoria(base64_encode('1'));
+    //buscarProductos(1,0);
+    //mostrarCategoria(base64_encode('1'));
     
     /*$(".dropdown").hover(            
         function() {
@@ -113,7 +113,7 @@ $(document).ready(function () {
 
 
     $('.pagination li a').on('click', function () {
-        alert('Paginado');
+        //alert('Paginado');
         var page = $(this).attr('data');
         buscarProductos(page,0);
     });
@@ -152,29 +152,35 @@ function buscarEnterProducto(valor,control){
 function buscarProductos(page,idsCat) {
     //$('.items').html('<div class="loading"><img src="images/loading.gif" width="70px" height="70px"/><br/>Un momento por favor...</div>');
     var strData = "";
-    var link = $('#txth_base').val() + "/site/index";
+    var link = $('#txth_base').val() + "/site/productos";
     var orderBy=$('#cmb_orden option:selected').val();
     var desCom=$('#txt_buscarData').val();
+    var idsCat=$('#txth_idsCat').val();
     
     var arrParams = new Object();
     arrParams.page = (page!=0)?page:1;
-    arrParams.idsCat = (idsCat!=0)?idsCat:0;
+    arrParams.codigo = (idsCat!=0)?base64_encode(idsCat):0;//idsCat =>idscategoria
     arrParams.desCom = desCom;
     arrParams.orderBy = orderBy;
     arrParams.op = 'productos';
     requestHttpAjax(link, arrParams, function (response) {
         if (response.status == "OK") {
+            //var data = JSON.parse(response.message);
             var data = response.message;
+            //alert(JSON.stringify(data));
+            //alert(JSON.parse(data));
+            //alert(data.toSource());
             var n=0;
             var fil=0;
             for (var i = 0; i < data.length; i++) {
                 //option_arr += '<a onclick="deleteComentario(\'' + data[i]['Ids'] + '\')" class="pull-right btn-box-tool" href="#"><i class="fa fa-times"></i></a>';
                 n=0;
-                strData+='<div class="row">';
+                strData+='<div class="row">';                
                 while (n < 3) {
-                    if(typeof(data[fil]) != "undefined"){
+                    //alert(data[fil]['cod_art']);
+                    //if(typeof(data[fil]) != "undefined"){
                         strData += llenarItems(data[fil]);
-                    } 
+                    //} 
                     fil++;
                     n ++;  
                 }

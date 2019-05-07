@@ -96,7 +96,7 @@ class Tienda {
 
     public static function getProductoTienda($data){
         $arroout = array();
-        $tipOrderby="ASC";
+        /*$tipOrderby="ASC";
         $page=1;//Valor por defecto 1
         $idsCat=0;//Valor por defecto 0
         $desCom="";
@@ -132,7 +132,7 @@ class Tienda {
         //$arroout["error"] = null;
         //$arroout["message"] = null;
         $arroout["trows"] = $tCount;//count($rawData);
-        $arroout["data"] = $rawData;
+        $arroout["data"] = $rawData;*/
         return $arroout;
         
         //return $comando->queryAll();
@@ -140,19 +140,23 @@ class Tienda {
     }
     
     
-    public static function getProductoTiendaIndex($page,$idsCat){
+    public static function getProductoTiendaIndex($data){
+        Utilities::putMessageLogFile($data);
         $arroout = array();
         $tipOrderby="ASC";
-        //$page=1;//Valor por defecto 1
-        //$idsCat=0;//Valor por defecto 0
+        $page=1;//Valor por defecto 1
         $desCom="";
-        $tCount=Tienda::getCountProductoTienda();
+        //$tCount=Tienda::getCountProductoTienda();
         //Utilities::putMessageLogFile($data);
-        //if(isset($data['page'])){$page=$data['page'];}
-        //if(isset($data['idsCat'])){$idsCat=$data['idsCat'];}
-        //if(isset($data['desCom'])){$desCom=$data['desCom'];}
+        
+        $idsCat=isset($data["codigo"]) ? base64_decode($data['codigo']) : "0";
+        
+        
+        Utilities::putMessageLogFile("ids ".$idsCat);
+        if(isset($data['page'])){$page=$data['page'];}
+        //if(isset($data['idsCat'])){$idsCat=$data['idsCat'];}        
+        if(isset($data['desCom'])){$desCom=$data['desCom'];}
         if(isset($data['orderBy'])){$tipOrderby=($data['orderBy']==2)?"DESC":"ASC";}
-
         $rowsPerPage = \Yii::$app->params['pagePro'];
         $offset = ($page - 1) * $rowsPerPage;
         $con = \Yii::$app->db_tienda;
@@ -163,34 +167,38 @@ class Tienda {
               WHERE A.est_log=1 ";
         $sql.=($idsCat!=0)?" AND A.ids_cat=$idsCat":"";  
         $sql.=($desCom!="")?" AND A.des_com LIKE '%$desCom%' ":"";
-        $sql.=" ORDER BY A.des_com ". $tipOrderby;
-        //$sql.=" LIMIT ".$offset.", ".$rowsPerPage;
 
-        $comando = $con->createCommand($sql);
-        
+        $comando = $con->createCommand($sql);        
         //$comando->bindParam(":med_id", $ids, \PDO::PARAM_INT);
         $rawData=$comando->queryAll();
-        //Utilities::putMessageLogFile($rawData);
+        //PARA CONSULTAR PAGINADO
+        $arroout["trows"] = count($rawData);
+        //$arroout = array();    
         
+        //PARA CONSULTAR DATOS        
+        $sql.=" ORDER BY A.des_com ". $tipOrderby;
+        $sql.=" LIMIT ".$offset.", ".$rowsPerPage;
+        $comando = $con->createCommand($sql); 
+        //echo $sql;
+        $rawData=$comando->queryAll();
+        $arroout["data"] = $rawData;
+        
+        //Utilities::putMessageLogFile($rawData);        
         //Tienda::existeImgLista($rawData);
 
         $arroout["status"] = TRUE;
         //$arroout["error"] = null;
         //$arroout["message"] = null;
-        $arroout["trows"] = $tCount;//count($rawData);
-        $arroout["data"] = $rawData;
+        
         return $arroout;
-        
-        //return $comando->queryAll();
-        
     }
 
     
     
     public static function existeImgLista($rawData) {
         //prueba rutatas
-        Utilities::putMessageLogFile(sizeof("PARTE2"));
-        Utilities::putMessageLogFile(sizeof($rawData));
+        //Utilities::putMessageLogFile(sizeof("PARTE2"));
+        //Utilities::putMessageLogFile(sizeof($rawData));
         
         for ($i = 0; $i < sizeof($rawData); $i++) {
             $nombre_fichero = \Yii::getAlias('@webroot').'/img/productos/'.$rawData[$i]['cod_art'].'_P-01.jpg';
@@ -200,7 +208,7 @@ class Tienda {
                 //Utilities::putMessageLogFile($nombre_fichero);
             } else {
                 //echo "El fichero ".$rawData[$i]['cod_art']." no existe<br>";
-                Utilities::putMessageLogFile($nombre_fichero);
+                //Utilities::putMessageLogFile($nombre_fichero);
                 //Utilities::putMessageLogFile("El fichero ".$rawData[$i]['cod_art']." no existe<br>");
             }
         }

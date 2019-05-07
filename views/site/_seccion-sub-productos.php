@@ -8,7 +8,7 @@
 //
 use yii\helpers\Html;
 use yii\helpers\Url;
-app\models\Utilities::putMessageLogFile($seccion);
+//app\models\Utilities::putMessageLogFile($seccion);
 ?>
 <div class="brands_products"><!--brands_products-->
     <h2><?=Yii::t("store", $nomCat)?></h2>

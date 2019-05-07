@@ -82,8 +82,8 @@ class SiteController extends Controller
                     $resul["data"] = $dts;
                     break;
                 case 'productos':
-                    $resul = Tienda::getProductoTienda($data);
-                    Tienda::getProductoTiendaMasVendidos($data);
+                    //$resul = Tienda::getProductoTienda($data);
+                    //Tienda::getProductoTiendaMasVendidos($data);
                     break;
                 default:
                    //echo "i no es igual a 0, 1 ni 2";
@@ -100,7 +100,7 @@ class SiteController extends Controller
             return;
         }
         //$pages=1;
-        $resul = Tienda::getProductoTienda(null);
+        //$resul = Tienda::getProductoTienda(null);
         return $this->render('index', [
                     //'models' => $resul['data'],
                     //'pages' => $resul['trows'],
@@ -115,14 +115,27 @@ class SiteController extends Controller
         $resul=array();
         $nivel=array();
         $data = Yii::$app->request->get();
-        $ids=isset($data["codigo"]) ? base64_decode($data['codigo']) : "NULL";        
+        //$ids=isset($data["codigo"]) ? base64_decode($data['codigo']) : "0";
+        //$page=isset($data["page"]) ? base64_decode($data['page']) : "1";          
         if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            $op=(isset($data["op"]))?$data["op"]:'';
+           
+            $resul = Tienda::getProductoTiendaIndex($data);
+            if ($resul['status']) {
+                $message = ["info" => Yii::t('exception', '<strong>Well done!</strong> your information was successfully saved.')];
+                return Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', $resul['data']);
+            }else{
+                $message = ["info" => Yii::t('exception', 'The above error occurred while the Web server was processing your request.')];
+                return Utilities::ajaxResponse('NO_OK', 'alert', Yii::t('jslang', 'Error'), 'false', $message);
+            }
+            return;
             
         }  
-        $resul = Tienda::getProductoTiendaIndex(0,$ids);
+        $resul = Tienda::getProductoTiendaIndex($data);
         $IdsScat=Tienda::getNivelSuperior($resul['data'][0]['ids_cat']);//Obtiene nivel superior
         $nivel = Tienda::getNivelTienda($IdsScat[0]['ids_scat']);//obtiene categoria de nivel
-        //Utilities::putMessageLogFile($nivel);
+        //Utilities::putMessageLogFile($resul);
         return $this->render('productos', [
                     'models' => $resul['data'],
                     'subnivel' => $nivel,
