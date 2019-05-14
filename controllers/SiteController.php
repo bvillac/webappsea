@@ -259,6 +259,8 @@ class SiteController extends Controller
         return $this->render('carrito');
     }
     
+    
+    //Control de busqueda de productos
     public function actionBuscararticulo() {
         if (Yii::$app->request->isAjax) {
             $data = Yii::$app->request->post();
@@ -320,7 +322,20 @@ class SiteController extends Controller
     
     public function actionConfirmarpedido()
     {
-        return $this->render('confirmarpedido');
+        $session = Yii::$app->session;
+        $isUser = $session->get('PB_isuser', FALSE);
+        Utilities::putMessageLogFile($session->isActive );
+        //if ($isUser != FALSE && $session->isActive ){
+        if ($session->isActive ){//Si la session esta activa se redireciona con los datos
+            
+        }
+        //return $this->render('confirmarpedido');
+        return $this->render('confirmarpedido', [
+            //'model' => json_encode(Tienda::getProductoDetalle($ids)),
+            'model' => Tienda::getProductoDetalle($ids),
+            'cant' => $cant,
+        ]);
+        
     }
     
     public function actionMicuenta()

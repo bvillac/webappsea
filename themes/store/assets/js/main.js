@@ -298,8 +298,15 @@ function llenarCategorias(data){
 }
 
 function verProducto(ids,txt_cant){
+    var cant=0;
     var link = $('#txth_base').val() + "/site/productodetalle";
-    var cant=('#'+txt_cant)?$('#'+txt_cant).val():1;//Si existe el control pasa el valor caso contrario manda el valor por defecto= 1
+    if (txt_cant==0){//cuando viene por la busqueda general
+        cant=1;
+    }else{
+        //cuando viene desd un detalle
+        cant=('#'+txt_cant)?$('#'+txt_cant).val():1;//Si existe el control pasa el valor caso contrario manda el valor por defecto= 1
+    }
+    
     parent.window.location.href = link + "?codigo="+ids+"&cant="+cant;
 }
 

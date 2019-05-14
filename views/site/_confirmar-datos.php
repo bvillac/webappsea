@@ -10,7 +10,9 @@ use yii\helpers\Url;
 ?>
 
 <div class="alert alert-success" role="alert">
-    Si tienes cuenta de usuario <a href="javascript: void(0);" title="Accede" onclick="javascript: _data();"> accede y ¡compra más rápido!</a>
+    Si tienes cuenta de usuario 
+    <!--<a href="javascript: void(0);" title="Accede" onclick="javascript: _data();"> accede y ¡compra más rápido!</a>-->
+    <?= Html::a('accede y ¡compra más rápido!', Url::to('#'),['onclick'=>'javascript:loginModal();']); ?>
 </div>
 
 <form>

@@ -25,7 +25,7 @@ use yii\web\JsExpression;
                                             }"),
                 'select' => new JsExpression("function( event, ui ) {
                                                     //alert(ui.item.id);
-                                                    verProducto(ui.item.id);
+                                                    verProducto(ui.item.id,0);
                                                     //actualizaBuscarPersona(ui.item.PER_ID); 
                                                     //$('#txth_ids').val(ui.item.nombre);
                                                     //actualizarGrid();
