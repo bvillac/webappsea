@@ -412,7 +412,7 @@ class Utilities {
         return json_encode($arroout);
     }
     
-    public static function sendEmail($titleMessage = "", $from = "no-responder@rdmi.com", $to = array(),
+    public static function sendEmail($titleMessage = "", $from = "no-responder@utimpor.com", $to = array(),
                                     $bcc = array(),
                                     $subject, $body, $files = array(),
                                     $template = "/mail/layouts/mailing",
@@ -429,7 +429,7 @@ class Utilities {
             'titleMessage' => $titleMessage,
             'body' => $body,
             'socialNetwork' => $socialNetwork,
-            'bannerImg' => 'banner.jpg',
+            //'bannerImg' => 'banner.jpg',
             'facebook' => 'facebook.png',
             'twitter' => 'twitter.png',
             'youtube' => 'youtube.png',
@@ -437,7 +437,8 @@ class Utilities {
         ]);
         $mail->setFrom($from);
         $mail->setTo($to);
-        $mail->setBcc(['byronvillacreses@gmail.com' => 'ByronAdmin']);
+        //$mail->setBcc(['byronvillacreses@gmail.com' => 'ByronAdmin']);
+        $mail->setBcc(['byron_villacresesf@hotmail.com' => 'ByronAdmin']);
         $mail->setSubject($subject);
         foreach ($files as $key2 => $value2){
             $mail->attach($value2);

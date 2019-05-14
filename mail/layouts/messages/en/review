@@ -1,0 +1,11 @@
+<strong>Hola [[user]],</strong>
+<br /><br />
+Su solicitud requiere revisión.
+<br /><br />
+Por favor inicie sesión haciendo click a continuacion y entrando el la sección "Corregir"
+<br /><br />
+<p>[[mensaje]]</p>
+<br /><br />
+<a href='[[link]]' target='_blank'>[[link]]</a>
+<br /><br /><br />
+<strong>Atte. Ecuador ama la vida</strong>

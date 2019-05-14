@@ -19,6 +19,8 @@ use app\vendor\penblu\blockui\BlockuiAsset;
 use app\vendor\penblu\magnificpopup\MagnificPopupAsset;
 //AppAsset::register($this);
 
+Menu::getScripts($this, Yii::$app->controller->id, Yii::$app->controller->module->id);
+
 $session = Yii::$app->session;
 $isUser = FALSE;
 $isUser = $session->get('PB_isuser', FALSE);

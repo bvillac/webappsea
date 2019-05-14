@@ -118,7 +118,7 @@
                             He leído y acepto las <a href="https://www.utimpor.com/condiciones-de-uso.php" title="Leer condiciones" target="_blank">condiciones de uso</a> y la <a href="https://www.utimpor.com/condiciones-de-uso.php" title="Leer política de privacidad" target="_blank">política de privacidad</a>							</label>
                    </div>
                    <div class="form-group">
-                       <button type="button" class="btn btn-primary">Nueva Cuenta</button>
+                       <button type="button" id="btn_saveCuenta" class="btn btn-primary">Nueva Cuenta</button>
                    </div>
                    <div class="form-group">
                        <p>

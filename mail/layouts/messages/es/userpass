@@ -1,0 +1,7 @@
+<strong>Hola [[user]],</strong>
+<br /><br />
+Usted ha solicitado cambiar su contraseña actual del usuario <strong>[[username]]</strong>. Para realizar el cambio de la clave, deberá utilizar el enlace proporcionado a continuación:
+<br /><br />
+<a href='[[link_verification]]' target='_blank'>[[link_verification]]</a>
+<br /><br /><br />
+<strong>Atte. RDMI</strong>

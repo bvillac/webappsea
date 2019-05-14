@@ -356,7 +356,7 @@ function validateForm(widthAlert) {
     $(".PBvalidation").each(function () {
         var result = new Object();
         noVal:
-                if ($(this).attr('data-required') == "false" && $(this).val() == "") {
+            if ($(this).attr('data-required') == "false" && $(this).val() == "") {
             if ($(this).val() == "") {
                 removeIco(this);
                 break noVal;

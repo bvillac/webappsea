@@ -1,0 +1,7 @@
+<strong>Hi [[user]],</strong>
+<br /><br />
+You are registered in ecuadoramalavida.com.ec with user name <strong>[[username]]</strong>. To activate your account, you must use the link provided below:
+<br /><br />
+<a href='[[link_verification]]' target='_blank'>[[link_verification]]</a>
+<br /><br /><br />
+<strong>Atte. Marca País</strong>

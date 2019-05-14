@@ -93,4 +93,100 @@ class Persona extends \yii\db\ActiveRecord
     public static function findIdentity($id) {
         return static::findOne($id);
     }
+    
+    public static function insertarDataPerfil($con,$data) {      
+        //Datos de Perfil
+        $sql = "INSERT INTO " . $con->dbname . ".persona
+        (per_ced_ruc,per_nombre,per_apellido,per_genero,per_fecha_nacimiento,per_estado_civil,per_correo,per_tipo_sangre,per_foto,per_estado_activo,per_est_log)VALUES
+        (:per_ced_ruc,:per_nombre,:per_apellido,:per_genero,:per_fecha_nacimiento,:per_estado_civil,:per_correo,:per_tipo_sangre,:per_foto,1,1 ); ";
+        $command = $con->createCommand($sql);
+        //$command->bindParam(":per_id", $data[0]['per_id'], \PDO::PARAM_INT);//Id Comparacion
+        $command->bindParam(":per_nombre", $data[0]['per_nombre'], \PDO::PARAM_STR);
+        $command->bindParam(":per_apellido", $data[0]['per_apellido'], \PDO::PARAM_STR);
+        $command->bindParam(":per_ced_ruc", $data[0]['per_ced_ruc'], \PDO::PARAM_STR);        
+        $command->bindParam(":per_genero", $data[0]['per_genero'], \PDO::PARAM_STR);
+        $command->bindParam(":per_fecha_nacimiento", $data[0]['per_fecha_nacimiento'], \PDO::PARAM_STR);
+        $command->bindParam(":per_estado_civil", $data[0]['per_estado_civil'], \PDO::PARAM_STR);
+        $command->bindParam(":per_correo", $data[0]['per_correo'], \PDO::PARAM_STR);
+        $command->bindParam(":per_tipo_sangre", $data[0]['per_tipo_sangre'], \PDO::PARAM_STR);
+        $command->bindParam(":per_foto", $data[0]['per_foto'], \PDO::PARAM_STR);
+        $command->execute();
+    }
+    
+    public static function insertarDataPerfilDatoAdicional($con,$data,$per_id) { 
+         //Datos Adicionales
+        $sql = "INSERT INTO " . $con->dbname . ".data_persona
+                (per_id,pai_id,prov_id,can_id,dper_direccion,dper_telefono,dper_celular,dper_contacto,dper_est_log)VALUES
+                (:per_id,:pai_id,:prov_id,:can_id,:dper_direccion,:dper_telefono,:dper_celular,:dper_contacto,1);";
+        $command = $con->createCommand($sql);
+        $command->bindParam(":per_id", $per_id, \PDO::PARAM_INT);//Id Comparacion
+        $command->bindParam(":pai_id", $data[0]['pai_id'], \PDO::PARAM_INT);
+        $command->bindParam(":prov_id", $data[0]['prov_id'], \PDO::PARAM_INT);
+        $command->bindParam(":can_id", $data[0]['can_id'], \PDO::PARAM_INT);
+        $command->bindParam(":dper_direccion", $data[0]['dper_direccion'], \PDO::PARAM_STR);
+        $command->bindParam(":dper_contacto", $data[0]['dper_contacto'], \PDO::PARAM_STR);
+        $command->bindParam(":dper_telefono", $data[0]['dper_telefono'], \PDO::PARAM_STR);
+        $command->bindParam(":dper_celular", $data[0]['dper_celular'], \PDO::PARAM_STR);
+        $command->execute();
+    }
+    
+    public static function actualizarDataPerfil($con,$data) {
+        $sql = "UPDATE " . $con->dbname . ".persona
+            SET per_ced_ruc = :per_ced_ruc,per_nombre = :per_nombre,per_apellido = :per_apellido,
+            per_genero = :per_genero,per_fecha_nacimiento = :per_fecha_nacimiento,per_estado_civil = :per_estado_civil,
+            per_correo = :per_correo,per_tipo_sangre = :per_tipo_sangre,per_foto = :per_foto,per_fec_mod = CURRENT_TIMESTAMP()
+            WHERE per_id=:per_id ";
+        $command = $con->createCommand($sql);
+        $command->bindParam(":per_id", $data[0]['per_id'], \PDO::PARAM_INT);//Id Comparacion
+        $command->bindParam(":per_nombre", $data[0]['per_nombre'], \PDO::PARAM_STR);
+        $command->bindParam(":per_apellido", $data[0]['per_apellido'], \PDO::PARAM_STR);
+        $command->bindParam(":per_ced_ruc", $data[0]['per_ced_ruc'], \PDO::PARAM_STR);        
+        $command->bindParam(":per_genero", $data[0]['per_genero'], \PDO::PARAM_STR);
+        $command->bindParam(":per_fecha_nacimiento", $data[0]['per_fecha_nacimiento'], \PDO::PARAM_STR);
+        $command->bindParam(":per_estado_civil", $data[0]['per_estado_civil'], \PDO::PARAM_STR);
+        $command->bindParam(":per_correo", $data[0]['per_correo'], \PDO::PARAM_STR);
+        $command->bindParam(":per_tipo_sangre", $data[0]['per_tipo_sangre'], \PDO::PARAM_STR);
+        $command->bindParam(":per_foto", $data[0]['per_foto'], \PDO::PARAM_STR);
+        $command->execute();
+    }
+    
+    public static function actualizarDataAdicional($con,$data) {
+        //Verificamos SI existe los Datos Adicionales
+        $dper_id=  Persona::existeDataAdicional($con, $data[0]['per_id']);
+        if($dper_id>0){
+            //Existe y Hay que Actualizar
+            $sql = "UPDATE " . $con->dbname . ".data_persona
+                SET per_id = :per_id,pai_id = :pai_id,prov_id = :prov_id,can_id = :can_id,dper_direccion = :dper_direccion,
+                dper_telefono = :dper_telefono,dper_celular = :dper_celular,dper_contacto = :dper_contacto,dper_est_log = 1,
+                dper_fec_mod=CURRENT_TIMESTAMP() WHERE dper_id=$dper_id "; 
+        }else{
+            //No Existe y Hay que Insertar
+            $sql = "INSERT INTO " . $con->dbname . ".data_persona
+                (per_id,pai_id,prov_id,can_id,dper_direccion,dper_telefono,dper_celular,dper_contacto,dper_est_log)VALUES
+                (:per_id,:pai_id,:prov_id,:can_id,:dper_direccion,:dper_telefono,:dper_celular,:dper_contacto,1);";
+        }
+        $command = $con->createCommand($sql);
+        $command->bindParam(":per_id", $data[0]['per_id'], \PDO::PARAM_INT);//Id Comparacion
+        $command->bindParam(":pai_id", $data[0]['pai_id'], \PDO::PARAM_INT);
+        $command->bindParam(":prov_id", $data[0]['prov_id'], \PDO::PARAM_INT);
+        $command->bindParam(":can_id", $data[0]['can_id'], \PDO::PARAM_INT);
+        $command->bindParam(":dper_direccion", $data[0]['dper_direccion'], \PDO::PARAM_STR);
+        $command->bindParam(":dper_contacto", $data[0]['dper_contacto'], \PDO::PARAM_STR);
+        $command->bindParam(":dper_telefono", $data[0]['dper_telefono'], \PDO::PARAM_STR);
+        $command->bindParam(":dper_celular", $data[0]['dper_celular'], \PDO::PARAM_STR);
+        $command->execute();
+    }
+    
+    public static function existeDataAdicional($con,$ids){
+        $sql = "SELECT dper_id FROM " . $con->dbname . ".data_persona WHERE per_id=:per_id ";
+        $comando = $con->createCommand($sql);
+        $comando->bindParam(":per_id", $ids, \PDO::PARAM_INT);
+        $rawData=$comando->queryScalar();
+        if ($rawData === false)
+            return 0; //en caso de que existe problema o no retorne nada tiene 1 por defecto 
+        return $rawData;
+    }
+    
+    
+    
 }

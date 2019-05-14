@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Utilities;
 
 /**
  * UsuarioController implements the CRUD actions for Usuario model.
@@ -124,4 +125,29 @@ class UsuarioController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+    
+    
+    public function actionSave() {
+        if (Yii::$app->request->isAjax) {
+            $model = new Usuario();
+            $data = Yii::$app->request->post();
+            $accion = isset($data['ACCION']) ? $data['ACCION'] : "";
+            if ($accion == "Create") {
+                //Nuevo Registro
+                $resul = $model->insertarUsuario($data);
+            }else if($accion == "Update"){
+                //Modificar Registro
+                //$resul = $model->actualizarPacientes($data);                
+            }
+            if ($resul['status']) {
+                $message = ["info" => Yii::t('exception', '<strong>Well done!</strong> your information was successfully saved.')];
+                echo Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', $message,$resul);
+            }else{
+                $message = ["info" => Yii::t('exception', 'The above error occurred while the Web server was processing your request.')];
+                echo Utilities::ajaxResponse('NO_OK', 'alert', Yii::t('jslang', 'Error'), 'false', $message);
+            }
+            return;
+        }   
+    }
+    
 }

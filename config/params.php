@@ -9,7 +9,7 @@ return [
     'adminEmail' => 'admin@utimpor.com',
     'ventasEmail' => 'ventas@utimpor.com',
     'contactoEmail' => 'contacto@utimpor.com',
-    'no-responder' => 'no-responder@innovaticsa.com',
+    'no-responder' => 'no-responder@utimpor.com',
     'culture' => 'es-ES',
     'cookieSession' => 3600*24*30,
     'logfile' => __DIR__ . '/../runtime/logs/webapp.log',

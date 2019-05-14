@@ -231,6 +231,101 @@ class Usuario extends ActiveRecord implements IdentityInterface  {
         return false;
     }
     
+    //Solo Genera Link Sin Guardar en la Base
+    public static function crearLinkActivacion(){
+        $security = new Security();
+        $hash = $security->generateRandomString();
+        $sublink = urlencode($hash);
+        $sublink = str_replace("/", "", $sublink);
+        $sublink = str_replace("+", "", $sublink);
+        $sublink = str_replace("-", "", $sublink);
+        $sublink = str_replace("_", "", $sublink);
+        $sublink = str_replace(" ", "", $sublink);
+        $sublink = str_replace("?", "", $sublink);
+        $link = Url::base(true)."/site/activation?wg=".$sublink;
+        return $link;
+    }
+    
+    public function activarLinkCuenta($link){
+        $user = static::findOne(['usu_link_activo' => $link]);
+        $dbLink = $user->usu_link_activo;
+        if(isset($dbLink) && $dbLink != ""){
+            if($dbLink == $link){
+                $user->usu_link_activo = "";
+                $user->usu_estado_activo = 1;
+                $id = $user->usu_id;
+                $user->update(true, array("usu_link_activo","usu_estado_activo"));
+                //EN CASO DE AGREGAR MAS DATOS EN LA ACTIVACION AKI
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    /* INSERTAR DATOS */
+    public function insertarUsuario($data) {
+        $arroout = array();
+        $con = \Yii::$app->db;
+        $trans = $con->beginTransaction();
+        try {
+            $data = isset($data['DATA']) ? $data['DATA'] : array();
+            Persona::insertarDataPerfil($con, $data);
+            $per_id=$con->getLastInsertID();//IDS de la Persona
+            Persona::insertarDataPerfilDatoAdicional($con, $data, $per_id);
+            //$this->insertarDataPaciente($con, $data, $per_id);
+            //$pac_id=$con->getLastInsertID();
+            //Inserta Datos de Usuario
+            $password=Utilities::generarCodigoKey(8);//Passw Generado Automaticamente
+            $linkActiva=Usuario::crearLinkActivacion();
+            Usuario::insertarDataUser($con, $data[0]['per_correo'], $password, $per_id,$linkActiva); 
+            $usu_id=$con->getLastInsertID();//IDS de la Persona
+            //Rol::saveEmpresaRol($con, $usu_id, 1, $this->rolDefault);//Empresas 1 Por Defecto
+            //###############################
+            
+            Utilities::insertarLogs($con, $usu_id, 'usuario', 'Insert -> Per_id,Usu_id');
+            $trans->commit();
+            $con->close();
+            //RETORNA DATOS 
+            $arroout["status"]= true;
+            
+            //Enviar correo electronico para activacion de cuenta
+                $nombres = $data[0]['per_nombre'];
+                $tituloMensaje = Yii::t("register","Successful Registration");
+                $asunto = Yii::t("register", "User Register") . " " . Yii::$app->params["siteName"];
+                $body = Utilities::getMailMessage("registerUsuario", array("[[user]]" => $nombres, "[[username]]" => $data[0]['per_correo'],"[[clave]]" => $password, "[[link_verification]]" => $linkActiva), Yii::$app->language);
+                Utilities::sendEmail($tituloMensaje, Yii::$app->params["no-responder"], 
+                                    [$data[0]['per_correo'] => $data[0]['per_nombre'] . " " . $data[0]['per_apellido']],
+                                    [],//Bcc
+                                    $asunto, $body);
+            //Find Datos Mail
+            
+            return $arroout;
+        } catch (\Exception $e) {
+            $trans->rollBack();
+            $con->close();
+            throw $e;
+            $arroout["status"]= false;
+            return $arroout;
+        }
+    }
+    
+    public static function insertarDataUser($con,$username, $password, $id_persona,$link) {
+        $security = new Security();
+        $usu_sha = $security->generateRandomString();//String de Seguridad
+        $usu_password = base64_encode($security->encryptByPassword($usu_sha, $password));//Nuevo Pass con SHA Y 64 BITS        
+        $sql = "INSERT INTO " . $con->dbname . ".usuario
+            (per_id,usu_username,usu_password,usu_sha,usu_link_activo,usu_estado_activo,usu_est_log)VALUES
+            (:per_id,:usu_username,:usu_password,:usu_sha,:usu_link_activo,1,1);";
+        $command = $con->createCommand($sql);
+        $command->bindParam(":per_id", $id_persona, \PDO::PARAM_INT);//Id Comparacion
+        $command->bindParam(":usu_username", $username, \PDO::PARAM_STR);
+        $command->bindParam(":usu_password", $usu_password, \PDO::PARAM_STR);
+        $command->bindParam(":usu_sha", $usu_sha, \PDO::PARAM_STR);
+        $command->bindParam(":usu_link_activo", $link, \PDO::PARAM_STR);
+        $command->execute();
+    }
+    
     
     
     

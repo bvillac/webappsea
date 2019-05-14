@@ -281,6 +281,43 @@ class SiteController extends Controller
         }
     }
     
+    public function actionActivation() {
+        /*$data = Yii::$app->request->get();
+        if (isset($data["wg"])) {
+            $link = Url::base(true) . "/site/activation?wg=" . $data["wg"];
+            $usuario = Usuario::findOne(['usu_link_activo' => $link]);
+            $status = false;
+            if (isset($usuario)) {
+                $status = $usuario->activarLinkCuenta($link);
+            }
+            if ($status) {
+                Yii::$app->session->setFlash('success', Yii::t("login", "<h4>Success</h4>Account is enabled. Please change your current password."));
+                $passReset = new UserPassreset();
+                $link2 = $passReset->generarLinkCambioClave($usuario->usu_id);
+                return $this->redirect($link2);
+            } else {
+                $model = new LoginForm();
+                Yii::$app->session->setFlash('error', Yii::t("login", "<h4>Error</h4>Account is disabled. Please confirm the account with link activation in your email account or reset your password."));
+                $link1 = Utilities::getLoginUrl();
+                return $this->redirect(Url::base(true) . $link1);
+            }
+        }*/
+        $data = Yii::$app->request->get();
+        if(isset($data["wg"])){
+            $usuario = new Usuario();
+            
+            $status = $usuario->activarLinkCuenta(Url::base(true)."/site/activation?wg=".$data["wg"]);
+            if($status){
+                Yii::$app->session->setFlash('success',Yii::t("login","<h4>Success</h4>Account is enabled. Please enter your email and password."));
+                return $this->redirect(Url::base(true).'/site/login#');
+            }else{
+                $model = new LoginForm();
+                Yii::$app->session->setFlash('error',Yii::t("login","<h4>Error</h4>Account is disabled. Please confirm the account with link activation in your email account or reset your password."));
+                return $this->redirect(Url::base(true).'/site/login#');
+            }
+        }
+    }
+    
     public function actionConfirmarpedido()
     {
         return $this->render('confirmarpedido');
