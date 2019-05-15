@@ -11,10 +11,12 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Usuario;
+use app\models\Persona;
 use app\models\Utilities;
 use \yii\helpers\Url;
 use app\models\Tienda;
 use yii\data\Pagination;
+use app\models\CabListapedidosTemp;
 
 
 class SiteController extends Controller
@@ -322,20 +324,63 @@ class SiteController extends Controller
     
     public function actionConfirmarpedido()
     {
+        $model = new Persona();
+        $resul=array();                
+        $actividad=false;
         $session = Yii::$app->session;
         $isUser = $session->get('PB_isuser', FALSE);
-        Utilities::putMessageLogFile($session->isActive );
+        //Utilities::putMessageLogFile($session->isActive );
         //if ($isUser != FALSE && $session->isActive ){
         if ($session->isActive ){//Si la session esta activa se redireciona con los datos
+            $actividad=true;
+            $perId = $session->get('PB_perid', FALSE);
+            $usuId = $session->get('PB_iduser', FALSE);
+            $resul=$model->buscarPersonaID($perId);
+        }
+        
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->post();
+            //$valor = isset($data['valor']) ? $data['valor'] : "";            
+            //$op = isset($data['op']) ? $data['op'] : "";
             
         }
-        //return $this->render('confirmarpedido');
+        
+
         return $this->render('confirmarpedido', [
-            //'model' => json_encode(Tienda::getProductoDetalle($ids)),
-            'model' => Tienda::getProductoDetalle($ids),
+            'actividad' => $actividad,
+            'Data' => $resul,//json_encode(Tienda::getProductoDetalle($ids)),
+            //'model' => Tienda::getProductoDetalle($ids),
             'cant' => $cant,
         ]);
         
+    }
+    
+    public function actionSave() {
+        if (Yii::$app->request->isAjax) {
+            $model = new CabListapedidosTemp();
+            $data = Yii::$app->request->post();
+            $dtsCab = isset($_POST['CAB_DATA']) ? CJavaScript::jsonDecode($_POST['CAB_DATA']) : array();
+            $dtsDet = isset($_POST['DET_DATA']) ? CJavaScript::jsonDecode($_POST['DET_DATA']) : array();
+            $accion = isset($data['ACCION']) ? $data['ACCION'] : "";
+            //Utilities::putMessageLogFile($data);
+            $resul = $model->insertarLista($dtsCab,$dtsDet);
+            if ($accion == "Create") {
+                //Nuevo Registro
+                //$resul = $model->insertarUsuario($data);
+            }else if($accion == "Update"){
+                //Modificar Registro
+                //$resul = $model->actualizarPacientes($data);                
+            }
+            $resul['status']=true;
+            if ($resul['status']) {
+                $message = ["info" => Yii::t('exception', '<strong>Well done!</strong> your information was successfully saved.')];
+                echo Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', $message,$resul);
+            }else{
+                $message = ["info" => Yii::t('exception', 'The above error occurred while the Web server was processing your request.')];
+                echo Utilities::ajaxResponse('NO_OK', 'alert', Yii::t('jslang', 'Error'), 'false', $message);
+            }
+            return;
+        }   
     }
     
     public function actionMicuenta()

@@ -187,6 +187,20 @@ class Persona extends \yii\db\ActiveRecord
         return $rawData;
     }
     
+    public function buscarPersonaID($ids){
+        $con = \Yii::$app->db;        
+        $sql = "SELECT A.per_id Ids,A.per_ced_ruc Cedula,A.per_nombre Nombre,A.per_apellido Apellido,A.per_genero Genero,A.per_fecha_nacimiento Fec_Nac,
+            A.per_estado_civil Est_Civ,A.per_correo Correo,A.per_tipo_sangre Gru_San,A.per_foto Foto,A.per_estado_activo,
+            A.per_est_log,A.per_fec_cre,B.pai_id Pais,B.prov_id Provincia,B.can_id Canton,B.dper_direccion Direccion,
+            B.dper_telefono Telefono,B.dper_celular Celular,B.dper_contacto Contacto
+              FROM " . $con->dbname . ".persona A
+            LEFT JOIN " . $con->dbname . ".data_persona B ON A.per_id=B.per_id
+        WHERE A.per_est_log=1 AND A.per_id=:per_id  ";
+        $comando = $con->createCommand($sql);
+        $comando->bindParam(":per_id", $ids, \PDO::PARAM_INT);
+        return $comando->queryAll();
+    }
+    
     
     
 }

@@ -80,13 +80,13 @@ use yii\helpers\Url;
     </div>
 </form>
 <div class="alert alert-success" role="alert">
-    Método de Pago 
+    Método de Pedido 
 </div>
 <form>
     <div class="scp_user_data scp_paytype">       
         
         <div >
-            <h2>Total a pagar: $ <span id="lbl_total">0.00</span></h2>
+            <h2>Total a pedir: $ <span id="lbl_total">0.00</span></h2>
         </div>
         
         <div class="scp_submit_pay">
@@ -94,7 +94,7 @@ use yii\helpers\Url;
             <?= Html::a('Pedir y Finalizar', ['site/confirmarpedido'],['class' => 'btn btn-primary check_out']); ?>
         </div>
         
-        <div><br>Al pulsar el botón "Pagar y Finalizar" confirmo que he leído y acepto las <a href="https://www.utimpor.com/condiciones-de-uso.php" target="_blank" title="Leer condiciones generales de venta">condiciones generales de venta</a> y la <a href="https://www.utimpor.com/politica-de-privacidad.php" title="Leer política de privacidad" target="_blank">política de privacidad</a></div>
+        <div><br>Al pulsar el botón "Pedir y Finalizar" confirmo que he leído y acepto las <a href="https://www.utimpor.com/condiciones-de-uso.php" target="_blank" title="Leer condiciones generales de venta">condiciones generales de venta</a> y la <a href="https://www.utimpor.com/politica-de-privacidad.php" title="Leer política de privacidad" target="_blank">política de privacidad</a></div>
     </div>
 </form>
 <br>
