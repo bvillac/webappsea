@@ -75,7 +75,8 @@ use yii\helpers\Url;
                                     </ul>
                                     <!--<a class="btn btn-default update" href="">Update</a>-->
                                     <!--<a class="btn btn-default check_out" href="">Continuar</a>-->
-                                    <?= Html::a('Confirmar Pedido', ['site/confirmarpedido'],['class' => 'btn btn-primary check_out']); ?>
+                                    <?php //Html::a('Confirmar Pedido', ['site/confirmarpedido'],['class' => 'btn btn-primary check_out']); ?>
+                                    <?= Html::a('Confirmar Pedido', Url::to('#'),['class' => 'btn btn-primary check_out','onclick'=>'javascript:confirmaPedidos();']); ?>
                                 </div>
                             </div>
 			</div>

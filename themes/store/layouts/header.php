@@ -8,7 +8,10 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+$session = Yii::$app->session;
+$isUser = $session->get('PB_isuser', FALSE);
 ?>
+<?= Html::hiddenInput('txth_activo', $isUser, ["id" => "txth_activo"]) ?>
 <?= Html::hiddenInput('txth_base', Url::base(), ["id" => "txth_base"]) ?>
 <?= Html::hiddenInput('txth_imgfolder', Url::base().Yii::$app->params["imgFolder"], ["id"=>"txth_imgfolder"]) ?>
 

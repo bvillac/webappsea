@@ -24,32 +24,27 @@ class CabListapedidosTemp {
         //$valida = new VSValidador();
         
         $arroout = array();
-        $con = \Yii::$app->db;
+        $con = \Yii::$app->db_tienda;
         $trans = $con->beginTransaction();
-        try {
-            
-            $idCab=$this->InsertarCabListPedTemp($con,$dtsCab);
-            $this->InsertarDetListPedTemp($con,$idCab,$dtsDet);
-            //$idCab = $con->getLastInsertID($con->dbname . '.TEMP_CAB_PEDIDO');
-            /*for ($i = 0; $i < sizeof($dts_Lista); $i++) {
-                $artieId = $dts_Lista[$i]['ARTIE_ID'];
-                $artId = $dts_Lista[$i]['ART_ID'];
-                $cant = $dts_Lista[$i]['CANT'];
-                $precio = $dts_Lista[$i]['PRECIO'];
-                $subtotal = $dts_Lista[$i]['TOTAL'];
-                $observ = $dts_Lista[$i]['OBSERV'];  
-                $sql = "INSERT INTO " . $con->dbname . ".TEMP_DET_PEDIDO
-                        (TCPED_ID,ARTIE_ID,ART_ID,TDPED_CAN_PED,TDPED_P_VENTA,TDPED_T_VENTA,
-                        TDPED_EST_AUT,TDPED_OBSERVA,TDPED_EST_LOG,TDPED_FEC_CRE)VALUES
-                        ($idCab,$artieId,$artId,$cant,$precio,$subtotal,'1','$observ','1',CURRENT_TIMESTAMP())";
-                //echo $sql;
-                $command = $con->createCommand($sql);
-                $command->execute();
-            }*/
+        try {            
+            $idCab=$this->InsertarCabListPedTemp($con,$dtsCab,$usuario);
+            $this->InsertarDetListPedTemp($con,$idCab,$dtsDet,$usuario);            
             $trans->commit();
             $con->close();
+            
+            //Envio de correo
+            $nombres = $dtsCab[0]['per_nombre'];
+            $tituloMensaje = Yii::t("register","Pedidos Exitoso");
+            $asunto = Yii::t("register", "Ha Recibido un(a) Orden Nuevo(a)!!!") . " " . Yii::$app->params["siteName"];
+            $body = Utilities::getMailMessage("formatoPedidos", array("[[user]]" => $nombres, "[[username]]" => $dtsCab[0]['per_correo'],
+                            "[[Orden]]" => $idCab,"[[Total]]" => $dtsCab[0]['val_net']), Yii::$app->language);
+            Utilities::sendEmail($tituloMensaje, Yii::$app->params["no-responder"], 
+                                    [$dtsCab[0]['per_correo'] => $dtsCab[0]['per_nombre'] . " " . $dtsCab[0]['per_apellido']],
+                                    [],//Bcc
+                                    $asunto, $body);
+            
             //RETORNA DATOS 
-            //$arroout["ids"]= $ftem_id;
+            $arroout["ids"]= $idCab;
             $arroout["status"]= true;
             //$arroout["secuencial"]= $doc_numero;
             return $arroout;
@@ -63,8 +58,27 @@ class CabListapedidosTemp {
     }
 
     
-    private function InsertarCabListPedTemp($con,$data) { 
+    private function InsertarCabListPedTemp($con,$data,$usuario) {         
+        
         //ids_clis
+        $cli_id=1;
+        $cod_cli='9999999999';
+        $atiende='01';
+        $ids_lre=1;
+        $nom_clis='LISTA 1';
+        
+        $por_des=0;
+        $val_des=0;
+        $val_fle=0;
+        $bas_iva=0;
+        $bas_iv0=0;
+        $por_iva=12;
+        $val_iva=0;
+        $val_net=$data[0]['val_net'];
+        $est_ped='PD';
+        $est_ped='1';
+        //Utilities::putMessageLogFile($data[0]['val_net']);
+
         $sql = "INSERT INTO " . $con->dbname . ".cab_listapedidos_temp
             (cli_id,cod_cli,atiende,tip_doc,num_doc,ids_lre,nom_clis,dir_entrega,val_bru,por_des,
              val_des,val_fle,bas_iva,bas_iv0,por_iva,val_iva,val_net,est_ped,est_log,usuario)VALUES
@@ -73,67 +87,65 @@ class CabListapedidosTemp {
         $command = $con->createCommand($sql);
 
         //$command->bindParam(":per_id", $data[0]['per_id'], \PDO::PARAM_INT);//Id Comparacion
-        $command->bindParam(":per_nombre", $data[0]['per_nombre'], \PDO::PARAM_STR);
-        $command->bindParam(":per_apellido", $data[0]['per_apellido'], \PDO::PARAM_STR);
-        $command->bindParam(":per_ced_ruc", $data[0]['per_ced_ruc'], \PDO::PARAM_STR);        
-        $command->bindParam(":per_genero", $data[0]['per_genero'], \PDO::PARAM_STR);
-        $command->bindParam(":per_fecha_nacimiento", $data[0]['per_fecha_nacimiento'], \PDO::PARAM_STR);
-        $command->bindParam(":per_estado_civil", $data[0]['per_estado_civil'], \PDO::PARAM_STR);
-        $command->bindParam(":per_correo", $data[0]['per_correo'], \PDO::PARAM_STR);
-        $command->bindParam(":per_tipo_sangre", $data[0]['per_tipo_sangre'], \PDO::PARAM_STR);
-        $command->bindParam(":per_foto", $data[0]['per_foto'], \PDO::PARAM_STR);
+        $command->bindParam(":cli_id",$cli_id, \PDO::PARAM_INT);
+        $command->bindParam(":cod_cli",$cod_cli, \PDO::PARAM_STR);
+        $command->bindParam(":atiende",$atiende, \PDO::PARAM_STR);
+        $command->bindParam(":tip_doc", $data[0]['tip_doc'], \PDO::PARAM_STR);
+        $command->bindParam(":num_doc", $data[0]['num_doc'], \PDO::PARAM_STR);
+        $command->bindParam(":ids_lre", $ids_lre, \PDO::PARAM_STR);
+        $command->bindParam(":nom_clis", $nom_clis, \PDO::PARAM_STR);
+        $command->bindParam(":dir_entrega", $data[0]['dper_direccion'], \PDO::PARAM_STR);        
+        $command->bindParam(":val_bru", $data[0]['val_bru'], \PDO::PARAM_STR);
+        $command->bindParam(":por_des", $por_des, \PDO::PARAM_STR);
+        $command->bindParam(":val_des", $val_des, \PDO::PARAM_STR);
+        $command->bindParam(":val_fle", $val_fle, \PDO::PARAM_STR);
+        $command->bindParam(":val_des", $val_des, \PDO::PARAM_STR);
+        $command->bindParam(":bas_iva", $bas_iva, \PDO::PARAM_STR);
+        $command->bindParam(":bas_iv0", $bas_iv0, \PDO::PARAM_STR);
+        $command->bindParam(":por_iva", $por_iva, \PDO::PARAM_STR);
+        $command->bindParam(":val_iva", $val_iva, \PDO::PARAM_STR);
+        $command->bindParam(":val_net", $val_net, \PDO::PARAM_STR);
+        $command->bindParam(":est_ped", $est_ped, \PDO::PARAM_STR);
+        $command->bindParam(":est_log", $est_log, \PDO::PARAM_STR);
+        $command->bindParam(":usuario", $usuario, \PDO::PARAM_STR);
         $command->execute();
         return $con->getLastInsertID();
     }
     
-    private function InsertarDetListPedTemp($con,$idCab,$dtsDet) {
-
-        //Dim por_iva As Decimal = CDbl(dtsData.Tables("VC010101").Rows(0).Item("POR_IVA")) / 100
+    private function InsertarDetListPedTemp($con,$idCab,$dtsDet,$usuario) {
+        //Utilities::putMessageLogFile($dtsDet);
+        //ids_dlis
         $por_iva=0;
-        $idDet=0;
-        $valSinImp = 0;
-        $val_iva12 = 0;
-        $vet_iva12 = 0;
-        $val_iva0 = 0;//Valor de Iva
-        $vet_iva0 = 0;//Venta total con Iva
-        for ($i = 0; $i < sizeof($detFact); $i++) {
-	    $por_iva=intval($detFact[$i]['IMP_PORCENTAJE']);//TARIFA % DE IVA SEGUN TABLA 17
-			//Utilities::putMessageLogFile($por_iva);
-            $valSinImp = $detFact[$i]['TOTALSINIMPUESTOS'];//floatval($detFact[$i]['T_VENTA']) - floatval($detFact[$i]['VAL_DES']);
-            //%codigo iva segun tabla #17
-            $codigoImp=$detFact[$i]['IMP_CODIGO'];
-            if ($por_iva > 0) {
-                $val_iva12 = $val_iva12 + ((floatval($detFact[$i]['CANTIDAD'])*floatval($detFact[$i]['PRECIOUNITARIO'])-floatval($detFact[$i]['DESC']))* (floatval($por_iva)/100));
-                $vet_iva12 = $vet_iva12 + $valSinImp;
-            } else {
-                $val_iva0 = 0;
-                $vet_iva0 = $vet_iva0 + $valSinImp;
-            }
-            $CodigoAuxiliar=($detFact[$i]['CODIGOPRINCIPAL']!='')?$detFact[$i]['CODIGOPRINCIPAL']:1;
-            $sql = "INSERT INTO " . $con->dbname . ".NubeDetalleFactura
-                        (CodigoPrincipal,CodigoAuxiliar,Descripcion,Cantidad,PrecioUnitario,Descuento,PrecioTotalSinImpuesto,IdFactura) VALUES 
-                        (:CodigoPrincipal,:CodigoAuxiliar,:Descripcion,:Cantidad,:PrecioUnitario,:Descuento,:PrecioTotalSinImpuesto,:IdFactura);";
-            
+        $idDet=0;        
+        $ids_pre=1;       
+  
+        for ($i = 0; $i < sizeof($dtsDet); $i++) {             
+            $cli_id=$dtsDet[$i]['cli_id'];
+            $sql = "INSERT INTO " . $con->dbname . ".det_listapedidos_temp                
+                    (ids_clis,ids_pre,ids_pro,cod_art,tip_doc,num_doc,cli_id,p_venta,can_des,
+                     t_venta,por_des,val_des,i_m_iva,val_iva,est_ped,est_log, usuario) VALUES
+                    (:ids_clis,:ids_pre,:ids_pro,:cod_art,:tip_doc,:num_doc,:cli_id,:p_venta,:can_des,
+                     :t_venta,:por_des,:val_des,:i_m_iva,:val_iva,:est_ped,:est_log,:usuario);";
             $comando = $con->createCommand($sql);
-            $comando->bindParam(":CodigoPrincipal", $detFact[$i]['CODIGOPRINCIPAL'], \PDO::PARAM_STR);
-            $comando->bindParam(":CodigoAuxiliar", $CodigoAuxiliar, \PDO::PARAM_STR);
-            $comando->bindParam(":Descripcion", $detFact[$i]['DESCRIPCION'], \PDO::PARAM_STR);
-            $comando->bindParam(":Cantidad", $detFact[$i]['CANTIDAD'], \PDO::PARAM_STR);
-            $comando->bindParam(":PrecioUnitario", $detFact[$i]['PRECIOUNITARIO'], \PDO::PARAM_STR);
-            $comando->bindParam(":Descuento", $detFact[$i]['DESC'], \PDO::PARAM_STR);
-            $comando->bindParam(":PrecioTotalSinImpuesto", $valSinImp, \PDO::PARAM_STR);
-            $comando->bindParam(":IdFactura", $idCab, \PDO::PARAM_INT);
+            $comando->bindParam(":ids_clis", $idCab, \PDO::PARAM_INT);
+            $comando->bindParam(":ids_pre", $ids_pre, \PDO::PARAM_INT);
+            $comando->bindParam(":ids_pro", $dtsDet[$i]['ids_pro'], \PDO::PARAM_INT);
+            $comando->bindParam(":cod_art", $dtsDet[$i]['cod_art'], \PDO::PARAM_STR);
+            $comando->bindParam(":tip_doc", $dtsDet[$i]['tip_doc'], \PDO::PARAM_STR);
+            $comando->bindParam(":num_doc", $dtsDet[$i]['num_doc'], \PDO::PARAM_STR);
+            $comando->bindParam(":cli_id", $cli_id, \PDO::PARAM_INT);
+            $comando->bindParam(":p_venta", $dtsDet[$i]['p_venta'], \PDO::PARAM_STR);
+            $comando->bindParam(":can_des", $dtsDet[$i]['can_des'], \PDO::PARAM_STR);
+            $comando->bindParam(":t_venta", $dtsDet[$i]['t_venta'], \PDO::PARAM_STR);
+            $comando->bindParam(":por_des", $dtsDet[$i]['por_des'], \PDO::PARAM_STR);
+            $comando->bindParam(":val_des", $dtsDet[$i]['val_des'], \PDO::PARAM_STR);
+            $comando->bindParam(":i_m_iva", $dtsDet[$i]['i_m_iva'], \PDO::PARAM_STR);
+            $comando->bindParam(":val_iva", $dtsDet[$i]['val_iva'], \PDO::PARAM_STR);
+            $comando->bindParam(":est_ped", $dtsDet[$i]['est_ped'], \PDO::PARAM_STR);
+            $comando->bindParam(":est_log", $dtsDet[$i]['est_log'], \PDO::PARAM_STR);
+            $comando->bindParam(":usuario", $usuario, \PDO::PARAM_INT);
             $comando->execute();
             $idDet = $con->getLastInsertID();
-            
-            //Inserta el IVA de cada Item             
-            if ($por_iva > 0) {//Verifico si el ITEM tiene Impuesto 12%
-                //Segun Datos Sri
-                $valIvaImp=(floatval($valSinImp)*floatval($por_iva))/100;//Calculo del Valor del Impuesto Generado por Detalle
-                $this->InsertarDetImpFactura($con, $idDet, '2',$por_iva, $valSinImp, $valIvaImp); //12%
-            } else {//Caso Contrario no Genera Impuesto 0%
-                $this->InsertarDetImpFactura($con, $idDet, '2','0', $valSinImp, '0'); //0%
-            }
         }
        
     }

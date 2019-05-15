@@ -26,7 +26,7 @@ $isUser = $session->get('PB_isuser', FALSE);
                         <?php if ($isUser != FALSE && $session->isActive ){ ?>
                             <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("store", "Account"), ['site/micuenta']); ?></li>
                             <li><?= Html::a('<i class="fa fa-star"></i> '.Yii::t("store", "Wishlist"), ['site/index']); ?></li>
-                            <li><?= Html::a('<i class="fa fa-crosshairs"></i> '.Yii::t("store", "Checkout"), ['site/checkout']); ?></li>
+                            <li><?PHP //Html::a('<i class="fa fa-crosshairs"></i> '.Yii::t("store", "Checkout"), ['site/checkout']); ?></li>
                         <?php }else{ ?>
                             <li><?= Html::a('<i class="fa fa-user"></i> '.Yii::t("login", "Create Account"), Url::to('#'),['onclick'=>'javascript:nuevaCuentaModal();']); ?></li>
                         <?php } ?>

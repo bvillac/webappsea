@@ -19,6 +19,7 @@ use yii\data\Pagination;
 use app\models\CabListapedidosTemp;
 
 
+
 class SiteController extends Controller
 {
     /**
@@ -355,23 +356,25 @@ class SiteController extends Controller
         
     }
     
+    //Guardar los pedidos
     public function actionSave() {
         if (Yii::$app->request->isAjax) {
             $model = new CabListapedidosTemp();
-            $data = Yii::$app->request->post();
-            $dtsCab = isset($_POST['CAB_DATA']) ? CJavaScript::jsonDecode($_POST['CAB_DATA']) : array();
-            $dtsDet = isset($_POST['DET_DATA']) ? CJavaScript::jsonDecode($_POST['DET_DATA']) : array();
+            $data = Yii::$app->request->post();//
+            $dtsCab = isset($_POST['CAB_DATA']) ? $_POST['CAB_DATA'] : array();
+            $dtsDet = isset($_POST['DET_DATA']) ? $_POST['DET_DATA'] : array();
             $accion = isset($data['ACCION']) ? $data['ACCION'] : "";
-            //Utilities::putMessageLogFile($data);
-            $resul = $model->insertarLista($dtsCab,$dtsDet);
-            if ($accion == "Create") {
+            $session = Yii::$app->session;
+            $usuario = $session->get('PB_iduser', FALSE);
+            $resul = $model->insertarLista($dtsCab,$dtsDet,$usuario);
+            //if ($accion == "Create") {
                 //Nuevo Registro
                 //$resul = $model->insertarUsuario($data);
-            }else if($accion == "Update"){
+            //}else if($accion == "Update"){
                 //Modificar Registro
                 //$resul = $model->actualizarPacientes($data);                
-            }
-            $resul['status']=true;
+            //}
+            //$resul['status']=true;
             if ($resul['status']) {
                 $message = ["info" => Yii::t('exception', '<strong>Well done!</strong> your information was successfully saved.')];
                 echo Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', $message,$resul);
@@ -385,7 +388,19 @@ class SiteController extends Controller
     
     public function actionMicuenta()
     {
-        return $this->render('micuenta');
+        //return $this->render('micuenta');
+        
+        $model = new Persona();
+        $resul=array();
+        $session = Yii::$app->session;
+        //$isUser = $session->get('PB_isuser', FALSE);
+        $perId = $session->get('PB_perid', FALSE);
+        Utilities::putMessageLogFile($perId);
+        $resul=$model->buscarPersonaID($perId);
+        Utilities::putMessageLogFile($resul);
+        return $this->render('micuenta', [
+            'Data' => $resul,            
+        ]);
     }
     public function actionMispedidos()
     {

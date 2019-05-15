@@ -3,7 +3,7 @@
 return [
     'copyright' => 'WebSea',
     'alias' => 'UTIMPOR S.A.',
-    'siteName' => 'Aplicación para Empresas',
+    'siteName' => 'Tienda UTIMPOR S.A.',
     'web' => 'https://www.utimpor.com/',
     'version' => '1.0',
     'adminEmail' => 'admin@utimpor.com',

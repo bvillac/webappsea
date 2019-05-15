@@ -7,6 +7,7 @@
 
 use kartik\date\DatePicker;
 use yii\helpers\Html;
+//echo $Data;
 ?>
 
 <div class="col-sm-3 padding-right">

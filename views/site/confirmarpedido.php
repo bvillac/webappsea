@@ -10,6 +10,7 @@ use yii\helpers\Url;
 
 $perId=0;
 $usuId=0;
+//echo $actividad;
 if($actividad){
     $session = Yii::$app->session;
     $perId = $session->get('PB_perid', FALSE);

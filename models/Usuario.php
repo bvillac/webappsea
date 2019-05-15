@@ -270,13 +270,15 @@ class Usuario extends ActiveRecord implements IdentityInterface  {
         $trans = $con->beginTransaction();
         try {
             $data = isset($data['DATA']) ? $data['DATA'] : array();
+            //Utilities::putMessageLogFile($data);
             Persona::insertarDataPerfil($con, $data);
             $per_id=$con->getLastInsertID();//IDS de la Persona
             Persona::insertarDataPerfilDatoAdicional($con, $data, $per_id);
             //$this->insertarDataPaciente($con, $data, $per_id);
             //$pac_id=$con->getLastInsertID();
             //Inserta Datos de Usuario
-            $password=Utilities::generarCodigoKey(8);//Passw Generado Automaticamente
+            //$password=Utilities::generarCodigoKey(8);//Passw Generado Automaticamente
+            $password=$data[0]['usu_password'];
             $linkActiva=Usuario::crearLinkActivacion();
             Usuario::insertarDataUser($con, $data[0]['per_correo'], $password, $per_id,$linkActiva); 
             $usu_id=$con->getLastInsertID();//IDS de la Persona

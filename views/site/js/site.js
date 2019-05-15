@@ -5,12 +5,12 @@
  */
 //alert('hola');
 $(document).ready(function () {
-    
-    
-    
+
     $('#btn_saveCuenta').click(function () {
         guardarDatos('Create');
     });
+    
+    
 
 });
 
@@ -65,6 +65,7 @@ function dataPersona(usuID,perID) {
     var objDat = new Object();
     objDat.usu_id = usuID;//Genero Automatico
     objDat.per_id = perID;
+    objDat.usu_password = $('#txt_usu_password').val();
     objDat.per_ced_ruc = "";//$('#txt_per_ced_ruc').val();
     objDat.per_nombre = $('#txt_per_nombre').val();
     objDat.per_apellido = $('#txt_per_apellido').val();
@@ -108,15 +109,27 @@ function hacerPedidos(accion) {
                 showAlert(response.status, response.type, {"wtmessage": message.info, "title": response.label});
                 $('#registroModal').modal('hide');
                 //$('#registroModal').modal({show:true});
-                //limpiarDatos();
-                //var renderurl = $('#txth_base').val() + "/mceformulariotemp/index";
-                //window.location = renderurl;
+                limpiarDatosPedido();
+                var renderurl = $('#txth_base').val() + "/site/index";
+                window.location = renderurl;
             } else {
                 showAlert(response.status, response.type, {"wtmessage": message.info, "title": response.label});
             }
         }, true);
     //}
     //showAlert('NO_OK', 'error', {"wtmessage": 'Debe Aceptar los términos de la Declaración Jurada', "title":'Información'});
+}
+
+function limpiarDatosPedido() {
+    $('#txt_per_nombre').val("");
+    $('#txt_per_apellido').val("");
+    $('#txt_per_correo').val("");
+    $('#txt_dper_direccion').val("");
+    $('#txt_dper_telefono').val("");
+    $('#lbl_total').text("0.00");
+    sessionStorage.removeItem('dataPersona');
+    sessionStorage.removeItem('dts_carrito');
+       
 }
 
 function listaCabPedido(usuID,perID) {
@@ -132,46 +145,24 @@ function listaCabPedido(usuID,perID) {
     objDat.dper_telefono = $('#txt_dper_telefono').val();
     //objDat.dper_celular =$('#txt_dper_celular').val();
     objDat.dper_est_log = 1;
+    
+    objDat.tip_doc = "PD";
+    objDat.num_doc = "0";//$('#lbl_total').text(redondea(total, Ndecimal))
+    objDat.val_bru = "0";
+    objDat.val_net = $('#lbl_total').text();
     datArray[0] = objDat;
     //sessionStorage.dataPersona = JSON.stringify(datArray);
     return datArray;
 }
 
 function listaDetPedido() {    
-    var arrayList = new Array;
+    var arrayList = new Array();
     var c=0;    
     //Usa los datos del Session Stores
     if (sessionStorage.dts_carrito) {
         var Grid = JSON.parse(sessionStorage.dts_carrito);
         if (Grid.length > 0) {
-            for (var i = 0; i < Grid.length; i++) { 
-                
-                /*SELECT `det_listapedidos_temp`.`ids_dlis`,
-                    `det_listapedidos_temp`.`ids_clis`,
-                    `det_listapedidos_temp`.`ids_pre`,
-                    `det_listapedidos_temp`.`ids_pro`,
-                    `det_listapedidos_temp`.`cod_art`,
-                    `det_listapedidos_temp`.`tip_doc`,
-                    `det_listapedidos_temp`.`num_doc`,
-                    `det_listapedidos_temp`.`cli_id`,
-                    `det_listapedidos_temp`.`p_venta`,
-                    `det_listapedidos_temp`.`can_des`,
-                    `det_listapedidos_temp`.`t_venta`,
-                    `det_listapedidos_temp`.`por_des`,
-                    `det_listapedidos_temp`.`val_des`,
-                    `det_listapedidos_temp`.`i_m_iva`,
-                    `det_listapedidos_temp`.`val_iva`,
-                    `det_listapedidos_temp`.`est_ped`,
-                    `det_listapedidos_temp`.`est_log`,
-                    `det_listapedidos_temp`.`fec_cre`,
-                    `det_listapedidos_temp`.`fec_mod`,
-                    `det_listapedidos_temp`.`usuario`
-                FROM `db_tienda`.`det_listapedidos_temp`;*/
-
-                
-                //[{"ids_pos":0,"ids_pro":"260","cod_art":"B0137","des_com":"BLOCK EJECUTIVO CUADRO","p_venta":"0.6795","can_des":"1","por_des":0,"val_des":0,"i_m_iva":1,"val_iva":"8.15","t_venta":"8.83","accion":"new"},
-                // {"ids_pos":1,"ids_pro":"1073","cod_art":"E0003","des_com":"ENGRAP.ARTESCO M.727 NEGRA P/30H","p_venta":"4.6369","can_des":1,"por_des":0,"val_des":0,"i_m_iva":1,"val_iva":"55.64","t_venta":"60.28","accion":"new"},
-                // {"ids_pos":2,"ids_pro":"984","cod_art":"C0696","des_com":"CINTA EMBALAJE 2PX80Y KOBOL 740 TRANSP.45MIC IND.","p_venta":"0.8756","can_des":"10","por_des":0,"val_des":0,"i_m_iva":1,"val_iva":"10.51","t_venta":8.756,"accion":"new"}]
+            for (var i = 0; i < Grid.length; i++) {                
                 if(parseFloat(Grid[i]['can_des'])>0){//$('#txt_cat_'.Grid[c]['ARTIE_ID']).val()
                     var rowGrid = new Object();
                     rowGrid.ids_pro = Grid[i]['ids_pro'];
@@ -194,5 +185,32 @@ function listaDetPedido() {
             }    
         }
     }
-    return JSON.stringify(arrayList);
+    //return JSON.stringify(arrayList);
+    return arrayList;
+}
+
+function confirmaPedidos() { 
+    var estado=false;
+    if (sessionStorage.dts_carrito) {
+        var Grid = JSON.parse(sessionStorage.dts_carrito);
+        if (Grid.length > 0) {//Se puede proceder            
+            estado=$('#txth_activo').val();
+            if(estado){
+                //alert('entro'+estado);
+                var renderurl = $('#txth_base').val() + "/site/confirmarpedido";
+                window.location = renderurl;  
+            }else{
+                //alert('no entro'+estado);
+                $('#loginModal').modal({show:true});
+            }
+            
+                      
+        }else{
+            showAlert('NO_OK', 'error', {"wtmessage": 'No Existen Items a pedir', "title":'Información'});
+        }        
+    }else{
+        showAlert('NO_OK', 'error', {"wtmessage": 'No Existen Items a pedir', "title":'Información'});
+    }
+    
+    
 }
