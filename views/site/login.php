@@ -39,12 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         </form>
                     </div><!--/login form-->
                 </div>
-                <div class="col-sm-1">
+<!--                <div class="col-sm-1">
                     <h2 class="or"><?= Yii::t("login", "OR") ?></h2>
                 </div>
                 <div class="col-sm-4">
-                    <div class="signup-form"><!--sign up form-->
-<!--                        <h2><?= Yii::t("app", "New User Signup!") ?></h2>-->
+                    <div class="signup-form">sign up form
+                        <h2><?= Yii::t("app", "New User Signup!") ?></h2>
                         <h2>Nuevo Usuario? <br>Crear Cuenta</h2>
                         <form action="#">
                             <input type="text" placeholder="<?= Yii::t("app", "Name") ?>"/>
@@ -52,8 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <input type="password" placeholder="<?= Yii::t("login", "Password") ?>"/>
                             <button type="submit" class="btn btn-default"><?= Yii::t("login", "Sign In") ?></button>
                         </form>
-                    </div><!--/sign up form-->
-                </div>
+                    </div>/sign up form
+                </div>-->
             </div>
         </div>
     </section><!--/form-->

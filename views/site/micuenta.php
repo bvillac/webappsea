@@ -21,7 +21,7 @@ use yii\helpers\Html;
             <p>A continuación se muestran tus datos personales. Si quieres modificarlos, cambia los campos que quieras y presiona el botón "Guardar cambios".</p>
             <form class="form-horizontal">
 
-                <div class="form-group">
+<!--                <div class="form-group">
                     <label for="txt_usu_password" class="col-sm-3 control-label">Contraseña</label>
                     <div class="col-sm-9">
                         <input type="password" class="form-control" id="txt_usu_password" >
@@ -32,36 +32,37 @@ use yii\helpers\Html;
                     <div class="col-sm-9">
                         <input type="password" class="form-control" id="txt_usu_password2" >
                     </div>
+                </div>-->
+                <div class="form-group">
+                    <label for="txt_per_correo" class="col-sm-3 control-label">Correo Electrónico</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txt_per_correo" value="<?= $Data[0]["Correo"]?>" disabled="true" >
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="txt_per_nombre" class="col-sm-3 control-label">Nombre</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txt_per_nombre" >
+                        <input type="text" class="form-control" id="txt_per_nombre" value="<?= $Data[0]["Nombre"]?>" >
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="txt_per_apellido" class="col-sm-3 control-label">Apellido</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txt_per_apellido" >
+                        <input type="text" class="form-control" id="txt_per_apellido" value="<?= $Data[0]["Apellido"]?>" >
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="txt_per_correo" class="col-sm-3 control-label">Correo Electrónico</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txt_per_correo" >
-                    </div>
-                </div>
+                
                 <div class="form-group">
                     <label for="txt_dper_telefono" class="col-sm-3 control-label">Teléfono</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txt_dper_telefono" >
+                        <input type="text" class="form-control" id="txt_dper_telefono" value="<?= $Data[0]["Telefono"]?>" >
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="txt_dper_direccion" class="col-sm-3 control-label">Dirección</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="txt_dper_direccion" >
+                        <input type="text" class="form-control" id="txt_dper_direccion" value="<?= $Data[0]["Direccion"]?>" >
                     </div>
                 </div>
                 <div class="form-group">
@@ -90,9 +91,14 @@ use yii\helpers\Html;
 
 
             </form>
-            <div class="alert alert-success" role="alert">
-               <?= Html::a('Guardar Cambios', ['site/confirmarpedido'],['class' => 'btn btn-primary']); ?>
+            <div class="form-group">
+                <div class="col-sm-3" ></div>
+                <div class="col-sm-9" >
+                    <?= Html::a('Guardar Cambios', ['site/confirmarpedido'], ['class' => 'btn btn-primary']); ?>
+                </div>
+
             </div>
+            
 
         </div>
     </div>
