@@ -14,11 +14,9 @@ use yii\helpers\Html;
     <div class="panel-body">
         <div class="list-group list-group-flush">
             <li class="list-group-item"><?= Html::a(Yii::t("store", "Mis Datos"), ['site/micuenta']); ?></li>
-            <li class="list-group-item"><?= Html::a(Yii::t("store", "Mis Pedidos"), ['site/mispedidos']); ?></li>
+<!--            <li class="list-group-item"><?= Html::a(Yii::t("store", "Mis Pedidos"), ['site/mispedidos']); ?></li>-->
             <li class="list-group-item"><?= Html::a(Yii::t("store", "Lista de Pedidos"), ['site/mislistas']); ?></li>
             <li class="list-group-item"><?= Html::a('<i class="glyphicon glyphicon-log-out"></i> '.Yii::t("store", "Salir"), ['site/logout']); ?></li>           
         </div>
     </div>
 </div>
-
-

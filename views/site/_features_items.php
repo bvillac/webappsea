@@ -11,6 +11,8 @@ use yii\helpers\Url;
 $Ruta=Url::base() . Yii::$app->params["imgFolder"];
 $ItemReco=$models;
 
+$isUser = Yii::$app->session->get('PB_isuser', FALSE);
+
 //$CastPro=app\models\Tienda::getMarcaTienda();
 //$num_total_rows= Tienda::getCountProductoTienda();
 ?>
@@ -39,26 +41,40 @@ $ItemReco=$models;
         <?php 
         while ($n < 3) { ?>
             <div class="col-sm-4">
-                <div class="product-image-wrapper">
-                    <div class="single-products">
-                        <div class="productinfo text-center">                                        
-                            <?php $imgData=Html::img($Ruta.$ItemReco[$fil]['cod_art']."_P-01.jpg",['class' => 'img-responsive ']); ?>
-                            <?= Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_masvendidos']); ?> 
-                            <h2>
-                                $<?= app\models\Utilities::round_out($ItemReco[$fil]['p_venta'], 2) ?>
-                                <img id="imgVisto_<?= $ItemReco[$fil]['cod_art']?>" style="display:none;" class="imgProVisto" src="<?= Url::base() ?>/web/img/product-details/VistoBueno.png" alt="" />
-                            </h2>
-                            <p><?=$ItemReco[$fil]['des_com']?></p>                                         
-                            <a onclick="addCarrito('<?= $ItemReco[$fil]['ids_pro'] ?>','<?= $ItemReco[$fil]['cod_art']?>','<?= $ItemReco[$fil]['des_com']?>','<?= $ItemReco[$fil]['p_venta']?>','0')" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i><?= Yii::t("store", "Add to cart") ?></a>
+                <?php if($isUser){ ?>
+                    <div class="product-image-wrapper">
+                        <div class="single-products">
+                            <div class="productinfo text-center">                                        
+                                <?php //$imgData=Html::img($Ruta.$ItemReco[$fil]['cod_art']."_P-01.jpg",['class' => 'img-responsive ']); ?>
+                                <?php $imgData= app\models\Utilities::verImagen($ItemReco[$fil]['cod_art']); ?>
+                                <?= Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_masvendidos']); ?> 
+                                <h2>
+                                    $<?= app\models\Utilities::round_out($ItemReco[$fil]['p_venta'], 2) ?>
+                                    <img id="imgVisto_<?= $ItemReco[$fil]['cod_art']?>" style="display:none;" class="imgProVisto" src="<?= Url::base() ?>/web/img/product-details/VistoBueno.png" alt="" />
+                                </h2>
+                                <p><?=$ItemReco[$fil]['des_com']?></p>                                         
+                                <a onclick="addCarrito('<?= $ItemReco[$fil]['ids_pro'] ?>','<?= $ItemReco[$fil]['cod_art']?>','<?= $ItemReco[$fil]['des_com']?>','<?= $ItemReco[$fil]['p_venta']?>','0')" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i><?= Yii::t("store", "Add to cart") ?></a>
+                            </div>
+                        </div>
+                        <div class="choose">
+                            <ul class="nav nav-pills nav-justified">
+                                <li><a href="#"><i class="fa fa-plus-square"></i>Agregar a lista de pedidos</a></li>
+                                <li><?= Html::a("<i class='fa fa-plus-square'></i>Ver Carrito", ['/site/cart']); ?></li>                            
+                            </ul>
                         </div>
                     </div>
-                    <div class="choose">
-                        <ul class="nav nav-pills nav-justified">
-                            <li><a href="#"><i class="fa fa-plus-square"></i>Agregar a lista de pedidos</a></li>
-                            <li><?= Html::a("<i class='fa fa-plus-square'></i>Ver Carrito", ['/site/cart']); ?></li>                            
-                        </ul>
+                <?php }else{ ?>
+                    <div class="product-image-wrapper">
+                        <div class="single-products">
+                            <div class="productinfo text-center">                                        
+                                <?php $imgData= app\models\Utilities::verImagen($ItemReco[$fil]['cod_art']); ?>
+                                <?= Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_masvendidos']); ?> 
+                                <p><?=$ItemReco[$fil]['des_com']?></p>                                         
+                                <a onclick="addCarrito('<?= $ItemReco[$fil]['ids_pro'] ?>','<?= $ItemReco[$fil]['cod_art']?>','<?= $ItemReco[$fil]['des_com']?>','<?= $ItemReco[$fil]['p_venta']?>','0')" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i><?= Yii::t("store", "Add to cart") ?></a>
+                            </div>
+                        </div>                        
                     </div>
-                </div>
+                <?php } ?>
             </div> 
         <?php 
             $fil++; 

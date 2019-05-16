@@ -11,6 +11,7 @@ namespace app\models;
 
 use Yii;
 use yii\helpers\Url;
+use yii\helpers\Html;
 
 class Utilities {
 
@@ -755,6 +756,18 @@ class Utilities {
             '2' => Yii::t("perfil", "Z - A"),
                   
         ];
+    }
+    
+    public static function verImagen($codigo) {
+        $Ruta=Url::base() . Yii::$app->params["imgFolder"];      
+        $rutaFile=Yii::$app->basePath.Yii::$app->params["imgFolder"].$codigo."_G-01.jpg"; 
+        //Utilities::putMessageLogFile($rutaFile);
+        if(file_exists($rutaFile)){
+           return Html::img($Ruta.$codigo."_G-01.jpg",['class' => 'img-responsive']);          
+        }else{
+           return Html::img($Ruta."NO_FOTO.jpg",['class' => 'img-responsive']); 
+        }
+        
     }
 
 }

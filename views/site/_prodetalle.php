@@ -9,15 +9,13 @@ use yii\helpers\Html;
 use yii\widgets\LinkPager;
 use app\models\Tienda;
 use yii\helpers\Url;
-$Ruta=Url::base() . Yii::$app->params["imgFolder"];
+//$Ruta=Url::base() . Yii::$app->params["imgFolder"];
 ?>
 
 <div class="product-details"><!--product-details-->
     <div class="col-sm-5">
         <div class="view-product">
-<!--            <img src="images/product-details/1.jpg" alt="" />-->
-            <!--<img src="<?php //Url::base() . Yii::$app->params["imgFolder"] ?>imgG.jpg" alt="" />-->
-            <?= Html::img($Ruta.$model[0]['cod_art']."_G-01.jpg",['class' => 'img-responsive ']); ?>
+            <?= app\models\Utilities::verImagen($model[0]['cod_art']); ?>
 
 <!--            <h3>ZOOM</h3>-->
         </div>

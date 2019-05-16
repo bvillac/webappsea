@@ -146,6 +146,7 @@ class Tienda {
         /*OBTIENE DESCUENTOS*/
         //Yii::$app->session->get("PB_iduser");
         $precio=Productos::consultarCatPrecio($ids);
+        $CampoVenta=\Yii::$app->params['p_venta'];
         $por_des=floatval($precio['por_des'])/100;
         /*FIN DESCUENTOS*/
         
@@ -172,7 +173,7 @@ class Tienda {
                     ON A.ids_pro=B.ids_pro
               WHERE A.est_log=1 ";*/
         
-         $sql="SELECT A.ids_pro,A.cod_art,A.des_com,(A.p_venta-(A.p_venta*$por_des)) p_venta,A.ruta_img,A.ids_cat
+         $sql="SELECT A.ids_pro,A.cod_art,A.des_com,(A.$CampoVenta-(A.$CampoVenta*$por_des)) p_venta,A.ruta_img,A.ids_cat
                 FROM " . $con->dbname . ".productos A                  
               WHERE A.est_log=1 ";
         
@@ -232,6 +233,7 @@ class Tienda {
         /*OBTIENE DESCUENTOS*/
         //Yii::$app->session->get("PB_iduser");
         $precio=Productos::consultarCatPrecio($ids);
+        $CampoVenta=\Yii::$app->params['p_venta'];
         $por_des=floatval($precio['por_des'])/100;
         /*FIN DESCUENTOS*/
         $con = \Yii::$app->db_tienda;        
@@ -244,7 +246,7 @@ class Tienda {
               WHERE A.est_log=1 AND A.tip_psug=:tipo ";
         $sql.=" ORDER BY A.ids_psug ASC ";*/
         
-        $sql="SELECT B.ids_pro,B.cod_art,B.des_com,(B.p_venta-(B.p_venta*$por_des)) p_venta,B.ruta_img
+        $sql="SELECT B.ids_pro,B.cod_art,B.des_com,(B.$CampoVenta-(B.$CampoVenta*$por_des)) p_venta,B.ruta_img
                 FROM " . $con->dbname . ".productos_sugeridos A
                   INNER JOIN " . $con->dbname . ".productos B                      
                     ON A.ids_pro=B.ids_pro
@@ -279,7 +281,8 @@ class Tienda {
     public static function getProductoDetalle($ids){
         /*OBTIENE DESCUENTOS*/
         //Yii::$app->session->get("PB_iduser");
-        $precio=Productos::consultarCatPrecio($ids);
+        $precio=Productos::consultarCatPrecio($idCli);
+        $CampoVenta=\Yii::$app->params['p_venta']; 
         $por_des=floatval($precio['por_des'])/100;
         /*FIN DESCUENTOS*/
         
@@ -296,7 +299,7 @@ class Tienda {
               WHERE A.est_log=1  AND A.ids_pro=:ids ;";*/
         
         //revisar no cambiar el valor
-        $sql="SELECT A.ids_pro,A.cod_art,A.des_com,(A.p_venta-(A.p_venta*$por_des)) p_venta,A.ruta_img,C.nom_cat,
+        $sql="SELECT A.ids_pro,A.cod_art,A.des_com,(A.$CampoVenta-(A.$CampoVenta*$por_des)) p_venta,A.ruta_img,C.nom_cat,
 		D.nom_mar
                 FROM " . $con->dbname . ".productos A                  
                   INNER JOIN " . $con->dbname . ".categorias C
@@ -304,6 +307,7 @@ class Tienda {
                   INNER JOIN " . $con->dbname . ".marca D
                         ON D.cod_mar=A.cod_mar
               WHERE A.est_log=1  AND A.ids_pro=:ids ;";
+        //Utilities::putMessageLogFile($sql);
         $comando = $con->createCommand($sql);
         $comando->bindParam(":ids", $ids, \PDO::PARAM_INT);
         return $comando->queryAll();
