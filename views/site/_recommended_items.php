@@ -24,10 +24,12 @@ $Ruta=Url::base() . Yii::$app->params["imgFolder"];
                     $n=0;
                     while ($n < 3) { ?>
                         <div class="col-sm-4">
+                            <?php if($isUser){ ?>
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">                                        
-                                        <?php $imgData=Html::img($Ruta.$ItemReco[$fil]['cod_art']."_G-01.jpg",['class' => 'img-responsive ']); ?>
+                                        <?php //$imgData=Html::img($Ruta.$ItemReco[$fil]['cod_art']."_G-01.jpg",['class' => 'img-responsive ']); ?>
+                                        <?php $imgData= app\models\Utilities::verImagen($ItemReco[$fil]['cod_art']); ?>
                                         <?= Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_masvendidos']); ?> 
                                         <h2>
                                             $<?= app\models\Utilities::round_out($ItemReco[$fil]['p_venta'], 2) ?>
@@ -38,6 +40,19 @@ $Ruta=Url::base() . Yii::$app->params["imgFolder"];
                                     </div>
                                 </div>
                             </div>
+                            <?php }else{ ?>
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">                                        
+                                            <?php $imgData= app\models\Utilities::verImagen($ItemReco[$fil]['cod_art']); ?>
+                                            <?= Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_masvendidos']); ?> 
+                                            <p><?=$ItemReco[$fil]['des_com']?></p>                                                               
+                                            <?= Html::a('Ver Detalle', ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_detalle','class'=>'btn btn-primary']); ?> 
+
+                                        </div>
+                                    </div>                        
+                                </div>
+                            <?php } ?>
                         </div>
                     <?php 
                         $fil++; 

@@ -122,8 +122,7 @@ class SiteController extends Controller
         //$page=isset($data["page"]) ? base64_decode($data['page']) : "1";          
         if (Yii::$app->request->isAjax) {
             $data = Yii::$app->request->post();
-            $op=(isset($data["op"]))?$data["op"]:'';
-           
+            $op=(isset($data["op"]))?$data["op"]:'';           
             $resul = Tienda::getProductoTiendaIndex($data);
             if ($resul['status']) {
                 $message = ["info" => Yii::t('exception', '<strong>Well done!</strong> your information was successfully saved.')];
@@ -133,17 +132,22 @@ class SiteController extends Controller
                 return Utilities::ajaxResponse('NO_OK', 'alert', Yii::t('jslang', 'Error'), 'false', $message);
             }
             return;
-            
-        }  
-        $resul = Tienda::getProductoTiendaIndex($data);
+        }
+        //Utilities::putMessageLogFile($ids);
+        //$IdsCat=Tienda::getNivelSuperior($ids);//Obtiene nivel superior
+        //Utilities::putMessageLogFile($IdsCat);ids_scat
+        
+        $resul = Tienda::getProductoTiendaIndex($data);//Retorna los Items a mostrar
         $IdsScat=Tienda::getNivelSuperior($resul['data'][0]['ids_cat']);//Obtiene nivel superior
+        $IdsSubcat=Tienda::getNivelSuperior($IdsScat[0]['ids_scat']);
         $nivel = Tienda::getNivelTienda($IdsScat[0]['ids_scat']);//obtiene categoria de nivel
-        //Utilities::putMessageLogFile($resul);
+        //Utilities::putMessageLogFile($IdsSubcat);
         return $this->render('productos', [
                     'models' => $resul['data'],
                     'subnivel' => $nivel,
                     'pages' => $resul['trows'],
                     'nomCat' => $IdsScat[0]['nom_cat'],
+                    'nomCatSup' => $IdsSubcat[0]['nom_cat'],
         ]);
      }
     

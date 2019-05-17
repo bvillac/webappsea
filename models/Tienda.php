@@ -74,6 +74,7 @@ class Tienda {
         return $rawData;
     }
     
+    //Obtiene el menu completo de datos principal
     public static function getMenuData(){
         $rawData=array();
         $con = \Yii::$app->db_tienda;
@@ -173,7 +174,8 @@ class Tienda {
                     ON A.ids_pro=B.ids_pro
               WHERE A.est_log=1 ";*/
         
-         $sql="SELECT A.ids_pro,A.cod_art,A.des_com,(A.$CampoVenta-(A.$CampoVenta*$por_des)) p_venta,A.ruta_img,A.ids_cat
+         $sql="SELECT A.ids_pro,A.cod_art,A.des_com,(A.$CampoVenta-(A.$CampoVenta*$por_des)) p_venta,A.ruta_img,
+             A.ids_cat
                 FROM " . $con->dbname . ".productos A                  
               WHERE A.est_log=1 ";
         

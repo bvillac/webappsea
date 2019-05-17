@@ -19,21 +19,25 @@ $isUser = Yii::$app->session->get('PB_isuser', FALSE);
 
 
 <div class="features_items"><!--features_items-->
-    <h2 class="title text-center"><?=Yii::t("store", "Features Items")?></h2>
-    <div class="col-sm-8"></div>
-    <div class="col-sm-4">
-        <div class="form-group">
-            <label for="cmb_orden" class="col-sm-6 control-label"><?= Yii::t("perfil", "Ordenar por:") ?></label>
-            <div class="col-sm-6">
-                <?= Html::dropDownList("cmb_orden", 0, app\models\Utilities::orderItems(), ["class" => "form-control", "id" => "cmb_orden"]) ?>
-            </div>
+    <h2 class="title text-center"><?= Yii::t("store", $nomCat)?></h2>
+    <div class="form-group row">
+        <div class="col-sm-6"></div>
+        <label for="cmb_orden" class="col-sm-2 control-label"><?= Yii::t("perfil", "Ordenar por:") ?></label>
+        <div class="col-sm-4">
+            <?= Html::dropDownList("cmb_orden", 0, app\models\Utilities::orderItems(), ["class" => "form-control", "id" => "cmb_orden"]) ?>
         </div>
     </div>
+ 
+    <?php if(sizeof($ItemReco)<1){ ?>
+        <div class="col-sm-12 alert alert-warning" role="alert">
+            <?= Yii::t("store", "Has no results !!!") ; ?>
+        </div> 
+    <?php } ?>
     
     <div id="listaPedidos">
     <?php 
     $fil=0;
-    $n=0;
+    $n=0;  
     for ($i = 0; $i < sizeof($ItemReco); $i++) {  ?>
         <?php
         $n=0;?>
@@ -69,8 +73,9 @@ $isUser = Yii::$app->session->get('PB_isuser', FALSE);
                             <div class="productinfo text-center">                                        
                                 <?php $imgData= app\models\Utilities::verImagen($ItemReco[$fil]['cod_art']); ?>
                                 <?= Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_masvendidos']); ?> 
-                                <p><?=$ItemReco[$fil]['des_com']?></p>                                         
-                                <a onclick="addCarrito('<?= $ItemReco[$fil]['ids_pro'] ?>','<?= $ItemReco[$fil]['cod_art']?>','<?= $ItemReco[$fil]['des_com']?>','<?= $ItemReco[$fil]['p_venta']?>','0')" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i><?= Yii::t("store", "Add to cart") ?></a>
+                                <p><?=$ItemReco[$fil]['des_com']?></p>                                                               
+                                <?= Html::a('Ver Detalle', ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_detalle','class'=>'btn btn-primary']); ?> 
+
                             </div>
                         </div>                        
                     </div>
@@ -84,7 +89,8 @@ $isUser = Yii::$app->session->get('PB_isuser', FALSE);
         </div>
     <?php 
         $i=$i+$n;                    
-    }  ?>
+    }
+     ?>
     </div>
     
 </div><!--features_items-->

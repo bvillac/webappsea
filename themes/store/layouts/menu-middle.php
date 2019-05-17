@@ -9,6 +9,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 
 $menu = app\models\Tienda::getMenuData();
+//app\models\Utilities::putMessageLogFile($menu);
 
 ?>
 <nav class="navbar navbar-default colorMenu" role="navigation">
@@ -51,10 +52,8 @@ $menu = app\models\Tienda::getMenuData();
                                                         <li class="menu_header"><a href="#"><?php echo $nivel[$n1]['nom_cat'] ?></a></li>
                                                         <?php for ($n2 = 0; $n2 < sizeof($subnivel); $n2++){ ?>                                                    
                                                         <li class="itemsubmenu"><?= Html::a($subnivel[$n2]['nom_cat'], ['site/productos','codigo' => base64_encode($subnivel[$n2]['ids_cat'])]); ?></li>                                                    
-                                                        <?php //Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_masvendidos']); ?> 
                                                         <?php } ?>                                                                                                                     
                                                     <?php } else { ?>
-
                                                         <li class="itemsubmenu"><?= Html::a($nivel[$n1]['nom_cat'], ['site/productos','codigo' => base64_encode($nivel[$n1]['ids_cat'])]); ?></li> 
                                                     <?php } ?>
                                                 </ul>        

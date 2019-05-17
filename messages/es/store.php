@@ -59,7 +59,7 @@ return [
     'Item' => 'Detalle',
     'Price' => 'Precio',
     'New' => 'Nuevo',
-    
+    'Has no results !!!'=> 'No tiene resultados  !!!',
     
 ];
 

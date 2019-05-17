@@ -15,7 +15,7 @@ $this->title = Yii::$app->params['alias']; //'My Yii Application';
 <div class="col-sm-3">
     <div class="left-sidebar">
         <?= $this->render('_seccion-productos.php') ?> 
-        <?= $this->render('_seccion-sub-productos.php', ['nomCat' => $nomCat,'seccion' => $subnivel]) ?>         
+        <?= $this->render('_seccion-sub-productos.php', ['nomCat' => $nomCatSup,'seccion' => $subnivel]) ?>         
         <?php //$this->render('_category-products.php', ['directoryAsset' => $directoryAsset]) ?> 
         <?php //$this->render('_brands_products.php', ['directoryAsset' => $directoryAsset]) ?> 
     </div>
@@ -24,7 +24,8 @@ $this->title = Yii::$app->params['alias']; //'My Yii Application';
 
 <div class="col-sm-9 padding-right">
     <?= $this->render('_barrabuscar.php') ?> 
-    <?= $this->render('_features_items.php', ['models'=> $models,'pages' => $pages,'seccion' => $subnivel]) ?> 
+    <?= $this->render('_features_items.php', ['models'=> $models,'pages' => $pages,
+                        'seccion' => $subnivel,'nomCat' => $nomCat]) ?> 
     <?= $this->render('_recommended_items.php') ?> 
 </div>
 
