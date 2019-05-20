@@ -98,13 +98,20 @@ function guardarDatos(accion) {
 function dataPersona(usuID,perID) {
     var datArray = new Array();
     var objDat = new Object();
-    var tipPer = ($("#rbt_tipo_per1").prop("checked", true))?'N':'J';
+    var tipPer='';
+    //var tipPer = ($("#rbt_tipo_per1").prop("checked", true))?'N':'J';
+    if ($("#rbt_tipo_per1").is(':checked')) {
+        tipPer = 'N';
+    } else {
+        tipPer = 'J';
+    }  
     objDat.per_tipo_persona =tipPer;
     objDat.usu_id = usuID;//Genero Automatico
     objDat.per_id = perID;
     objDat.usu_password = $('#txt_usu_password').val();
     objDat.per_ced_ruc = (tipPer=='N')?$('#txt_per_ced_ruc_n').val():$('#txt_per_ced_ruc_j').val();
     objDat.per_nombre = (tipPer=='N')?$('#txt_per_nombre').val():$('#txt_per_nombre_j').val();
+    //alert($('#txt_per_apellido_j').val());
     objDat.per_apellido = (tipPer=='N')?$('#txt_per_apellido').val():$('#txt_per_apellido_j').val();
     objDat.per_empresa = (tipPer=='J')?$('#txt_per_empresa').val():'';
     objDat.per_genero = "";//$('#cmb_per_genero option:selected').val();

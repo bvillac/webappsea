@@ -247,6 +247,7 @@ class Usuario extends ActiveRecord implements IdentityInterface  {
     }
     
     public function activarLinkCuenta($link){
+        $result=false;
         $user = static::findOne(['usu_link_activo' => $link]);
         $dbLink = $user->usu_link_activo;
         if(isset($dbLink) && $dbLink != ""){
@@ -254,12 +255,49 @@ class Usuario extends ActiveRecord implements IdentityInterface  {
                 $user->usu_link_activo = "";
                 $user->usu_estado_activo = 1;
                 $id = $user->usu_id;
-                $user->update(true, array("usu_link_activo","usu_estado_activo"));
+                $result= $this->activarCuenta($id);
+                //$user->update(true, array("usu_link_activo","usu_estado_activo"));
                 //EN CASO DE AGREGAR MAS DATOS EN LA ACTIVACION AKI
-                return true;
+                //return true;
+                //$nombres = $data[0]['per_nombre'];
+                if($result){
+                    $tituloMensaje = Yii::t("register","Successful Registration");
+                    $asunto = Yii::t("register", "User Register") . " " . Yii::$app->params["siteName"];//
+                    //Correo para el Usuario Final
+                    $body = Utilities::getMailMessage("registerUsuarioActivo", 
+                            array("[[username]]" => $user->usu_username,
+                                  ), Yii::$app->language);
+                    Utilities::sendEmail($tituloMensaje, Yii::$app->params["no-responder"], 
+                                        [$user->usu_username => $user->usu_username],
+                                        [],//Bcc
+                                        $asunto, $body);
+                    
+                }
+                
             }
         }
-        return false;
+        return $result;
+    }
+    
+    public function activarCuenta($ids) {
+        $con = \Yii::$app->db;
+        $trans = $con->beginTransaction();
+        try {
+            //$ids = isset($data['ids']) ? base64_decode($data['ids']) :NULL;
+            $sql = "UPDATE " . $con->dbname . ".usuario SET usu_estado_activo=1,usu_link_activo='' "
+                    . " WHERE usu_id=:usu_id";
+            $command = $con->createCommand($sql);
+            $command->bindParam(":usu_id", $ids, \PDO::PARAM_INT);
+            $command->execute();
+            $trans->commit();
+            $con->close();
+            return true;
+        } catch (\Exception $e) {
+            $trans->rollBack();
+            $con->close();
+            //throw $e;
+            return false;
+        }
     }
     
     
@@ -318,7 +356,7 @@ class Usuario extends ActiveRecord implements IdentityInterface  {
                                     [],//Bcc
                                     $asunto, $body);
             //Find Datos Mail
-            Utilities::putMessageLogFile($data);
+            //Utilities::putMessageLogFile($data);
             return $arroout;
         } catch (\Exception $e) {
             $trans->rollBack();

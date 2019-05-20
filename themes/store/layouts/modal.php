@@ -93,6 +93,11 @@
             </div>
             <div class="modal-body">
                <form>
+                   <div class="form-group">
+                       <p>
+                           Favor ingresar datos validos para poder registrar su cuenta. 
+                       </p>                       
+                   </div>
                    <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rbt_tipo_per1" value="N" checked>
                       <label class="form-check-label" for="inlineRadio1">Persona Natural</label>
@@ -112,10 +117,10 @@
                         <input type="text" class="form-control" id="txt_per_apellido" placeholder="Apellido">
                     </div>
                    <div class="form-group">                       
-                        <input type="text" class="form-control" id="txt_per_nombre_j" placeholder="Nombre Representante legal" style="display: none">
+                        <input type="text" class="form-control" id="txt_per_nombre_j" placeholder="Nombre de Contacto" style="display: none">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="txt_per_apellido_j" placeholder="Apellido Representante legal" style="display: none">
+                        <input type="text" class="form-control" id="txt_per_apellido_j" placeholder="Apellido de Contacto" style="display: none">
                     </div>
                    
                    <div class="form-group">

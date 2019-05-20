@@ -63,7 +63,7 @@ $isUser = Yii::$app->session->get('PB_isuser', FALSE);
                         <div class="choose">
                             <ul class="nav nav-pills nav-justified">
                                 <li><a href="#"><i class="fa fa-plus-square"></i>Agregar a lista de pedidos</a></li>
-                                <li><?= Html::a("<i class='fa fa-plus-square'></i>Ver Carrito", ['/site/cart']); ?></li>                            
+                                <li><?= Html::a("<i class='fa fa-plus-square'></i>Ver Carrito", ['/site/carrito']); ?></li>                            
                             </ul>
                         </div>
                     </div>
