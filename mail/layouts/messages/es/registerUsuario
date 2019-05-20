@@ -1,7 +1,5 @@
 <strong>Hola [[user]],</strong>
 <br /><br />
-Usted se ha registrado con el nombre de usuario <strong>[[username]]</strong> y Clave <strong>[[clave]]</strong>. Para activar su cuenta, deberá utilizar el enlace proporcionado a continuación:
-<br /><br />
-<a href='[[link_verification]]' target='_blank'>[[link_verification]]</a>
+Usted se ha registrado con el nombre de usuario <strong>[[username]]</strong> y Clave <strong>[[clave]]</strong>. Para que su cuenta este totalmente activa, deberá recibir la confirmacion del Administrador.
 <br /><br /><br />
 <strong>Atte. Utimpor</strong>

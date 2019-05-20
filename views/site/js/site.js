@@ -10,9 +10,44 @@ $(document).ready(function () {
         guardarDatos('Create');
     });
     
+    $('#rbt_tipo_per1').click(function () {
+        //alert("natural");
+        verNatural(true);
+        verJuridico(false);
+    });
+    $('#rbt_tipo_per2').click(function () {
+        //alert("juridico");
+        verJuridico(true);
+        verNatural(false);
+    });
     
 
 });
+
+function verNatural(valor) {
+    if(valor){
+       $('#txt_per_nombre').show(); 
+       $('#txt_per_apellido').show();
+       $('#txt_per_ced_ruc_n').show();
+    }else{
+       $('#txt_per_nombre').hide();
+       $('#txt_per_apellido').hide();
+       $('#txt_per_ced_ruc_n').hide();
+    }
+}
+function verJuridico(valor) {
+    if(valor){
+       $('#txt_per_empresa').show(); 
+       $('#txt_per_ced_ruc_j').show();
+       $('#txt_per_nombre_j').show(); 
+       $('#txt_per_apellido_j').show();
+    }else{
+       $('#txt_per_empresa').hide();
+       $('#txt_per_ced_ruc_j').hide();
+       $('#txt_per_nombre_j').hide(); 
+       $('#txt_per_apellido_j').hide();
+    }
+}
 
 function divComentario(data) {
     //$("#countMensaje").html(data.length);
@@ -63,12 +98,15 @@ function guardarDatos(accion) {
 function dataPersona(usuID,perID) {
     var datArray = new Array();
     var objDat = new Object();
+    var tipPer = ($("#rbt_tipo_per1").prop("checked", true))?'N':'J';
+    objDat.per_tipo_persona =tipPer;
     objDat.usu_id = usuID;//Genero Automatico
     objDat.per_id = perID;
     objDat.usu_password = $('#txt_usu_password').val();
-    objDat.per_ced_ruc = "";//$('#txt_per_ced_ruc').val();
-    objDat.per_nombre = $('#txt_per_nombre').val();
-    objDat.per_apellido = $('#txt_per_apellido').val();
+    objDat.per_ced_ruc = (tipPer=='N')?$('#txt_per_ced_ruc_n').val():$('#txt_per_ced_ruc_j').val();
+    objDat.per_nombre = (tipPer=='N')?$('#txt_per_nombre').val():$('#txt_per_nombre_j').val();
+    objDat.per_apellido = (tipPer=='N')?$('#txt_per_apellido').val():$('#txt_per_apellido_j').val();
+    objDat.per_empresa = (tipPer=='J')?$('#txt_per_empresa').val():'';
     objDat.per_genero = "";//$('#cmb_per_genero option:selected').val();
     objDat.per_fecha_nacimiento = "";//$('#dtp_per_fecha_nacimiento').val();
     objDat.per_estado_civil = "";//$('#cmb_per_estado_civil option:selected').val();
@@ -86,6 +124,7 @@ function dataPersona(usuID,perID) {
     objDat.dper_celular =$('#txt_dper_celular').val();
     objDat.dper_contacto = $('#txt_dper_contacto').val();
     objDat.dper_est_log = 1;
+    objDat.usu_estado_activo=0;
 
     datArray[0] = objDat;
     sessionStorage.dataPersona = JSON.stringify(datArray);

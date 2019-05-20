@@ -274,13 +274,12 @@ class Usuario extends ActiveRecord implements IdentityInterface  {
             Persona::insertarDataPerfil($con, $data);
             $per_id=$con->getLastInsertID();//IDS de la Persona
             Persona::insertarDataPerfilDatoAdicional($con, $data, $per_id);
-            //$this->insertarDataPaciente($con, $data, $per_id);
-            //$pac_id=$con->getLastInsertID();
             //Inserta Datos de Usuario
             //$password=Utilities::generarCodigoKey(8);//Passw Generado Automaticamente
             $password=$data[0]['usu_password'];
+            $estado_activo=$data[0]['usu_estado_activo'];
             $linkActiva=Usuario::crearLinkActivacion();
-            Usuario::insertarDataUser($con, $data[0]['per_correo'], $password, $per_id,$linkActiva); 
+            Usuario::insertarDataUser($con, $data[0]['per_correo'], $password, $per_id,$linkActiva,$estado_activo); 
             $usu_id=$con->getLastInsertID();//IDS de la Persona
             //Rol::saveEmpresaRol($con, $usu_id, 1, $this->rolDefault);//Empresas 1 Por Defecto
             //###############################
@@ -294,14 +293,32 @@ class Usuario extends ActiveRecord implements IdentityInterface  {
             //Enviar correo electronico para activacion de cuenta
                 $nombres = $data[0]['per_nombre'];
                 $tituloMensaje = Yii::t("register","Successful Registration");
-                $asunto = Yii::t("register", "User Register") . " " . Yii::$app->params["siteName"];
-                $body = Utilities::getMailMessage("registerUsuario", array("[[user]]" => $nombres, "[[username]]" => $data[0]['per_correo'],"[[clave]]" => $password, "[[link_verification]]" => $linkActiva), Yii::$app->language);
+                $asunto = Yii::t("register", "User Register") . " " . Yii::$app->params["siteName"];//
+                //Correo para el Usuario Final
+                $body = Utilities::getMailMessage("registerUsuario", 
+                        array("[[user]]" => $nombres, 
+                              "[[username]]" => $data[0]['per_correo'],
+                              "[[clave]]" => $password), Yii::$app->language);
+                Utilities::sendEmail($tituloMensaje, Yii::$app->params["no-responder"], 
+                                    [$data[0]['per_correo'] => $data[0]['per_nombre'] . " " . $data[0]['per_apellido']],
+                                    [],//Bcc
+                                    $asunto, $body);
+                
+                //Correo para el Usuario de Activacion es decir para hacer la activacion el administrador
+                $TipoPersona=($data[0]['per_tipo_persona']=='N')?'Natural':'Jurídica';
+                $body = Utilities::getMailMessage("activarUsuario", 
+                        array("[[user]]" => $nombres,
+                              "[[tipoPersona]]" => $TipoPersona,"[[ced_ruc]]" => $data[0]['per_ced_ruc'],  
+                              "[[Empresa]]" => $data[0]['per_empresa'],
+                              "[[Nombres]]" => $data[0]['per_nombre'] . " " . $data[0]['per_apellido'],
+                              "[[username]]" => $data[0]['per_correo'],"[[clave]]" => $password, 
+                              "[[link_verification]]" => $linkActiva), Yii::$app->language);
                 Utilities::sendEmail($tituloMensaje, Yii::$app->params["no-responder"], 
                                     [$data[0]['per_correo'] => $data[0]['per_nombre'] . " " . $data[0]['per_apellido']],
                                     [],//Bcc
                                     $asunto, $body);
             //Find Datos Mail
-            
+            Utilities::putMessageLogFile($data);
             return $arroout;
         } catch (\Exception $e) {
             $trans->rollBack();
@@ -312,19 +329,20 @@ class Usuario extends ActiveRecord implements IdentityInterface  {
         }
     }
     
-    public static function insertarDataUser($con,$username, $password, $id_persona,$link) {
+    public static function insertarDataUser($con,$username, $password, $id_persona,$link,$estado_activo) {
         $security = new Security();
         $usu_sha = $security->generateRandomString();//String de Seguridad
         $usu_password = base64_encode($security->encryptByPassword($usu_sha, $password));//Nuevo Pass con SHA Y 64 BITS        
         $sql = "INSERT INTO " . $con->dbname . ".usuario
             (per_id,usu_username,usu_password,usu_sha,usu_link_activo,usu_estado_activo,usu_est_log)VALUES
-            (:per_id,:usu_username,:usu_password,:usu_sha,:usu_link_activo,1,1);";
+            (:per_id,:usu_username,:usu_password,:usu_sha,:usu_link_activo,:usu_estado_activo,1);";
         $command = $con->createCommand($sql);
         $command->bindParam(":per_id", $id_persona, \PDO::PARAM_INT);//Id Comparacion
         $command->bindParam(":usu_username", $username, \PDO::PARAM_STR);
         $command->bindParam(":usu_password", $usu_password, \PDO::PARAM_STR);
         $command->bindParam(":usu_sha", $usu_sha, \PDO::PARAM_STR);
         $command->bindParam(":usu_link_activo", $link, \PDO::PARAM_STR);
+        $command->bindParam(":usu_estado_activo", $estado_activo, \PDO::PARAM_STR);
         $command->execute();
     }
     

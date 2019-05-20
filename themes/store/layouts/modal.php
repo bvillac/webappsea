@@ -93,6 +93,17 @@
             </div>
             <div class="modal-body">
                <form>
+                   <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rbt_tipo_per1" value="N" checked>
+                      <label class="form-check-label" for="inlineRadio1">Persona Natural</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="rbt_tipo_per2" value="J">
+                      <label class="form-check-label" for="inlineRadio2">Persona Jurídica</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txt_per_empresa" placeholder="Nombre de Empresa" style="display: none">
+                    </div>
                     <div class="form-group">
 <!--                        <label for="recipient-name" class="col-form-label">Recipient:</label>-->
                         <input type="text" class="form-control" id="txt_per_nombre" placeholder="Nombre">
@@ -100,12 +111,26 @@
                     <div class="form-group">
                         <input type="text" class="form-control" id="txt_per_apellido" placeholder="Apellido">
                     </div>
+                   <div class="form-group">                       
+                        <input type="text" class="form-control" id="txt_per_nombre_j" placeholder="Nombre Representante legal" style="display: none">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txt_per_apellido_j" placeholder="Apellido Representante legal" style="display: none">
+                    </div>
+                   
                    <div class="form-group">
-                        <input type="text" class="form-control" id="txt_per_correo" placeholder="Email (Será su nomobre de usuario)">
+                        <input type="text" class="form-control" id="txt_per_ced_ruc_n" placeholder="Cédula">
+                   </div>
+                   <div class="form-group">
+                        <input type="text" class="form-control" id="txt_per_ced_ruc_j" placeholder="Ruc" style="display: none">
                    </div>
                    <div class="form-group">
                         <input type="text" class="form-control" id="txt_dper_telefono" placeholder="Teléfono de Contacto">
                    </div>
+                   <div class="form-group">
+                        <input type="text" class="form-control" id="txt_per_correo" placeholder="Email (Será su nomobre de usuario)">
+                   </div>
+                   
                    <div class="form-group">
                        <input type="password" class="form-control" id="txt_usu_password" placeholder="Escoge una clave">
                    </div>

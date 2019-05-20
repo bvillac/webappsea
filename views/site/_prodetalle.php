@@ -10,6 +10,7 @@ use yii\widgets\LinkPager;
 use app\models\Tienda;
 use yii\helpers\Url;
 //$Ruta=Url::base() . Yii::$app->params["imgFolder"];
+$isUser = Yii::$app->session->get('PB_isuser', FALSE);
 ?>
 
 <div class="product-details"><!--product-details-->
@@ -52,23 +53,43 @@ use yii\helpers\Url;
     </div>
     <div class="col-sm-7">
         <div class="product-information"><!--/product-information-->
-<!--            <img src="<?= Url::base() ?>/web/img/product-details/new.jpg" class="newarrival" alt="" />-->
-            <h2><?= $model[0]['des_com'] ?></h2>
-            <p>PARTE ID: <?= $model[0]['cod_art'] ?></p>
-            <img src="<?= Url::base() ?>/web/img/product-details/rating.png" alt="" />
-            <span>
-                <span>$<?= app\models\Utilities::round_out($model[0]['p_venta'], 2) ?></span>
-                <label><?= Yii::t("store", "Quantity") ?>:</label>
-                <input id="txt_cant" type="text" value="<?= $cant ?>" />
-                <?php //Html::a(Yii::t("store", "Add to cart"), ['/site/cart'], ['class' => 'btn btn-fefault cart']) ?>
-                <?= Html::button('<i class="fa fa-shopping-cart"></i>'.Yii::t("store", "Add to cart"), 
-                                ['class' => 'btn btn-fefault cart','onclick'=>'addCarrito(\''.$model[0]["ids_pro"].'\',\''.$model[0]["cod_art"].'\',\''.$model[0]["des_com"].'\',\''.$model[0]["p_venta"].'\',\'txt_cant\')'])?>
-        
-            </span>
-            <p><b><?= Yii::t("store", "Availability") ?>:</b> <?= Yii::t("store", "In Stock") ?></p>
-            <p><b><?= Yii::t("store", "Condition") ?>:</b> <?= Yii::t("store", "New") ?></p>
-            <p><b><?= Yii::t("store", "Brand") ?>:</b> <?= $model[0]['nom_mar'] ?></p>
-            <a href=""><img src="<?= Url::base() ?>/web/img/product-details/share.png" class="share img-responsive"  alt="" /></a>
+            <!--<img src="<?= Url::base() ?>/web/img/product-details/new.jpg" class="newarrival" alt="" />-->
+            <?php if($isUser){ ?>
+                <h2><?= $model[0]['des_com'] ?></h2>
+                <p>PARTE ID: <?= $model[0]['cod_art'] ?></p>
+                <img src="<?= Url::base() ?>/web/img/product-details/rating.png" alt="" />
+                <span>
+                    <span>$<?= app\models\Utilities::round_out($model[0]['p_venta'], 2) ?></span>
+                    <label><?= Yii::t("store", "Quantity") ?>:</label>
+                    <input id="txt_cant" type="text" value="<?= $cant ?>" />
+                    <?php //Html::a(Yii::t("store", "Add to cart"), ['/site/cart'], ['class' => 'btn btn-fefault cart']) ?>
+                    <?= Html::button('<i class="fa fa-shopping-cart"></i>'.Yii::t("store", "Add to cart"), 
+                                    ['class' => 'btn btn-fefault cart','onclick'=>'addCarrito(\''.$model[0]["ids_pro"].'\',\''.$model[0]["cod_art"].'\',\''.$model[0]["des_com"].'\',\''.$model[0]["p_venta"].'\',\'txt_cant\')'])?>
+
+                </span>
+                <p><b><?= Yii::t("store", "Availability") ?>:</b> <?= Yii::t("store", "In Stock") ?></p>
+                <p><b><?= Yii::t("store", "Condition") ?>:</b> <?= Yii::t("store", "New") ?></p>
+                <p><b><?= Yii::t("store", "Brand") ?>:</b> <?= $model[0]['nom_mar'] ?></p>
+                <a href=""><img src="<?= Url::base() ?>/web/img/product-details/share.png" class="share img-responsive"  alt="" /></a>
+            <?php }else{ ?>
+                <h2><?= $model[0]['des_com'] ?></h2>
+                <p>PARTE ID: <?= $model[0]['cod_art'] ?></p>
+                <img src="<?= Url::base() ?>/web/img/product-details/rating.png" alt="" />               
+                <br> <br> 
+                <div class="alert alert-info" role="alert">
+                    Si deseas obtener información sobre nuestros productos escríbenos a <a href="mailto:<?= Yii::$app->params['ventasEmail']; ?>" style="color: #005B25"><?= Yii::$app->params['ventasEmail']; ?></a> o llámanos al  PBX:</span><?= Yii::$app->params['telefonos']; ?>.
+                </div>
+                <div class="alert alert-success" role="alert">
+                    Para formar parte de nuestros selectos Clientes revisa la siguiente información.
+                    <div class="form-group">                       
+                       <?= Html::button(Yii::t("store", "Registrarme !!"), 
+                                    ['class' => 'btn btn-success','onclick'=>'nuevaCuentaModal()'])?>
+                    </div>
+                    
+                </div>
+                
+                                
+            <?php } ?>
         </div><!--/product-information-->
     </div>
 </div><!--/product-details-->

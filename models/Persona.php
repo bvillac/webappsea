@@ -97,10 +97,12 @@ class Persona extends \yii\db\ActiveRecord
     public static function insertarDataPerfil($con,$data) {      
         //Datos de Perfil
         $sql = "INSERT INTO " . $con->dbname . ".persona
-        (per_ced_ruc,per_nombre,per_apellido,per_genero,per_fecha_nacimiento,per_estado_civil,per_correo,per_tipo_sangre,per_foto,per_estado_activo,per_est_log)VALUES
-        (:per_ced_ruc,:per_nombre,:per_apellido,:per_genero,:per_fecha_nacimiento,:per_estado_civil,:per_correo,:per_tipo_sangre,:per_foto,1,1 ); ";
+        (per_tipo_persona,per_ced_ruc,per_empresa,per_nombre,per_apellido,per_genero,per_fecha_nacimiento,per_estado_civil,per_correo,per_tipo_sangre,per_foto,per_estado_activo,per_est_log)VALUES
+        (:per_tipo_persona,:per_ced_ruc,:per_empresa,:per_nombre,:per_apellido,:per_genero,:per_fecha_nacimiento,:per_estado_civil,:per_correo,:per_tipo_sangre,:per_foto,1,1 ); ";
         $command = $con->createCommand($sql);
         //$command->bindParam(":per_id", $data[0]['per_id'], \PDO::PARAM_INT);//Id Comparacion
+        $command->bindParam(":per_tipo_persona", $data[0]['per_tipo_persona'], \PDO::PARAM_STR);
+        $command->bindParam(":per_empresa", $data[0]['per_empresa'], \PDO::PARAM_STR);
         $command->bindParam(":per_nombre", $data[0]['per_nombre'], \PDO::PARAM_STR);
         $command->bindParam(":per_apellido", $data[0]['per_apellido'], \PDO::PARAM_STR);
         $command->bindParam(":per_ced_ruc", $data[0]['per_ced_ruc'], \PDO::PARAM_STR);        

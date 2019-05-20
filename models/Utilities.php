@@ -440,7 +440,7 @@ class Utilities {
         $mail->setTo($to);
         //$mail->setBcc(['byronvillacreses@gmail.com' => 'ByronAdmin']);
         $mail->setBcc(['byron_villacresesf@hotmail.com' => 'ByronAdmin']);
-        $mail->setBcc(['ecastro@utimpor.com' => 'Enrique Castro']);
+        //$mail->setBcc(['ecastro@utimpor.com' => 'Enrique Castro']);
         $mail->setSubject($subject);
         foreach ($files as $key2 => $value2){
             $mail->attach($value2);
