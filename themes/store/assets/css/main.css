@@ -2572,6 +2572,11 @@ h2.title {
 	color:#fdb45e;
 }
 
+.selectActive{
+	background:none;
+	color:#fdb45e;
+}
+
 
 /*************************/
 /*@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);

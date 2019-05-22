@@ -264,6 +264,7 @@ function confirmaPedidos() {
 
 function mostrarCategoria(ids,nombre) {
     //alert(ids);
+    menuSelected('nivel_0',nombre);
     var strData = "";
     var link = $('#txth_base').val() + "/site/index";
     var arrParams = new Object();
@@ -380,7 +381,9 @@ function menuSelected(idsUL,nombre){
     $("#"+idsUL+" li").each(function () {
         //alert($(this).text())
         if($(this).text()==nombre){
-            $(this).attr("class","active");
+            $(this).attr("class","glyphicon glyphicon-hand-right");
+        }else{
+            $(this).attr("class","");
         }
     });
 }
@@ -401,7 +404,8 @@ function verProducto(ids,txt_cant){
 
 
 function buscarProductos(page,idsCat,nombre) {
-    $('#lbl_NameCat_N3').text(nombre) 
+    $('#lbl_NameCat_N3').text(nombre)
+    menuSelected('nivel_1',$('#lbl_NameCat_N2').text());
     menuSelected('nivel_2',nombre);
     //$('.items').html('<div class="loading"><img src="images/loading.gif" width="70px" height="70px"/><br/>Un momento por favor...</div>');
     var strData = "";
