@@ -262,7 +262,7 @@ function confirmaPedidos() {
 
 // MOSTRAR MENU CATEGORIAS 
 
-function mostrarCategoria(ids) {
+function mostrarCategoria(ids,nombre) {
     //alert(ids);
     var strData = "";
     var link = $('#txth_base').val() + "/site/index";
@@ -279,29 +279,21 @@ function mostrarCategoria(ids) {
                 strData += llenarCategorias(data[i]);
             }
             $("#listaCategorias").html(strData);
+            //menuSelected();
         }
     }, true);
     return false;
 }
 function llenarCategorias(data){
     var strData = "";
-
-        /*strData += '<div class="panel panel-default">';
-            strData += '<div class="panel-heading">';
-                strData += '<h4 class="panel-title"><a href="javascript:void(0)" onclick="mostrarSubCategoria(\'' + data['ids_cat'] + '\')" >' + data['nom_cat'] + '</a></h4>';
-            strData += '</div>';
-        strData += '</div>';*/
-        
-        strData += '<ul id="subNivel" class="nav nav-pills nav-stacked">';
+        strData += '<ul id="nivel_1" class="nav nav-pills nav-stacked">';
             strData += '<li>';
                 strData += '<a href="javascript:void(0)" onclick="mostrarSubCategoria(\'' + data['ids_cat'] + '\',\'' + data['nom_cat'] + '\')" >';
                     strData += data['nom_cat'];
                 strData += '</a>';
             strData += '</li>';
         strData += '</ul>';
-
     return strData;
-    
 }
 
 function llenarCategoriasXXX(data){
@@ -347,7 +339,7 @@ function llenarCategoriasXXX(data){
 
 function mostrarSubCategoria(ids,nombre) {
     var strData = "";    
-    $('#lbl_subNameCat').text(nombre) 
+    $('#lbl_NameCat_N2').text(nombre) 
     var link = $('#txth_base').val() + "/site/index";
     var arrParams = new Object();
     arrParams.ids = base64_encode(ids);
@@ -357,10 +349,10 @@ function mostrarSubCategoria(ids,nombre) {
             var data = response.message;
             if(data.length>0){
                 for (var i = 0; i < data.length; i++) {
-                    strData += '<ul id="subNivel" class="nav nav-pills nav-stacked">';
+                    strData += '<ul id="nivel_2" class="nav nav-pills nav-stacked">';
                     for (var i = 0; i < data.length; i++) {
                         strData += '<li>';
-                                strData += '<a href="javascript:void(0)" onclick="buscarProductos(0,\'' + data[i]['ids_cat'] + '\')" >';
+                                strData += '<a href="javascript:void(0)" onclick="buscarProductos(0,\'' + data[i]['ids_cat'] + '\',\'' + data[i]['nom_cat'] + '\')" >';
                                 //strData += '<a href="'+$('#txth_base').val()+'/site/productos?codigo='+base64_encode(data[i]['ids_cat'])+'"  >';
                                 strData += data[i]['nom_cat'];
                             strData += '</a>';
@@ -374,10 +366,25 @@ function mostrarSubCategoria(ids,nombre) {
                 strData += '</div>'; 
             }            
             $("#listaSubCategorias").html(strData);
+            menuSelected('nivel_1',nombre);
         }
     }, true);
     return false;
 }
+
+//Selecionar Productos
+//https://www.anerbarrena.com/jquery-each-5297/
+function menuSelected(idsUL,nombre){
+    //Recibimos el Id del elemento y recorremos los LI y sacamos su texto,
+    //le agregamos la propieda class=active para que este selecionado
+    $("#"+idsUL+" li").each(function () {
+        //alert($(this).text())
+        if($(this).text()==nombre){
+            $(this).attr("class","active");
+        }
+    });
+}
+
 
 function verProducto(ids,txt_cant){
     var cant=0;
@@ -393,7 +400,9 @@ function verProducto(ids,txt_cant){
 }
 
 
-function buscarProductos(page,idsCat) {
+function buscarProductos(page,idsCat,nombre) {
+    $('#lbl_NameCat_N3').text(nombre) 
+    menuSelected('nivel_2',nombre);
     //$('.items').html('<div class="loading"><img src="images/loading.gif" width="70px" height="70px"/><br/>Un momento por favor...</div>');
     var strData = "";
     var link = $('#txth_base').val() + "/site/productos";
@@ -503,3 +512,4 @@ function llenarItems(data){
     strData += '</div>';
     return strData;
 }
+

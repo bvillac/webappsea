@@ -19,7 +19,7 @@ $isUser = Yii::$app->session->get('PB_isuser', FALSE);
 
 
 <div class="features_items"><!--features_items-->
-    <h2 class="title text-center"><?= Yii::t("store", $nomCat)?></h2>
+    <h2 id="lbl_NameCat_N3" class="title text-center"><?= Yii::t("store", $nomCat)?></h2>
     <div class="form-group row">
         <div class="col-sm-6"></div>
         <label for="cmb_orden" class="col-sm-2 control-label"><?= Yii::t("perfil", "Ordenar por:") ?></label>

@@ -86,11 +86,8 @@ class SiteController extends Controller
                     break;
                 case 'subCategoria':
                     //$ids=(isset($data["ids"]))?$data["ids"]:'0';
-                    Utilities::putMessageLogFile($ids);
                     $ids=isset($data["ids"]) ? base64_decode($data['ids']) : "0";
-                    Utilities::putMessageLogFile($ids);
                     $dts = Tienda::getSubNivelTienda($ids);
-                    Utilities::putMessageLogFile($dts);
                     $resul["status"] = TRUE;
                     $resul["data"] = $dts;
                     break;
@@ -126,9 +123,8 @@ class SiteController extends Controller
      */
      public function actionProductos() {
         $resul=array();
-        $nivel=array();        
-        //$ids=isset($data["codigo"]) ? base64_decode($data['codigo']) : "0";
-        //$page=isset($data["page"]) ? base64_decode($data['page']) : "1";          
+        $nivel_1=array();  
+        $nivel_2=array();        
         if (Yii::$app->request->isAjax) {
             $data = Yii::$app->request->post();
             $op=(isset($data["op"]))?$data["op"]:'';  
@@ -142,19 +138,20 @@ class SiteController extends Controller
             }
             return;
         }
-        //Utilities::putMessageLogFile($ids);
-        //$IdsCat=Tienda::getNivelSuperior($ids);//Obtiene nivel superior
-        //Utilities::putMessageLogFile($IdsCat);ids_scat
         $data = Yii::$app->request->get();
-        
-        $resul = Tienda::getProductoTiendaIndex($data);//Retorna los Items a mostrar
-        $IdsScat=Tienda::getNivelSuperior($resul['data'][0]['ids_cat']);//Obtiene nivel superior
-        $IdsSubcat=Tienda::getNivelSuperior($IdsScat[0]['ids_scat']);
-        $nivel = Tienda::getNivelTienda($IdsScat[0]['ids_scat']);//obtiene categoria de nivel
-        //Utilities::putMessageLogFile($IdsSubcat);
+        //DATOS 3 NIVEL
+        $resul = Tienda::getProductoTiendaIndex($data);//Retorna los Items a mostrar osea resultado de Items    
+        $IdsScat=Tienda::getNivelSuperior($resul['data'][0]['ids_cat']);//Obtiene nivel superior los IDS
+        $IdsSubcat=Tienda::getNivelSuperior($IdsScat[0]['ids_scat']);//Obtiene el Menu de Nivel superior Categorias
+        //DATOS 2 NIVEL
+        $nivel_2 = Tienda::getNivelTienda($IdsScat[0]['ids_scat']);//obtiene categoria de nivel
+        //DATOS 1 NIVEL
+        $nivel_1 = Tienda::getSubNivelTienda($IdsSubcat[0]['ids_scat']);//Menu de Categorias
+      
         return $this->render('productos', [
-                    'models' => $resul['data'],
-                    'subnivel' => $nivel,
+                    'models' => $resul['data'],//nivel 3
+                    'nivel_1' => $nivel_1,
+                    'nivel_2' => $nivel_2,
                     'pages' => $resul['trows'],
                     'nomCat' => $IdsScat[0]['nom_cat'],
                     'nomCatSup' => $IdsSubcat[0]['nom_cat'],

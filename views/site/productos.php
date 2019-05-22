@@ -11,12 +11,12 @@ use yii\helpers\Url;
 $this->title = Yii::$app->params['alias']; //'My Yii Application';
 ?>
 
-<?= Html::hiddenInput('txth_idsCat', $subnivel[0]['ids_cat'], ["id" => "txth_idsCat"]) ?>
+<?= Html::hiddenInput('txth_idsCat', $nivel_2[0]['ids_cat'], ["id" => "txth_idsCat"]) ?>
 <div class="col-sm-3">
     <div class="left-sidebar">
         <?= $this->render('_seccion-productos.php') ?> 
-        <?= $this->render('_category-products.php') ?> 
-        <?= $this->render('_seccion-sub-productos.php', ['nomCat' => $nomCatSup,'seccion' => $subnivel]) ?>             
+        <?= $this->render('_seccion-s1-productos.php',['nomCat' => Yii::t("store", "Category"),'seccion' => $nivel_1]) ?> 
+        <?= $this->render('_seccion-s2-productos.php', ['nomCat' => $nomCatSup,'seccion' => $nivel_2]) ?>             
         <?php //$this->render('_brands_products.php', ['directoryAsset' => $directoryAsset]) ?> 
     </div>
 </div>
@@ -25,7 +25,7 @@ $this->title = Yii::$app->params['alias']; //'My Yii Application';
 <div class="col-sm-9 padding-right">
     <?= $this->render('_barrabuscar.php') ?> 
     <?= $this->render('_features_items.php', ['models'=> $models,'pages' => $pages,
-                        'seccion' => $subnivel,'nomCat' => $nomCat]) ?> 
+                        'seccion' => $nivel_2,'nomCat' => $nomCat]) ?> 
     <?= $this->render('_recommended_items.php') ?> 
 </div>
 
