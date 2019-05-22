@@ -43,6 +43,7 @@ class Tienda {
         $con = \Yii::$app->db_tienda;
         $sql="SELECT ids_cat,nom_cat  FROM " . $con->dbname . ".categorias "
                 . " WHERE ids_scat=:ids AND ids_cat<>ids_scat AND est_log=1 ORDER BY ids_cat;";
+        //echo $sql;
         $comando = $con->createCommand($sql);
         $comando->bindParam(":ids", $ids, \PDO::PARAM_INT);
         $result=$comando->queryAll();
@@ -142,7 +143,7 @@ class Tienda {
     
     
     public static function getProductoTiendaIndex($data){
-        //Utilities::putMessageLogFile($data);
+        Utilities::putMessageLogFile($data);
         
         /*OBTIENE DESCUENTOS*/
         //Yii::$app->session->get("PB_iduser");
@@ -159,7 +160,7 @@ class Tienda {
         $idsCat=isset($data["codigo"]) ? base64_decode($data['codigo']) : "0";
         
         
-        //Utilities::putMessageLogFile("ids ".$idsCat);
+        Utilities::putMessageLogFile("ids ".$idsCat);
         if(isset($data['page'])){$page=$data['page'];}
         //if(isset($data['idsCat'])){$idsCat=$data['idsCat'];}        
         if(isset($data['desCom'])){$desCom=$data['desCom'];}
@@ -182,7 +183,7 @@ class Tienda {
         $sql.=($idsCat!=0)?" AND A.ids_cat=$idsCat":"";  
         $sql.=($desCom!="")?" AND A.des_com LIKE '%$desCom%' ":"";
         
-        //echo $sql;
+        Utilities::putMessageLogFile($sql);
 
         $comando = $con->createCommand($sql);        
         //$comando->bindParam(":med_id", $ids, \PDO::PARAM_INT);

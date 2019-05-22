@@ -11,12 +11,10 @@ $(document).ready(function () {
     });
     
     $('#rbt_tipo_per1').click(function () {
-        //alert("natural");
         verNatural(true);
         verJuridico(false);
     });
     $('#rbt_tipo_per2').click(function () {
-        //alert("juridico");
         verJuridico(true);
         verNatural(false);
     });
@@ -259,4 +257,249 @@ function confirmaPedidos() {
     }
     
     
+}
+
+
+// MOSTRAR MENU CATEGORIAS 
+
+function mostrarCategoria(ids) {
+    //alert(ids);
+    var strData = "";
+    var link = $('#txth_base').val() + "/site/index";
+    var arrParams = new Object();
+    arrParams.ids = base64_decode(ids);
+    arrParams.op = 'categoria';
+    requestHttpAjax(link, arrParams, function (response) {
+        if (response.status == "OK") {
+            var data = response.message;
+            for (var i = 0; i < data.length; i++) {
+                //alert(data[i]['nom_cat']);
+                //option_arr += '<a onclick="deleteComentario(\'' + data[i]['Ids'] + '\')" class="pull-right btn-box-tool" href="#"><i class="fa fa-times"></i></a>';
+                //strData += llenarCategoriasXXX(data[i]);
+                strData += llenarCategorias(data[i]);
+            }
+            $("#listaCategorias").html(strData);
+        }
+    }, true);
+    return false;
+}
+function llenarCategorias(data){
+    var strData = "";
+
+        /*strData += '<div class="panel panel-default">';
+            strData += '<div class="panel-heading">';
+                strData += '<h4 class="panel-title"><a href="javascript:void(0)" onclick="mostrarSubCategoria(\'' + data['ids_cat'] + '\')" >' + data['nom_cat'] + '</a></h4>';
+            strData += '</div>';
+        strData += '</div>';*/
+        
+        strData += '<ul id="subNivel" class="nav nav-pills nav-stacked">';
+            strData += '<li>';
+                strData += '<a href="javascript:void(0)" onclick="mostrarSubCategoria(\'' + data['ids_cat'] + '\',\'' + data['nom_cat'] + '\')" >';
+                    strData += data['nom_cat'];
+                strData += '</a>';
+            strData += '</li>';
+        strData += '</ul>';
+
+    return strData;
+    
+}
+
+function llenarCategoriasXXX(data){
+    var strData = "";
+        var subnivel=data['subnivel'];
+        //alert(subnivel.length);
+        if(subnivel.length>0){
+            strData += '<div class="panel panel-default">';
+                strData += '<div class="panel-heading">';
+                    strData += '<h4 class="panel-title">';
+                        strData += '<a data-toggle="collapse" data-parent="#accordian" href="#' + data['nom_cat'] + '">';
+                            strData += '<span class="badge pull-right"><i class="fa fa-plus"></i></span>';
+                            strData += data['nom_cat'];
+                        strData += '</a>';
+                    strData += '</h4>';
+                strData += '</div>';
+                //option_arr += '<a onclick="deleteComentario(\'' + data[i]['Ids'] + '\')" class="pull-right btn-box-tool" href="#"><i class="fa fa-times"></i></a>';
+               
+                strData += '<div id="' + data['nom_cat'] + '" class="panel-collapse collapse">';
+                    strData += '<div class="panel-body">';
+                        strData += '<ul id="subNivel" class="nav nav-pills nav-stacked">';
+                            for (var i = 0; i < subnivel.length; i++) {
+                                strData += '<li>';
+                                    strData += '<a href="javascript:void(0)" onclick="buscarProductos(0,\'' + subnivel[i]['ids_cat'] + '\')" >';
+                                        strData += subnivel[i]['nom_cat'];
+                                    strData += '</a>';
+                                strData += '</li>';
+                            }
+                        strData += '</ul>';
+                    strData += '</div>';
+                strData += '</div>';
+            strData += '</div>';
+        }else{
+            strData += '<div class="panel panel-default">';
+                strData += '<div class="panel-heading">';
+                    strData += '<h4 class="panel-title"><a href="javascript:void(0)" onclick="buscarProductos(0,\'' + data['ids_cat'] + '\')" >' + data['nom_cat'] + '</a></h4>';
+                strData += '</div>';
+            strData += '</div>';
+            
+        }
+    return strData;
+}
+
+function mostrarSubCategoria(ids,nombre) {
+    var strData = "";    
+    $('#lbl_subNameCat').text(nombre) 
+    var link = $('#txth_base').val() + "/site/index";
+    var arrParams = new Object();
+    arrParams.ids = base64_encode(ids);
+    arrParams.op = 'subCategoria';
+    requestHttpAjax(link, arrParams, function (response) {
+        if (response.status == "OK") {
+            var data = response.message;
+            if(data.length>0){
+                for (var i = 0; i < data.length; i++) {
+                    strData += '<ul id="subNivel" class="nav nav-pills nav-stacked">';
+                    for (var i = 0; i < data.length; i++) {
+                        strData += '<li>';
+                                strData += '<a href="javascript:void(0)" onclick="buscarProductos(0,\'' + data[i]['ids_cat'] + '\')" >';
+                                //strData += '<a href="'+$('#txth_base').val()+'/site/productos?codigo='+base64_encode(data[i]['ids_cat'])+'"  >';
+                                strData += data[i]['nom_cat'];
+                            strData += '</a>';
+                        strData += '</li>';
+                    }
+                    strData += '</ul>';
+                }
+            }else{
+                strData += '<div class="col-sm-12 alert alert-warning" role="alert">';
+                    strData += 'No tiene Resultados!!!';
+                strData += '</div>'; 
+            }            
+            $("#listaSubCategorias").html(strData);
+        }
+    }, true);
+    return false;
+}
+
+function verProducto(ids,txt_cant){
+    var cant=0;
+    var link = $('#txth_base').val() + "/site/productodetalle";
+    if (txt_cant==0){//cuando viene por la busqueda general
+        cant=1;
+    }else{
+        //cuando viene desd un detalle
+        cant=('#'+txt_cant)?$('#'+txt_cant).val():1;//Si existe el control pasa el valor caso contrario manda el valor por defecto= 1
+    }
+    
+    parent.window.location.href = link + "?codigo="+ids+"&cant="+cant;
+}
+
+
+function buscarProductos(page,idsCat) {
+    //$('.items').html('<div class="loading"><img src="images/loading.gif" width="70px" height="70px"/><br/>Un momento por favor...</div>');
+    var strData = "";
+    var link = $('#txth_base').val() + "/site/productos";
+    var orderBy=$('#cmb_orden option:selected').val();
+    var desCom=$('#txt_buscarData').val();
+    //Verifica la categoria recuperada por php y dianamico por javascript
+    var idsCat=(idsCat>0)?idsCat:$('#txth_idsCat').val();
+    
+    var arrParams = new Object();
+    arrParams.page = (page!=0)?page:1;
+    arrParams.codigo = (idsCat!=0)?base64_encode(idsCat):0;//idsCat =>idscategoria
+    arrParams.desCom = desCom;
+    arrParams.orderBy = orderBy;
+    arrParams.op = 'productos';
+    requestHttpAjax(link, arrParams, function (response) {
+        if (response.status == "OK") {
+            //var data = JSON.parse(response.message);
+            var data = response.message;
+            //alert(JSON.stringify(data));
+            //alert(JSON.parse(data));
+            //alert(data.toSource());
+            var n=0;
+            var fil=0;
+            for (var i = 0; i < data.length; i++) {
+                //option_arr += '<a onclick="deleteComentario(\'' + data[i]['Ids'] + '\')" class="pull-right btn-box-tool" href="#"><i class="fa fa-times"></i></a>';
+                n=0;
+                strData+='<div class="row">';                
+                while (n < 3) {
+                    //alert(data[fil]['cod_art']);
+                    //if(typeof(data[fil]) != "undefined"){
+                        strData += llenarItems(data[fil]);
+                    //} 
+                    fil++;
+                    n ++;  
+                }
+                strData+='</div>';
+                i=i+n;
+            }
+            $("#listaPedidos").empty();
+            // $("#listaPedidos").append(strData);
+            $("#listaPedidos").html(strData);
+
+            //console.log(data);
+            //$('.items').fadeIn(2000).html(data);
+            $('.pagination li').removeClass('active');
+            $('.pagination li a[data="' + page + '"]').parent().addClass('active');
+        }
+    }, true);
+    return false;
+
+}
+
+
+
+function llenarItems(data){
+    var estado=$('#txth_activo').val();
+    var link = $('#txth_base').val() + "/site/carrito";
+    var ruta=$('#txth_imgfolder').val()+ data['cod_art']+'_P-01.jpg';
+    if(!fileExists(ruta)){
+        //sI la ruta no existe muestra la imagen no foto
+        ruta=$('#txth_imgfolder').val()+ 'NO_FOTO.jpg';
+    }
+    
+    var strData = "";//data[i]['p_venta']
+    strData += '<div class="col-sm-4">';
+        if(estado){
+            strData += '<div class="product-image-wrapper">';
+                strData += '<div class="single-products">';
+                    strData += '<div class="productinfo text-center">';
+                        //strData += '<img src="img/productos/img1.jpg" alt="" />';
+                        strData += '<img onclick="verProducto(\'' + data['ids_pro'] + '\',1)" src="'+ruta+'" alt="" />';
+                        strData += '<h2>$' + redondea(data['p_venta'],2) + '</h2>';
+                        strData += '<p>' + data['des_com'] + '</p>';
+                        strData += '<a onclick="addCarrito(\'' + data['ids_pro'] + '\',\'' + data['cod_art'] + '\',\'' + data['des_com'] + '\',\'' + data['p_venta'] + '\',0)" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Agregar a Carrito</a>';
+                    strData += '</div>';
+                    /*strData += '<div class="product-overlay">';
+                        strData += '<div class="overlay-content">';
+                            strData += '<h2>$' + data['p_venta'] + '</h2>';
+                            strData += '<p>' + data['des_com'] + '</p>';
+                            strData += '<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Agregar a Carrito</a>';
+                        strData += '</div>';
+                    strData += '</div>';*/
+                strData += '</div>';
+                strData += '<div class="choose">';
+                    strData += '<ul class="nav nav-pills nav-justified">';
+                        strData += '<li><a href="#"><i class="fa fa-plus-square"></i>Agregar a lista de pedidos</a></li>';
+                        strData += '<li><a href="' + link + '"><i class="fa fa-plus-square"></i>Ver Carrito</a></li>';
+                    strData += '</ul>';
+                strData += '</div>';
+            strData += '</div>';            
+        }else{
+            strData += '<div class="product-image-wrapper">';
+                strData += '<div class="single-products">';
+                    strData += '<div class="productinfo text-center">';
+                        //strData += '<img src="img/productos/img1.jpg" alt="" />';
+                        strData += '<img onclick="verProducto(\'' + data['ids_pro'] + '\',1)" src="'+ruta+'" alt="" />';
+                        strData += '<p>' + data['des_com'] + '</p>';
+                        strData += '<a id="btn_detalle" class="btn btn-primary" href="/webappsea/site/productodetalle?codigo='+data['ids_pro']+'">Ver Detalle</a>';
+                        //strData += '<a onclick="addCarrito(\'' + data['ids_pro'] + '\',\'' + data['cod_art'] + '\',\'' + data['des_com'] + '\',\'' + data['p_venta'] + '\',0)" href="javascript:void(0)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Ver Detalle</a>';
+                    strData += '</div>';                    
+                strData += '</div>';
+                
+            strData += '</div>';
+            
+        }
+        
+    strData += '</div>';
+    return strData;
 }

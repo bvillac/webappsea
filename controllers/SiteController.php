@@ -84,6 +84,16 @@ class SiteController extends Controller
                     $resul["status"] = TRUE;
                     $resul["data"] = $dts;
                     break;
+                case 'subCategoria':
+                    //$ids=(isset($data["ids"]))?$data["ids"]:'0';
+                    Utilities::putMessageLogFile($ids);
+                    $ids=isset($data["ids"]) ? base64_decode($data['ids']) : "0";
+                    Utilities::putMessageLogFile($ids);
+                    $dts = Tienda::getSubNivelTienda($ids);
+                    Utilities::putMessageLogFile($dts);
+                    $resul["status"] = TRUE;
+                    $resul["data"] = $dts;
+                    break;
                 case 'productos':
                     //$resul = Tienda::getProductoTienda($data);
                     //Tienda::getProductoTiendaMasVendidos($data);
@@ -116,13 +126,12 @@ class SiteController extends Controller
      */
      public function actionProductos() {
         $resul=array();
-        $nivel=array();
-        $data = Yii::$app->request->get();
+        $nivel=array();        
         //$ids=isset($data["codigo"]) ? base64_decode($data['codigo']) : "0";
         //$page=isset($data["page"]) ? base64_decode($data['page']) : "1";          
         if (Yii::$app->request->isAjax) {
             $data = Yii::$app->request->post();
-            $op=(isset($data["op"]))?$data["op"]:'';           
+            $op=(isset($data["op"]))?$data["op"]:'';  
             $resul = Tienda::getProductoTiendaIndex($data);
             if ($resul['status']) {
                 $message = ["info" => Yii::t('exception', '<strong>Well done!</strong> your information was successfully saved.')];
@@ -136,6 +145,7 @@ class SiteController extends Controller
         //Utilities::putMessageLogFile($ids);
         //$IdsCat=Tienda::getNivelSuperior($ids);//Obtiene nivel superior
         //Utilities::putMessageLogFile($IdsCat);ids_scat
+        $data = Yii::$app->request->get();
         
         $resul = Tienda::getProductoTiendaIndex($data);//Retorna los Items a mostrar
         $IdsScat=Tienda::getNivelSuperior($resul['data'][0]['ids_cat']);//Obtiene nivel superior
