@@ -143,7 +143,7 @@ class Tienda {
     
     
     public static function getProductoTiendaIndex($data){
-        Utilities::putMessageLogFile($data);
+        //Utilities::putMessageLogFile($data);
         
         /*OBTIENE DESCUENTOS*/
         //Yii::$app->session->get("PB_iduser");

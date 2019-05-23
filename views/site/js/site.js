@@ -362,9 +362,10 @@ function mostrarSubCategoria(ids,nombre) {
                     strData += '</ul>';
                 }
             }else{
-                strData += '<div class="col-sm-12 alert alert-warning" role="alert">';
+                buscarProductos(0,ids,nombre);//Busca par ver si tiene Productos en la segunda categoria
+                /*strData += '<div class="col-sm-12 alert alert-warning" role="alert">';
                     strData += 'No tiene Resultados!!!';
-                strData += '</div>'; 
+                strData += '</div>'; */
             }            
             $("#listaSubCategorias").html(strData);
             menuSelected('nivel_1',nombre);
@@ -378,12 +379,15 @@ function mostrarSubCategoria(ids,nombre) {
 function menuSelected(idsUL,nombre){
     //Recibimos el Id del elemento y recorremos los LI y sacamos su texto,
     //le agregamos la propieda class=active para que este selecionado
-    $("#"+idsUL+" li").each(function () {
+    $("#"+idsUL+" li > a").each(function () {
         //alert($(this).text())
         if($(this).text()==nombre){
-            $(this).attr("class","glyphicon glyphicon-hand-right");
+            //$(this).attr("class","glyphicon glyphicon-hand-right");
+            //$(this).html('<h1>'+nombre+'</h1>');
+            $(this).html('<h4><span class="badge badge-secondary">'+nombre+'</span></h4>');
         }else{
-            $(this).attr("class","");
+            //$(this).attr("class","");
+            $(this).html($(this).text());
         }
     });
 }
@@ -422,6 +426,9 @@ function buscarProductos(page,idsCat,nombre) {
     arrParams.orderBy = orderBy;
     arrParams.op = 'productos';
     requestHttpAjax(link, arrParams, function (response) {
+        strData += '<div class="col-sm-12 alert alert-warning" role="alert">';
+            strData += 'No tiene Resultados!!!';
+        strData += '</div>';
         if (response.status == "OK") {
             //var data = JSON.parse(response.message);
             var data = response.message;
@@ -430,30 +437,33 @@ function buscarProductos(page,idsCat,nombre) {
             //alert(data.toSource());
             var n=0;
             var fil=0;
-            for (var i = 0; i < data.length; i++) {
-                //option_arr += '<a onclick="deleteComentario(\'' + data[i]['Ids'] + '\')" class="pull-right btn-box-tool" href="#"><i class="fa fa-times"></i></a>';
-                n=0;
-                strData+='<div class="row">';                
-                while (n < 3) {
-                    //alert(data[fil]['cod_art']);
-                    //if(typeof(data[fil]) != "undefined"){
-                        strData += llenarItems(data[fil]);
-                    //} 
-                    fil++;
-                    n ++;  
-                }
-                strData+='</div>';
-                i=i+n;
+            if(data.length>0){
+                strData='';
+                for (var i = 0; i < data.length; i++) {
+                    //option_arr += '<a onclick="deleteComentario(\'' + data[i]['Ids'] + '\')" class="pull-right btn-box-tool" href="#"><i class="fa fa-times"></i></a>';
+                    n=0;
+                    strData+='<div class="row">';                
+                    while (n < 3) {
+                        //alert(data[fil]['cod_art']);
+                        //if(typeof(data[fil]) != "undefined"){
+                            strData += llenarItems(data[fil]);
+                        //} 
+                        fil++;
+                        n ++;  
+                    }
+                    strData+='</div>';
+                    i=i+n;
+                }                
             }
-            $("#listaPedidos").empty();
-            // $("#listaPedidos").append(strData);
-            $("#listaPedidos").html(strData);
 
-            //console.log(data);
             //$('.items').fadeIn(2000).html(data);
             $('.pagination li').removeClass('active');
             $('.pagination li a[data="' + page + '"]').parent().addClass('active');
         }
+        //console.log(data);
+        $("#listaPedidos").empty();
+        // $("#listaPedidos").append(strData);
+        $("#listaPedidos").html(strData);
     }, true);
     return false;
 

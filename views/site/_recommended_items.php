@@ -8,6 +8,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 $ItemReco=app\models\Tienda::getProductoTiendaMasVendidos('PRO');
 $Ruta=Url::base() . Yii::$app->params["imgFolder"];
+$isUser = Yii::$app->session->get('PB_isuser', FALSE);
 ?>
 
 <div class="recommended_items"><!--recommended_items-->
@@ -27,8 +28,7 @@ $Ruta=Url::base() . Yii::$app->params["imgFolder"];
                             <?php if($isUser){ ?>
                             <div class="product-image-wrapper">
                                 <div class="single-products">
-                                    <div class="productinfo text-center">                                        
-                                        <?php //$imgData=Html::img($Ruta.$ItemReco[$fil]['cod_art']."_G-01.jpg",['class' => 'img-responsive ']); ?>
+                                    <div class="productinfo text-center">                                      
                                         <?php $imgData= app\models\Utilities::verImagen($ItemReco[$fil]['cod_art']); ?>
                                         <?= Html::a($imgData, ['/site/productodetalle','codigo' => $ItemReco[$fil]['ids_pro']], ['id' => 'btn_masvendidos']); ?> 
                                         <h2>

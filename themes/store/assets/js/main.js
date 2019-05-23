@@ -168,7 +168,7 @@ function verificarIngreso() {
             if (response.status == "OK") {
                 showAlert(response.status, response.type, {"wtmessage": message.info, "title":response.label});
                 //limpiarDatos();
-                var renderurl = $('#txth_base').val() + "/mceformulariotemp/index";
+                var renderurl = $('#txth_base').val() + "/site/index";
                 window.location = renderurl;
             } else {
                 var renderurl = $('#txth_base').val() + "/site/login";

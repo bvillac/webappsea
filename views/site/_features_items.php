@@ -28,13 +28,14 @@ $isUser = Yii::$app->session->get('PB_isuser', FALSE);
         </div>
     </div>
  
-    <?php if(sizeof($ItemReco)<1){ ?>
-        <div class="col-sm-12 alert alert-warning" role="alert">
-            <?= Yii::t("store", "Has no results !!!") ; ?>
-        </div> 
-    <?php } ?>
+    
     
     <div id="listaPedidos">
+        <?php if(sizeof($ItemReco)<1){ ?>
+            <div class="col-sm-12 alert alert-warning" role="alert">
+                <?= Yii::t("store", "Has no results !!!") ; ?>
+            </div> 
+        <?php } ?>
     <?php 
     $fil=0;
     $n=0;  

@@ -147,6 +147,7 @@ class SiteController extends Controller
         $nivel_2 = Tienda::getNivelTienda($IdsScat[0]['ids_scat']);//obtiene categoria de nivel
         //DATOS 1 NIVEL
         $nivel_1 = Tienda::getSubNivelTienda($IdsSubcat[0]['ids_scat']);//Menu de Categorias
+        //Utilities::putMessageLogFile($IdsSubcat);
       
         return $this->render('productos', [
                     'models' => $resul['data'],//nivel 3

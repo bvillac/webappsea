@@ -18,8 +18,13 @@ use yii\helpers\Url;
             </div> 
         <?php } ?>
         <ul id="nivel_2" class="nav nav-pills nav-stacked">
-            <?php for ($i = 0; $i < sizeof($seccion); $i++) {  ?>
-            <li><?= Html::a($seccion[$i]['nom_cat'],['site/productos','codigo' => base64_encode($seccion[$i]['ids_cat'])]); ?> 
+            <?php for ($i = 0; $i < sizeof($seccion); $i++) {                 
+                if($seccion[$i]['nom_cat']==$nomSelected){ ?>
+                    <li><?= Html::a('<h4><span class="badge badge-secondary">'.$nomSelected.'</span></h4>',['site/productos','codigo' => base64_encode($seccion[$i]['ids_cat'])]); ?> 
+                <?php } else { ?>
+                    <li><?= Html::a($seccion[$i]['nom_cat'],['site/productos','codigo' => base64_encode($seccion[$i]['ids_cat'])]); ?> 
+                <?php }  ?>
+            
             <?php }  ?>
         </ul>
     </div>

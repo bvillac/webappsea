@@ -8,6 +8,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 $ItemReco=app\models\Tienda::getProductoTiendaMasVendidos('IDX');
 $Ruta=Url::base() . Yii::$app->params["imgFolder"];
+$isUser = Yii::$app->session->get('PB_isuser', FALSE);
 ?>
 
 <div class="features_items"><!--recommended_items-->
