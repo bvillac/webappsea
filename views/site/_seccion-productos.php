@@ -15,8 +15,15 @@ $seccion=\app\models\Tienda::getSeccionTienda();
     <div class="brands-name">
         <ul id="nivel_0" class="nav nav-pills nav-stacked">
         <!--<ul id="categoria" class="nav nav-pills nav-stacked">-->
-            <?php for ($i = 0; $i < sizeof($seccion); $i++) {  ?>
-            <li><?= Html::a($seccion[$i]['nom_cat'],Url::to('#') ,['onclick' => 'javascript:mostrarCategoria(\'' . base64_encode($seccion[$i]['ids_cat']) . '\',\'' . $seccion[$i]['nom_cat'] . '\');']) ?></li>
+            <?php 
+                $nomSelected=$nivel_0[0]['nom_cat'];
+                for ($i = 0; $i < sizeof($seccion); $i++) {  
+                    $nombre=$seccion[$i]['nom_cat']; 
+                    if($nombre==$nomSelected){ ?>            
+                        <li><?= Html::a('<h4><span class="badge badge-secondary">'.$nomSelected.'</span></h4>',Url::to('#') ,['onclick' => 'javascript:mostrarCategoria(\'' . base64_encode($seccion[$i]['ids_cat']) . '\',\'' . $seccion[$i]['nom_cat'] . '\');']) ?></li>
+                    <?php } else { ?>
+                        <li><?= Html::a($nombre,Url::to('#') ,['onclick' => 'javascript:mostrarCategoria(\'' . base64_encode($seccion[$i]['ids_cat']) . '\',\'' . $seccion[$i]['nom_cat'] . '\');']) ?></li>
+                    <?php }  ?>
             <?php }  ?>
         </ul>
     </div>

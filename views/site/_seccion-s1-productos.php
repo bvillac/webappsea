@@ -24,8 +24,7 @@ use yii\helpers\Url;
         <ul id="nivel_1" class="nav nav-pills nav-stacked">
             <?php for ($i = 0; $i < sizeof($seccion); $i++) {
                 $ids=$seccion[$i]['ids_cat'];
-                $nombre=$seccion[$i]['nom_cat']; 
-           
+                $nombre=$seccion[$i]['nom_cat'];            
                 if($seccion[$i]['nom_cat']==$nomSelected){ ?>
                     <li><?= Html::a('<h4><span class="badge badge-secondary">'.$nomSelected.'</span></h4>',Url::to('#'),['onclick'=>"javascript:mostrarSubCategoria('$ids','$nombre')"]); ?> 
                     

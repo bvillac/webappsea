@@ -143,14 +143,16 @@ class SiteController extends Controller
         $resul = Tienda::getProductoTiendaIndex($data);//Retorna los Items a mostrar osea resultado de Items    
         $IdsScat=Tienda::getNivelSuperior($resul['data'][0]['ids_cat']);//Obtiene nivel superior los IDS
         $IdsSubcat=Tienda::getNivelSuperior($IdsScat[0]['ids_scat']);//Obtiene el Menu de Nivel superior Categorias
+        $nivel_0=Tienda::getNivelSuperior($IdsSubcat[0]['ids_scat']);
         //DATOS 2 NIVEL
         $nivel_2 = Tienda::getNivelTienda($IdsScat[0]['ids_scat']);//obtiene categoria de nivel
         //DATOS 1 NIVEL
         $nivel_1 = Tienda::getSubNivelTienda($IdsSubcat[0]['ids_scat']);//Menu de Categorias
-        //Utilities::putMessageLogFile($IdsSubcat);
+        //Utilities::putMessageLogFile($nivel_0);
       
         return $this->render('productos', [
                     'models' => $resul['data'],//nivel 3
+                    'nivel_0' => $nivel_0,
                     'nivel_1' => $nivel_1,
                     'nivel_2' => $nivel_2,
                     'pages' => $resul['trows'],

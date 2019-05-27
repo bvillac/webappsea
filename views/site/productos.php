@@ -14,7 +14,7 @@ $this->title = Yii::$app->params['alias']; //'My Yii Application';
 <?= Html::hiddenInput('txth_idsCat', $nivel_2[0]['ids_cat'], ["id" => "txth_idsCat"]) ?>
 <div class="col-sm-3">
     <div class="left-sidebar">
-        <?= $this->render('_seccion-productos.php') ?> 
+        <?= $this->render('_seccion-productos.php',["nivel_0" => $nivel_0]) ?> 
         <?= $this->render('_seccion-s1-productos.php',['nomCat' => Yii::t("store", "Category"),'seccion' => $nivel_1,'nomSelected' => $nomCatSup]) ?> 
         <?= $this->render('_seccion-s2-productos.php', ['nomCat' => $nomCatSup,'seccion' => $nivel_2,'nomSelected' => $nomCat]) ?>             
         <?php //$this->render('_brands_products.php', ['directoryAsset' => $directoryAsset]) ?> 
