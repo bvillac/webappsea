@@ -14,6 +14,9 @@ $isUser = Yii::$app->session->get('PB_isuser', FALSE);
 ?>
 
 <div class="product-details"><!--product-details-->
+    <div class="col-sm-12">
+        <?= $this->render('_barrabuscar.php') ?> 
+    </div>
     <div class="col-sm-5">
         <div class="view-product">
             <?= app\models\Utilities::verImagen($model[0]['cod_art']); ?>
@@ -52,11 +55,13 @@ $isUser = Yii::$app->session->get('PB_isuser', FALSE);
                 </div>-->
     </div>
     <div class="col-sm-7">
+        
         <div class="product-information"><!--/product-information-->
             <!--<img src="<?= Url::base() ?>/web/img/product-details/new.jpg" class="newarrival" alt="" />-->
             <?php if($isUser){ ?>
                 <h2><?= $model[0]['des_com'] ?></h2>
                 <p>PARTE ID: <?= $model[0]['cod_art'] ?></p>
+                <p>CATEGORÍA: <?= $model[0]['nom_cat'] ?></p>
                 <img src="<?= Url::base() ?>/web/img/product-details/rating.png" alt="" />
                 <span>
                     <span>$<?= app\models\Utilities::round_out($model[0]['p_venta'], 2) ?></span>
@@ -74,6 +79,7 @@ $isUser = Yii::$app->session->get('PB_isuser', FALSE);
             <?php }else{ ?>
                 <h2><?= $model[0]['des_com'] ?></h2>
                 <p>PARTE ID: <?= $model[0]['cod_art'] ?></p>
+                <p>CATEGORÍA: <?= $model[0]['nom_cat'] ?></p>
                 <img src="<?= Url::base() ?>/web/img/product-details/rating.png" alt="" />               
                 <br> <br> 
                 <div class="alert alert-info" role="alert">

@@ -26,8 +26,7 @@ use yii\helpers\Url;
                 $ids=$seccion[$i]['ids_cat'];
                 $nombre=$seccion[$i]['nom_cat'];            
                 if($seccion[$i]['nom_cat']==$nomSelected){ ?>
-                    <li><?= Html::a('<h4><span class="badge badge-secondary">'.$nomSelected.'</span></h4>',Url::to('#'),['onclick'=>"javascript:mostrarSubCategoria('$ids','$nombre')"]); ?> 
-                    
+                    <li><?= Html::a('<h4><span class="badge badge-secondary">'.$nomSelected.'</span></h4>',Url::to('#'),['onclick'=>"javascript:mostrarSubCategoria('$ids','$nombre')"]); ?>               
                 <?php } else { ?>
                     <li><?= Html::a($nombre,Url::to('#'),['onclick'=>"javascript:mostrarSubCategoria('$ids','$nombre')"]); ?> 
                 <?php } ?>

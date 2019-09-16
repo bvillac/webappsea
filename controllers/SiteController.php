@@ -127,8 +127,10 @@ class SiteController extends Controller
         $nivel_2=array();        
         if (Yii::$app->request->isAjax) {
             $data = Yii::$app->request->post();
-            $op=(isset($data["op"]))?$data["op"]:'';  
+            $op=(isset($data["op"]))?$data["op"]:'';
+            //Utilities::putMessageLogFile('ajax '.$data);
             $resul = Tienda::getProductoTiendaIndex($data);
+          
             if ($resul['status']) {
                 $message = ["info" => Yii::t('exception', '<strong>Well done!</strong> your information was successfully saved.')];
                 return Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', $resul['data']);
@@ -139,6 +141,7 @@ class SiteController extends Controller
             return;
         }
         $data = Yii::$app->request->get();
+        //Utilities::putMessageLogFile('get '.$data);
         //DATOS 3 NIVEL
         $resul = Tienda::getProductoTiendaIndex($data);//Retorna los Items a mostrar osea resultado de Items    
         $IdsScat=Tienda::getNivelSuperior($resul['data'][0]['ids_cat']);//Obtiene nivel superior los IDS
@@ -148,7 +151,7 @@ class SiteController extends Controller
         $nivel_2 = Tienda::getNivelTienda($IdsScat[0]['ids_scat']);//obtiene categoria de nivel
         //DATOS 1 NIVEL
         $nivel_1 = Tienda::getSubNivelTienda($IdsSubcat[0]['ids_scat']);//Menu de Categorias
-        //Utilities::putMessageLogFile($nivel_0);
+        
       
         return $this->render('productos', [
                     'models' => $resul['data'],//nivel 3

@@ -22,7 +22,7 @@ class Productos {
         //Recibe IdsCliente  y si no tiene valor 
         //su valor por defecto=1 que es consumidor final
         //Precio por defecto f3
-        $ids=($ids!='')?$ids:1;
+        //$ids=($ids!='')?$ids:1;//revisar bien
         $con = \Yii::$app->db;
         $con1 = \Yii::$app->db_tienda;
         $sql="SELECT B.ids_ctp,B.cod_ctp,B.por_des 

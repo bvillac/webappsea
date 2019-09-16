@@ -147,6 +147,9 @@ class Tienda {
         
         /*OBTIENE DESCUENTOS*/
         //Yii::$app->session->get("PB_iduser");
+        //Se debe consultar la tabla usuario CLiente
+        //UTIMPOR IDS=1 POR DEFECTO
+        $ids=1;
         $precio=Productos::consultarCatPrecio($ids);
         $CampoVenta=\Yii::$app->params['p_venta'];
         $por_des=floatval($precio['por_des'])/100;
@@ -159,8 +162,9 @@ class Tienda {
 
         $idsCat=isset($data["codigo"]) ? base64_decode($data['codigo']) : "0";
         
-        
+        //Utilities::putMessageLogFile("ids ".$data);
         //Utilities::putMessageLogFile("ids ".$idsCat);
+        
         if(isset($data['page'])){$page=$data['page'];}
         //if(isset($data['idsCat'])){$idsCat=$data['idsCat'];}        
         if(isset($data['desCom'])){$desCom=$data['desCom'];}
@@ -180,21 +184,22 @@ class Tienda {
                 FROM " . $con->dbname . ".productos A                  
               WHERE A.est_log=1 ";
         
-        $sql.=($idsCat!=0)?" AND A.ids_cat=$idsCat":"";  
+        //$sql.=($idsCat!=0)?" AND A.ids_cat=$idsCat":"";  
         $sql.=($desCom!="")?" AND A.des_com LIKE '%$desCom%' ":"";
         
         //Utilities::putMessageLogFile($sql);
+        //echo $sql;
 
         $comando = $con->createCommand($sql);        
         //$comando->bindParam(":med_id", $ids, \PDO::PARAM_INT);
         $rawData=$comando->queryAll();
         //PARA CONSULTAR PAGINADO
-        $arroout["trows"] = count($rawData);
+        $arroout["trows"] = 0;//count($rawData);
         //$arroout = array();    
         
         //PARA CONSULTAR DATOS        
         $sql.=" ORDER BY A.des_com ". $tipOrderby;
-        $sql.=" LIMIT ".$offset.", ".$rowsPerPage;
+        //$sql.=" LIMIT ".$offset.", ".$rowsPerPage;
         $comando = $con->createCommand($sql); 
         //echo $sql;
         $rawData=$comando->queryAll();
