@@ -103,8 +103,8 @@ $num_total_rows=$pages;
 if ($num_total_rows > 0) {
     $num_pages = ceil($num_total_rows / (\Yii::$app->params['pagePro']));
     echo '<div class="row">';
-    echo '<div class="col-lg-12">';
-    echo '<nav aria-label="Page navigation example">';
+    echo '<div id="Paginado" class="col-lg-12">';
+    echo '<nav  aria-label="Page navigation">';
     echo '<ul class="pagination justify-content-end">';
     for ($i = 1; $i <= $num_pages; $i++) {
     //for ($i = 1; $i <= 10; $i++) {

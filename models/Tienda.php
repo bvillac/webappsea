@@ -162,30 +162,29 @@ class Tienda {
 
         $idsCat=isset($data["codigo"]) ? base64_decode($data['codigo']) : "0";
         
-        //Utilities::putMessageLogFile("ids ".$data);
+        ///Utilities::putMessageLogFile("ids ".$data);
         //Utilities::putMessageLogFile("ids ".$idsCat);
         
         if(isset($data['page'])){$page=$data['page'];}
         //if(isset($data['idsCat'])){$idsCat=$data['idsCat'];}        
         if(isset($data['desCom'])){$desCom=$data['desCom'];}
-        if(isset($data['orderBy'])){$tipOrderby=($data['orderBy']==2)?"DESC":"ASC";}
+        if(isset($data['order By'])){$tipOrderby=($data['orderBy']==2)?"DESC":"ASC";}
         $rowsPerPage = \Yii::$app->params['pagePro'];
         $offset = ($page - 1) * $rowsPerPage;
         $con = \Yii::$app->db_tienda;
         
-        /*$sql="SELECT A.ids_pro,A.cod_art,A.des_com,B.p_venta,A.ruta_img,A.ids_cat
-                FROM " . $con->dbname . ".productos A
-                  INNER JOIN " . $con->dbname . ".precios B
-                    ON A.ids_pro=B.ids_pro
-              WHERE A.est_log=1 ";*/
-        
-         $sql="SELECT A.ids_pro,A.cod_art,A.des_com,(A.$CampoVenta-(A.$CampoVenta*$por_des)) p_venta,A.ruta_img,
+      
+        $sql="SELECT A.ids_pro,A.cod_art,A.des_com,(A.$CampoVenta-(A.$CampoVenta*$por_des)) p_venta,A.ruta_img,
              A.ids_cat
                 FROM " . $con->dbname . ".productos A                  
               WHERE A.est_log=1 ";
-        
-        //$sql.=($idsCat!=0)?" AND A.ids_cat=$idsCat":"";  
-        $sql.=($desCom!="")?" AND A.des_com LIKE '%$desCom%' ":"";
+         
+        if($desCom!=""){
+            $sql.=" AND A.des_com LIKE '%$desCom%' ";
+        }else{
+            $sql.=($idsCat!=0)?" AND A.ids_cat=$idsCat":"";  
+        }
+        //$sql.=($desCom!="")?" AND A.des_com LIKE '%$desCom%' ":"";
         
         //Utilities::putMessageLogFile($sql);
         //echo $sql;
@@ -194,20 +193,22 @@ class Tienda {
         //$comando->bindParam(":med_id", $ids, \PDO::PARAM_INT);
         $rawData=$comando->queryAll();
         //PARA CONSULTAR PAGINADO
-        $arroout["trows"] = 0;//count($rawData);
-        //$arroout = array();    
+        $arroout["trows"] = count($rawData);
+        //Utilities::putMessageLogFile(count($rawData));
+        
         
         //PARA CONSULTAR DATOS        
         $sql.=" ORDER BY A.des_com ". $tipOrderby;
-        //$sql.=" LIMIT ".$offset.", ".$rowsPerPage;
-        $comando = $con->createCommand($sql); 
+        $sql.=" LIMIT ".$offset.", ".$rowsPerPage;
+        $comando = $con->createCommand($sql);
+        //Utilities::putMessageLogFile($sql);
         //echo $sql;
         $rawData=$comando->queryAll();
         $arroout["data"] = $rawData;
         
         //Utilities::putMessageLogFile($rawData);        
         //Tienda::existeImgLista($rawData);
-
+        $arroout["idscat"] = $idsCat;
         $arroout["status"] = TRUE;
         //$arroout["error"] = null;
         //$arroout["message"] = null;

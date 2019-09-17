@@ -406,12 +406,14 @@ function verProducto(ids,txt_cant){
     parent.window.location.href = link + "?codigo="+ids+"&cant="+cant;
 }
 
-
+//Buscar productos paginado
 function buscarProductos(page,idsCat,nombre) {
+    //alert(page+' cc '+idsCat+' cc '+nombre)
     $('#lbl_NameCat_N3').text(nombre)
     menuSelected('nivel_1',$('#lbl_NameCat_N2').text());
     menuSelected('nivel_2',nombre);
     //$('.items').html('<div class="loading"><img src="images/loading.gif" width="70px" height="70px"/><br/>Un momento por favor...</div>');
+    
     var strData = "";
     var link = $('#txth_base').val() + "/site/productos";
     var orderBy=$('#cmb_orden option:selected').val();
@@ -431,10 +433,11 @@ function buscarProductos(page,idsCat,nombre) {
         strData += '</div>';
         if (response.status == "OK") {
             //var data = JSON.parse(response.message);
-            var data = response.message;
+            var data = response.message.data;
             //alert(JSON.stringify(data));
             //alert(JSON.parse(data));
             //alert(data.toSource());
+            //alert(response.message.toSource());
             var n=0;
             var fil=0;
             if(data.length>0){
@@ -445,9 +448,9 @@ function buscarProductos(page,idsCat,nombre) {
                     strData+='<div class="row">';                
                     while (n < 3) {
                         //alert(data[fil]['cod_art']);
-                        //if(typeof(data[fil]) != "undefined"){
+                        if(typeof(data[fil]) != "undefined"){
                             strData += llenarItems(data[fil]);
-                        //} 
+                        } 
                         fil++;
                         n ++;  
                     }
@@ -455,7 +458,7 @@ function buscarProductos(page,idsCat,nombre) {
                     i=i+n;
                 }                
             }
-
+            paginadojs(response.message.trows);
             //$('.items').fadeIn(2000).html(data);
             $('.pagination li').removeClass('active');
             $('.pagination li a[data="' + page + '"]').parent().addClass('active');
@@ -467,6 +470,24 @@ function buscarProductos(page,idsCat,nombre) {
     }, true);
     return false;
 
+}
+
+function paginadojs(trows){
+   var numPag=trows/9; 
+ 
+    //var strData= '<div class="col-lg-12">';
+    var strData = '<nav aria-label="Page navigation example">';
+     strData += '<ul class="pagination justify-content-end">';
+    for (var i = 1; i < numPag+1; i++) {        
+        strData+=  '<li class="page-item "><a onclick="buscarProductos(\'' +i+ '\',0,\'\')" href="javascript:void(0)" class="page-link" data="' + i + '">' + i + '</a></li>';
+    }
+    strData+= '</ul>';
+    strData+= '</nav>';
+    //strData+= '</div>';
+
+    $("#Paginado").empty();
+    $("#Paginado").html(strData);
+    
 }
 
 

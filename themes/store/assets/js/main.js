@@ -115,7 +115,7 @@ $(document).ready(function () {
     $('.pagination li a').on('click', function () {
         //alert('Paginado');
         var page = $(this).attr('data');
-        buscarProductos(page,0);
+        buscarProductos(page,0,"");
     });
     
     
@@ -125,7 +125,7 @@ $(document).ready(function () {
     
     $('#cmb_orden').change(function () {
         var page = $(this).attr('data');
-        buscarProductos(page,0);
+        buscarProductos(page,0,"");
     });
     
 
@@ -144,7 +144,7 @@ function buscarIndex(){
 
 function buscarEnterProducto(valor,control){
     if (valor) {//Si el usuario Presiono Enter= True
-         buscarProductos(0,0);
+         buscarProductos(0,0,"");
     }
 }
 

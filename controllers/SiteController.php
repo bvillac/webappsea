@@ -133,7 +133,8 @@ class SiteController extends Controller
           
             if ($resul['status']) {
                 $message = ["info" => Yii::t('exception', '<strong>Well done!</strong> your information was successfully saved.')];
-                return Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', $resul['data']);
+                //return Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', $resul['data']);
+                return Utilities::ajaxResponse('OK', 'alert', Yii::t('jslang', 'Success'), 'false', $resul);
             }else{
                 $message = ["info" => Yii::t('exception', 'The above error occurred while the Web server was processing your request.')];
                 return Utilities::ajaxResponse('NO_OK', 'alert', Yii::t('jslang', 'Error'), 'false', $message);
@@ -159,6 +160,7 @@ class SiteController extends Controller
                     'nivel_1' => $nivel_1,
                     'nivel_2' => $nivel_2,
                     'pages' => $resul['trows'],
+                    'idscat' => $resul['idscat'],
                     'nomCat' => $IdsScat[0]['nom_cat'],
                     'nomCatSup' => $IdsSubcat[0]['nom_cat'],
         ]);

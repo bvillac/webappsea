@@ -11,7 +11,7 @@ use yii\helpers\Url;
 $this->title = Yii::$app->params['alias']; //'My Yii Application';
 ?>
 
-<?= Html::hiddenInput('txth_idsCat', $nivel_2[0]['ids_cat'], ["id" => "txth_idsCat"]) ?>
+<?= Html::hiddenInput('txth_idsCat', $idscat, ["id" => "txth_idsCat"]) ?>
 <div class="col-sm-3">
     <div class="left-sidebar">
         <?= $this->render('_seccion-productos.php',["nivel_0" => $nivel_0]) ?> 
